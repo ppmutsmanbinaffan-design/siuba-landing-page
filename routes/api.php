@@ -1,0 +1,160 @@
+<?php
+
+use App\Http\Controllers\Api\AnalyticsApiController;
+use App\Http\Controllers\Api\AttendanceApiController;
+use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\DataImportApiController;
+use App\Http\Controllers\Api\DomainManagementApiController;
+use App\Http\Controllers\Api\MaintenanceApiController;
+use App\Http\Controllers\Api\OfflineSyncApiController;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes - SIUBA Core Engine, Analytics, Reporting & Offline Sync API
+|--------------------------------------------------------------------------
+*/
+
+// Server Health Endpoints (Public)
+Route::get('/health', [OfflineSyncApiController::class, 'health']);
+Route::get('/v1/health', [OfflineSyncApiController::class, 'health']);
+
+// Top-level Auth Login (Rate Limited: 5 attempts per minute)
+Route::post('/login', [AuthApiController::class, 'login'])->middleware('throttle:5,1')->name('login');
+
+Route::prefix('v1')->group(function () {
+    // Health Check (Public)
+    Route::get('/health', [OfflineSyncApiController::class, 'health']);
+
+    // Authentication Public & User Credential Endpoints
+    Route::prefix('auth')->group(function () {
+        Route::post('/login', [AuthApiController::class, 'login'])->middleware('throttle:5,1');
+
+        // Authenticated Session Endpoints
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/me', [AuthApiController::class, 'me']);
+            Route::post('/logout', [AuthApiController::class, 'logout']);
+        });
+    });
+
+    // =========================================================================
+    // PROTECTED OPERATIONAL API GROUP (Requires valid Sanctum Bearer Token)
+    // =========================================================================
+    Route::middleware('auth:sanctum')->group(function () {
+
+        // User Management & Password Sync (Protected)
+        Route::post('/users/{id}/password', [AuthApiController::class, 'updatePassword'])
+            ->middleware('permission:users.update');
+        Route::put('/users/{id}', [AuthApiController::class, 'updateUser'])
+            ->middleware('permission:users.update');
+        Route::post('/users', [AuthApiController::class, 'createUser'])
+            ->middleware('permission:users.create');
+
+        // Full-Stack Bulk Import Engine (Santri, Guru, SDM, Pelatih)
+        Route::prefix('import')->group(function () {
+            // Students Import
+            Route::get('/students/template', [DataImportApiController::class, 'downloadStudentTemplate']);
+            Route::post('/students/preview', [DataImportApiController::class, 'previewStudents'])
+                ->middleware('permission:students.create|students.update');
+            Route::post('/students', [DataImportApiController::class, 'importStudents'])
+                ->middleware('permission:students.create|students.update');
+
+            // Staff / Teachers / Coaches Import
+            Route::get('/staff/template', [DataImportApiController::class, 'downloadStaffTemplate']);
+            Route::post('/staff/preview', [DataImportApiController::class, 'previewStaff'])
+                ->middleware('permission:staff.create|staff.edit|users.create');
+            Route::post('/staff', [DataImportApiController::class, 'importStaff'])
+                ->middleware('permission:staff.create|staff.edit|users.create');
+        });
+
+        // Attendance Core Engine Endpoints
+        Route::prefix('attendance')->group(function () {
+            Route::post('/sessions/{session}/record', [AttendanceApiController::class, 'record'])
+                ->middleware('permission:attendance.create|attendance.manual');
+            Route::post('/sessions/{session}/qr', [AttendanceApiController::class, 'recordByQr'])
+                ->middleware('permission:attendance.create|attendance.qr');
+            Route::post('/sessions/{session}/rfid', [AttendanceApiController::class, 'recordByRfid'])
+                ->middleware('permission:attendance.create|attendance.rfid');
+            Route::get('/sessions/{session}/stats', [AttendanceApiController::class, 'sessionStats'])
+                ->middleware('permission:attendance.view|attendance.sessions.view');
+        });
+
+        // Offline Sync & Preparation Endpoints (Sprint 10)
+        Route::prefix('offline')->group(function () {
+            Route::get('/prepare-session/{session}', [OfflineSyncApiController::class, 'prepareSession'])
+                ->middleware('permission:system.sync_center|attendance.sessions.view');
+            Route::post('/attendance/sync', [OfflineSyncApiController::class, 'sync'])
+                ->middleware('permission:system.sync_center|attendance.create');
+        });
+
+        // Analytics & Realtime KPIs (Sprint 9)
+        Route::prefix('analytics')->group(function () {
+            Route::get('/dashboard', [AnalyticsApiController::class, 'dashboard'])
+                ->middleware('permission:dashboard.view|dashboard.executive');
+            Route::get('/students/{student}', [AnalyticsApiController::class, 'studentAnalytics'])
+                ->middleware('permission:students.view');
+            Route::get('/classrooms/{classroom}', [AnalyticsApiController::class, 'classroomAnalytics'])
+                ->middleware('permission:classrooms.view|reports.view');
+            Route::get('/prayers', [AnalyticsApiController::class, 'prayerAnalytics'])
+                ->middleware('permission:prayer.view|prayer.monitoring');
+            Route::get('/devices', [AnalyticsApiController::class, 'deviceAnalytics'])
+                ->middleware('permission:devices.view');
+        });
+
+        // Reporting Suite & Exports
+        Route::prefix('reports')->group(function () {
+            Route::get('/daily', [AnalyticsApiController::class, 'dailyReport'])
+                ->middleware('permission:reports.view|reports.attendance.view');
+            Route::get('/daily/export', [AnalyticsApiController::class, 'exportDailyCsv'])
+                ->middleware('permission:reports.export|reports.attendance.export');
+            Route::get('/classrooms/{classroom}', [AnalyticsApiController::class, 'classroomReport'])
+                ->middleware('permission:reports.view|reports.attendance.view');
+            Route::get('/classrooms/{classroom}/export', [AnalyticsApiController::class, 'exportClassroomCsv'])
+                ->middleware('permission:reports.export|reports.attendance.export');
+        });
+
+        // Dynamic Participant Engine
+        Route::prefix('participants')->group(function () {
+            Route::get('/activity/{activity}/preview', [DomainManagementApiController::class, 'previewActivityParticipants'])
+                ->middleware('permission:activities.view|attendance.sessions.view');
+            Route::get('/sessions/{session}/preview', [DomainManagementApiController::class, 'previewSessionSnapshot'])
+                ->middleware('permission:attendance.sessions.view');
+            Route::post('/sessions/{session}/refresh', [DomainManagementApiController::class, 'refreshSessionSnapshot'])
+                ->middleware('permission:attendance.sessions.create|attendance.sessions.open');
+        });
+
+        // Academic / KBM (Sprint 6)
+        Route::prefix('academic')->group(function () {
+            Route::get('/overview', [DomainManagementApiController::class, 'academicIndex'])
+                ->middleware('permission:kbm.teacher_dashboard|kbm.monitoring|kbm.master');
+            Route::post('/generate-sessions', [DomainManagementApiController::class, 'generateAcademicSessions'])
+                ->middleware('permission:kbm.master|attendance.sessions.create');
+        });
+
+        // Routine & Boarding (Sprint 7)
+        Route::prefix('routine')->group(function () {
+            Route::get('/overview', [DomainManagementApiController::class, 'routineIndex'])
+                ->middleware('permission:routine.view|dormitory.view|prayer.view');
+            Route::post('/generate-sessions', [DomainManagementApiController::class, 'generateRoutineSessions'])
+                ->middleware('permission:routine.view|attendance.sessions.create');
+        });
+
+        // Extracurriculars & Events (Sprint 8)
+        Route::prefix('extracurriculars')->group(function () {
+            Route::get('/', [DomainManagementApiController::class, 'extracurricularIndex'])
+                ->middleware('permission:extracurriculars.view|trainer.attendance');
+        });
+
+        Route::prefix('events')->group(function () {
+            Route::get('/', [DomainManagementApiController::class, 'eventsIndex'])
+                ->middleware('permission:events.view');
+            Route::post('/{event}/generate-sessions', [DomainManagementApiController::class, 'generateEventSessions'])
+                ->middleware('permission:events.manage|attendance.sessions.create');
+        });
+    });
+
+    // System Maintenance & Database Reset (Guarded by exact phrase verification)
+    Route::prefix('maintenance')->group(function () {
+        Route::post('/reset', [MaintenanceApiController::class, 'reset']);
+    });
+});
