@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMS Landing Page, Berita & PPDB — SIUBA Backend</title>
+
+  <!-- Google Fonts: Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Google Material Symbols Rounded -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Urbanist', 'sans-serif'] },
+          colors: {
+            forest: { 950: '#071f12', 900: '#12372A', 800: '#1F5C45', 700: '#1c633a' },
+            limeaccent: { 400: '#a3e635', 500: '#84cc16', 600: '#65a30d' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Urbanist', sans-serif; background-color: #F7F8F7; color: #0f2417; }
+    .material-symbols-rounded { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 22; vertical-align: middle; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Top Header Bar -->
+  <header class="bg-forest-900 text-white border-b border-forest-800 sticky top-0 z-30 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <a href="/dashboard" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition" title="Kembali ke Dashboard SIUBA">
+          <span class="material-symbols-rounded text-[20px]">arrow_back</span>
+        </a>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight">Manajemen Konten Landing Page (CMS)</h1>
+            <span class="text-[11px] font-bold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">MySQL Live</span>
+          </div>
+          <p class="text-xs text-emerald-200/80">Kelola Profil Pesantren, Visi-Misi, Informasi PPDB, dan Berita Terkini</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <a href="/beranda" target="_blank" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition">
+          <span class="material-symbols-rounded text-[16px] text-limeaccent-400">open_in_new</span>
+          <span>Lihat Landing Page</span>
+        </a>
+        <a href="/dashboard" class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 text-xs font-extrabold px-4 py-2 rounded-xl flex items-center gap-1.5 transition shadow">
+          <span class="material-symbols-rounded text-[16px]">dashboard</span>
+          <span>Dashboard Utama</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- Toast Notification -->
+    <div id="cms-toast" class="hidden fixed bottom-6 right-6 z-50 bg-forest-950 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-limeaccent-400/40 flex items-center gap-3 text-xs font-bold">
+      <span class="material-symbols-rounded text-limeaccent-400">check_circle</span>
+      <span id="cms-toast-text">Perubahan berhasil disimpan!</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex flex-wrap items-center gap-2 bg-white p-2 rounded-2xl border border-zinc-200/80 shadow-xs">
+      <button onclick="switchTab('tab-profile')" id="btn-tab-profile" class="cms-tab-btn bg-forest-900 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer">
+        <span class="material-symbols-rounded text-[18px]">mosque</span>
+        <span>1. Profil, Visi &amp; Misi</span>
+      </button>
+      <button onclick="switchTab('tab-ppdb')" id="btn-tab-ppdb" class="cms-tab-btn text-zinc-600 hover:bg-zinc-100 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer">
+        <span class="material-symbols-rounded text-[18px]">how_to_reg</span>
+        <span>2. Pengaturan Info PPDB</span>
+      </button>
+      <button onclick="switchTab('tab-news')" id="btn-tab-news" class="cms-tab-btn text-zinc-600 hover:bg-zinc-100 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer">
+        <span class="material-symbols-rounded text-[18px]">newspaper</span>
+        <span>3. Kelola Berita &amp; Artikel</span>
+      </button>
+      <button onclick="switchTab('tab-registrations')" id="btn-tab-registrations" class="cms-tab-btn text-zinc-600 hover:bg-zinc-100 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer">
+        <span class="material-symbols-rounded text-[18px]">group_add</span>
+        <span>4. Data Pendaftar PPDB</span>
+        <span id="badge-reg-count" class="bg-limeaccent-400 text-forest-950 text-[11px] font-extrabold px-2 py-0.5 rounded-full">0</span>
+      </button>
+    </div>
+
+    <!-- ==================== TAB 1: PROFIL, VISI & MISI ==================== -->
+    <section id="tab-profile" class="cms-tab-panel bg-white rounded-3xl border border-zinc-200/80 p-5 sm:p-8 shadow-xs space-y-6">
+      <div class="flex items-center justify-between border-b border-zinc-100 pb-4">
+        <div>
+          <h2 class="text-lg font-extrabold text-forest-950">Edit Profil Pesantren, Hero Banner, Visi &amp; Misi</h2>
+          <p class="text-xs text-zinc-500">Perubahan pada formulir ini akan langsung tampil di halaman depan Landing Page.</p>
+        </div>
+      </div>
+
+      <form id="form-profile" onsubmit="saveProfile(event)" class="space-y-5 text-xs sm:text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Nama Pondok Pesantren (Badge Hero)</label>
+            <input type="text" id="p_pesantren_name" required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Tahun Berdiri / Badge Sejarah</label>
+            <input type="text" id="p_founded_year" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800" />
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-zinc-800 block mb-1">Judul Utama Hero (Headline Besar)</label>
+          <input type="text" id="p_hero_title" required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800 font-bold" />
+        </div>
+
+        <div>
+          <label class="font-bold text-zinc-800 block mb-1">Deskripsi Sub-Judul Hero</label>
+          <textarea id="p_hero_subtitle" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-zinc-100">
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Visi Pesantren</label>
+            <textarea id="p_vision" rows="3" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800"></textarea>
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Motto Pesantren</label>
+            <input type="text" id="p_motto" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800 mb-3" />
+            <label class="font-bold text-zinc-800 block mb-1">Nama Pimpinan Pondok (Mudir)</label>
+            <input type="text" id="p_mudir_name" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800" />
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-zinc-800 block mb-1">Kutipan Sambutan Pimpinan Pondok</label>
+          <textarea id="p_mudir_quote" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800"></textarea>
+        </div>
+
+        <div class="space-y-3 pt-2 border-t border-zinc-100">
+          <label class="font-extrabold text-forest-900 block">4 Poin Misi Utama Pesantren</label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <span class="text-xs font-bold text-zinc-500">Misi 01</span>
+              <textarea id="p_mission_0" rows="2" class="w-full mt-1 px-3.5 py-2 rounded-xl border border-zinc-300"></textarea>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-zinc-500">Misi 02</span>
+              <textarea id="p_mission_1" rows="2" class="w-full mt-1 px-3.5 py-2 rounded-xl border border-zinc-300"></textarea>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-zinc-500">Misi 03</span>
+              <textarea id="p_mission_2" rows="2" class="w-full mt-1 px-3.5 py-2 rounded-xl border border-zinc-300"></textarea>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-zinc-500">Misi 04</span>
+              <textarea id="p_mission_3" rows="2" class="w-full mt-1 px-3.5 py-2 rounded-xl border border-zinc-300"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-zinc-100">
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Statistik Santri Aktif</label>
+            <input type="text" id="p_stat_students" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Statistik Ustadz/ah</label>
+            <input type="text" id="p_stat_teachers" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Persentase Kelulusan</label>
+            <input type="text" id="p_stat_graduation" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-zinc-100">
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Telepon / Call Center</label>
+            <input type="text" id="p_contact_phone" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Email Resmi</label>
+            <input type="text" id="p_contact_email" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Alamat Pesantren</label>
+            <input type="text" id="p_contact_address" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+        </div>
+
+        <div class="pt-4 flex justify-end">
+          <button type="submit" class="bg-forest-900 hover:bg-forest-800 text-white font-extrabold px-6 py-3 rounded-xl flex items-center gap-2 shadow-md cursor-pointer transition">
+            <span class="material-symbols-rounded text-[18px] text-limeaccent-400">save</span>
+            <span>Simpan Profil &amp; Visi Misi</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ==================== TAB 2: PENGATURAN INFO PPDB ==================== -->
+    <section id="tab-ppdb" class="cms-tab-panel hidden bg-white rounded-3xl border border-zinc-200/80 p-5 sm:p-8 shadow-xs space-y-6">
+      <div class="border-b border-zinc-100 pb-4">
+        <h2 class="text-lg font-extrabold text-forest-950">Edit Informasi PPDB Santri Baru</h2>
+        <p class="text-xs text-zinc-500">Atur tahun ajaran, kuota penerimaan, jadwal gelombang, dan rincian jenjang SMP IT / SMA IT.</p>
+      </div>
+
+      <form id="form-ppdb" onsubmit="savePpdb(event)" class="space-y-5 text-xs sm:text-sm">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Tahun Ajaran PPDB</label>
+            <input type="text" id="ppdb_academic_year" required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Badge Status Pendaftaran</label>
+            <input type="text" id="ppdb_status_badge" required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Total Kuota Kursi</label>
+            <input type="text" id="ppdb_total_quota" required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 font-bold" />
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-zinc-800 block mb-1">Deskripsi Rincian Kuota</label>
+          <textarea id="ppdb_quota_description" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-2 border-t border-zinc-100">
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Jadwal Gelombang I</label>
+            <input type="text" id="ppdb_wave_1" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Jadwal Gelombang II</label>
+            <input type="text" id="ppdb_wave_2" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Jadwal Tes Seleksi</label>
+            <input type="text" id="ppdb_test_schedule" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Nomor WhatsApp PPDB</label>
+            <input type="text" id="ppdb_whatsapp_contact" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2 border-t border-zinc-100">
+          <div class="bg-zinc-50 p-4 rounded-2xl space-y-3 border border-zinc-200/70">
+            <span class="font-extrabold text-forest-900 block">Kartu Jenjang 1 (SMP IT)</span>
+            <div>
+              <label class="font-bold text-zinc-700 block mb-1">Judul Jenjang 1</label>
+              <input type="text" id="ppdb_smp_title" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+            </div>
+            <div>
+              <label class="font-bold text-zinc-700 block mb-1">Deskripsi Program SMP IT</label>
+              <textarea id="ppdb_smp_desc" rows="2" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white"></textarea>
+            </div>
+            <div>
+              <label class="font-bold text-zinc-700 block mb-1">Kuota SMP IT</label>
+              <input type="text" id="ppdb_smp_quota" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+            </div>
+          </div>
+
+          <div class="bg-zinc-50 p-4 rounded-2xl space-y-3 border border-zinc-200/70">
+            <span class="font-extrabold text-forest-900 block">Kartu Jenjang 2 (SMA IT &amp; Takhassus)</span>
+            <div>
+              <label class="font-bold text-zinc-700 block mb-1">Judul Jenjang 2</label>
+              <input type="text" id="ppdb_sma_title" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+            </div>
+            <div>
+              <label class="font-bold text-zinc-700 block mb-1">Deskripsi Program SMA IT</label>
+              <textarea id="ppdb_sma_desc" rows="2" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white"></textarea>
+            </div>
+            <div>
+              <label class="font-bold text-zinc-700 block mb-1">Kuota SMA IT</label>
+              <input type="text" id="ppdb_sma_quota" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-zinc-800 block mb-1">Catatan Beasiswa PPDB</label>
+          <input type="text" id="ppdb_scholarship_note" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+        </div>
+
+        <div class="pt-4 flex justify-end">
+          <button type="submit" class="bg-forest-900 hover:bg-forest-800 text-white font-extrabold px-6 py-3 rounded-xl flex items-center gap-2 shadow-md cursor-pointer transition">
+            <span class="material-symbols-rounded text-[18px] text-limeaccent-400">save</span>
+            <span>Simpan Pengaturan PPDB</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ==================== TAB 3: KELOLA BERITA & ARTIKEL ==================== -->
+    <section id="tab-news" class="cms-tab-panel hidden space-y-6">
+      <!-- Form Tambah / Edit Berita -->
+      <div class="bg-white rounded-3xl border border-zinc-200/80 p-5 sm:p-8 shadow-xs space-y-4">
+        <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
+          <h2 id="news-form-title" class="text-lg font-extrabold text-forest-950">Tambah Berita / Kegiatan Baru</h2>
+          <button type="button" onclick="resetNewsForm()" class="text-xs font-bold text-zinc-500 hover:text-zinc-800 cursor-pointer">Reset Form</button>
+        </div>
+
+        <form id="form-news" onsubmit="saveNews(event)" class="space-y-4 text-xs sm:text-sm">
+          <input type="hidden" id="news_id" value="" />
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-2">
+              <label class="font-bold text-zinc-800 block mb-1">Judul Berita / Artikel *</label>
+              <input type="text" id="news_title" required placeholder="Contoh: Wisuda Akbar Tahfidz 30 Juz..." class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+            </div>
+            <div>
+              <label class="font-bold text-zinc-800 block mb-1">Kategori *</label>
+              <input type="text" id="news_category" required placeholder="Tahfidz Al-Qur'an / Prestasi / Kegiatan" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="font-bold text-zinc-800 block mb-1">Tanggal Publikasi</label>
+              <input type="text" id="news_date" required placeholder="Contoh: 30 Oktober 2026" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+            </div>
+            <div>
+              <label class="font-bold text-zinc-800 block mb-1">URL Gambar Sampul (Unsplash / Link Foto)</label>
+              <input type="text" id="news_image" required placeholder="https://images.unsplash.com/..." class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+            </div>
+          </div>
+
+          <div>
+            <label class="font-bold text-zinc-800 block mb-1">Ringkasan / Isi Berita *</label>
+            <textarea id="news_excerpt" rows="3" required placeholder="Tuliskan ringkasan berita atau kegiatan pesantren..." class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300"></textarea>
+          </div>
+
+          <div class="flex justify-end">
+            <button type="submit" class="bg-forest-900 hover:bg-forest-800 text-white font-extrabold px-6 py-2.5 rounded-xl flex items-center gap-2 shadow cursor-pointer transition">
+              <span class="material-symbols-rounded text-[18px] text-limeaccent-400">publish</span>
+              <span id="news-submit-label">Terbitkan Berita</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Daftar Berita -->
+      <div class="bg-white rounded-3xl border border-zinc-200/80 p-5 sm:p-8 shadow-xs space-y-4">
+        <h3 class="text-base font-extrabold text-forest-950">Daftar Berita Aktif di Landing Page</h3>
+        <div id="news-list-container" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: DATA PENDAFTAR PPDB ==================== -->
+    <section id="tab-registrations" class="cms-tab-panel hidden bg-white rounded-3xl border border-zinc-200/80 p-5 sm:p-8 shadow-xs space-y-4">
+      <div class="flex items-center justify-between border-b border-zinc-100 pb-4">
+        <div>
+          <h2 class="text-lg font-extrabold text-forest-950">Daftar Calon Santri Baru (PPDB Online)</h2>
+          <p class="text-xs text-zinc-500">Data calon santri yang mengisi formulir PPDB dari Landing Page.</p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="border-b border-zinc-200 text-zinc-500 uppercase text-[11px]">
+              <th class="py-3 px-3">Nama Calon Santri</th>
+              <th class="py-3 px-3">Jenjang &amp; Jalur</th>
+              <th class="py-3 px-3">Nama Wali</th>
+              <th class="py-3 px-3">No. WhatsApp</th>
+              <th class="py-3 px-3">Asal Sekolah</th>
+              <th class="py-3 px-3">Status</th>
+              <th class="py-3 px-3 text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="ppdb-reg-tbody" class="divide-y divide-zinc-100"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    var cmsData = { profile: {}, ppdb: {}, news: [], registrations: [] };
+
+    function showToast(msg) {
+      var t = document.getElementById('cms-toast');
+      var txt = document.getElementById('cms-toast-text');
+      txt.textContent = msg;
+      t.classList.remove('hidden');
+      setTimeout(function () { t.classList.add('hidden'); }, 3500);
+    }
+
+    function switchTab(tabId) {
+      var panels = document.querySelectorAll('.cms-tab-panel');
+      for (var i = 0; i < panels.length; i++) panels[i].classList.add('hidden');
+      document.getElementById(tabId).classList.remove('hidden');
+
+      var btns = document.querySelectorAll('.cms-tab-btn');
+      for (var j = 0; j < btns.length; j++) {
+        btns[j].className = 'cms-tab-btn text-zinc-600 hover:bg-zinc-100 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer';
+      }
+      var activeBtn = document.getElementById('btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.className = 'cms-tab-btn bg-forest-900 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer';
+      }
+    }
+
+    async function loadCmsData() {
+      try {
+        var res = await fetch('/api/v1/cms/landing');
+        var data = await res.json();
+        if (data && data.success) {
+          cmsData = data;
+          populateProfileForm(data.profile || {});
+          populatePpdbForm(data.ppdb || {});
+          renderNewsList(data.news || []);
+          renderRegistrations(data.registrations || []);
+        }
+      } catch (e) {
+        console.error('Failed to load CMS data:', e);
+      }
+    }
+
+    function populateProfileForm(p) {
+      document.getElementById('p_pesantren_name').value = p.pesantren_name || '';
+      document.getElementById('p_founded_year').value = p.founded_year || '';
+      document.getElementById('p_hero_title').value = p.hero_title || '';
+      document.getElementById('p_hero_subtitle').value = p.hero_subtitle || '';
+      document.getElementById('p_vision').value = p.vision || '';
+      document.getElementById('p_motto').value = p.motto || '';
+      document.getElementById('p_mudir_name').value = p.mudir_name || '';
+      document.getElementById('p_mudir_quote').value = p.mudir_quote || '';
+      var missions = p.missions || [];
+      for (var i = 0; i < 4; i++) {
+        document.getElementById('p_mission_' + i).value = missions[i] || '';
+      }
+      document.getElementById('p_stat_students').value = p.stat_students || '';
+      document.getElementById('p_stat_teachers').value = p.stat_teachers || '';
+      document.getElementById('p_stat_graduation').value = p.stat_graduation || '';
+      document.getElementById('p_contact_phone').value = p.contact_phone || '';
+      document.getElementById('p_contact_email').value = p.contact_email || '';
+      document.getElementById('p_contact_address').value = p.contact_address || '';
+    }
+
+    function populatePpdbForm(ppdb) {
+      document.getElementById('ppdb_academic_year').value = ppdb.academic_year || '';
+      document.getElementById('ppdb_status_badge').value = ppdb.status_badge || '';
+      document.getElementById('ppdb_total_quota').value = ppdb.total_quota || '';
+      document.getElementById('ppdb_quota_description').value = ppdb.quota_description || '';
+      document.getElementById('ppdb_wave_1').value = ppdb.wave_1 || '';
+      document.getElementById('ppdb_wave_2').value = ppdb.wave_2 || '';
+      document.getElementById('ppdb_test_schedule').value = ppdb.test_schedule || '';
+      document.getElementById('ppdb_whatsapp_contact').value = ppdb.whatsapp_contact || '';
+      document.getElementById('ppdb_smp_title').value = ppdb.smp_title || '';
+      document.getElementById('ppdb_smp_desc').value = ppdb.smp_desc || '';
+      document.getElementById('ppdb_smp_quota').value = ppdb.smp_quota || '';
+      document.getElementById('ppdb_sma_title').value = ppdb.sma_title || '';
+      document.getElementById('ppdb_sma_desc').value = ppdb.sma_desc || '';
+      document.getElementById('ppdb_sma_quota').value = ppdb.sma_quota || '';
+      document.getElementById('ppdb_scholarship_note').value = ppdb.scholarship_note || '';
+    }
+
+    async function saveProfile(e) {
+      e.preventDefault();
+      var payload = {
+        pesantren_name: document.getElementById('p_pesantren_name').value,
+        founded_year: document.getElementById('p_founded_year').value,
+        hero_title: document.getElementById('p_hero_title').value,
+        hero_subtitle: document.getElementById('p_hero_subtitle').value,
+        vision: document.getElementById('p_vision').value,
+        motto: document.getElementById('p_motto').value,
+        mudir_name: document.getElementById('p_mudir_name').value,
+        mudir_quote: document.getElementById('p_mudir_quote').value,
+        missions: [
+          document.getElementById('p_mission_0').value,
+          document.getElementById('p_mission_1').value,
+          document.getElementById('p_mission_2').value,
+          document.getElementById('p_mission_3').value
+        ],
+        stat_students: document.getElementById('p_stat_students').value,
+        stat_teachers: document.getElementById('p_stat_teachers').value,
+        stat_graduation: document.getElementById('p_stat_graduation').value,
+        contact_phone: document.getElementById('p_contact_phone').value,
+        contact_email: document.getElementById('p_contact_email').value,
+        contact_address: document.getElementById('p_contact_address').value
+      };
+
+      var res = await fetch('/api/v1/cms/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      var data = await res.json();
+      if (data.success) showToast(data.message);
+    }
+
+    async function savePpdb(e) {
+      e.preventDefault();
+      var payload = {
+        academic_year: document.getElementById('ppdb_academic_year').value,
+        status_badge: document.getElementById('ppdb_status_badge').value,
+        total_quota: document.getElementById('ppdb_total_quota').value,
+        quota_description: document.getElementById('ppdb_quota_description').value,
+        wave_1: document.getElementById('ppdb_wave_1').value,
+        wave_2: document.getElementById('ppdb_wave_2').value,
+        test_schedule: document.getElementById('ppdb_test_schedule').value,
+        whatsapp_contact: document.getElementById('ppdb_whatsapp_contact').value,
+        smp_title: document.getElementById('ppdb_smp_title').value,
+        smp_desc: document.getElementById('ppdb_smp_desc').value,
+        smp_quota: document.getElementById('ppdb_smp_quota').value,
+        sma_title: document.getElementById('ppdb_sma_title').value,
+        sma_desc: document.getElementById('ppdb_sma_desc').value,
+        sma_quota: document.getElementById('ppdb_sma_quota').value,
+        scholarship_note: document.getElementById('ppdb_scholarship_note').value
+      };
+
+      var res = await fetch('/api/v1/cms/ppdb', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      var data = await res.json();
+      if (data.success) showToast(data.message);
+    }
+
+    function renderNewsList(newsList) {
+      var container = document.getElementById('news-list-container');
+      container.innerHTML = '';
+      newsList.forEach(function (item) {
+        var card = document.createElement('div');
+        card.className = 'border border-zinc-200 rounded-2xl overflow-hidden flex flex-col justify-between bg-zinc-50/50';
+        card.innerHTML =
+          '<div>' +
+            '<img src="' + (item.image_url || '') + '" class="w-full h-36 object-cover" alt="" />' +
+            '<div class="p-4 space-y-1.5">' +
+              '<span class="text-[10px] font-extrabold uppercase bg-limeaccent-400/30 text-forest-950 px-2.5 py-0.5 rounded-full">' + item.category + '</span>' +
+              '<div class="text-[11px] text-zinc-400 font-semibold">' + (item.published_date || '') + '</div>' +
+              '<h4 class="font-extrabold text-sm text-forest-950 leading-snug">' + item.title + '</h4>' +
+              '<p class="text-xs text-zinc-600 line-clamp-3">' + item.excerpt + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="p-3 bg-white border-t border-zinc-200/80 flex items-center justify-end gap-2">' +
+            '<button onclick="editNewsItem(' + item.id + ')" class="px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-xs font-bold text-zinc-800 cursor-pointer">Edit</button>' +
+            '<button onclick="deleteNewsItem(' + item.id + ')" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-bold text-rose-700 cursor-pointer">Hapus</button>' +
+          '</div>';
+        container.appendChild(card);
+      });
+    }
+
+    function editNewsItem(id) {
+      var item = (cmsData.news || []).find(function (n) { return Number(n.id) === Number(id); });
+      if (!item) return;
+      document.getElementById('news_id').value = item.id;
+      document.getElementById('news_title').value = item.title;
+      document.getElementById('news_category').value = item.category;
+      document.getElementById('news_date').value = item.published_date;
+      document.getElementById('news_image').value = item.image_url;
+      document.getElementById('news_excerpt').value = item.excerpt;
+      document.getElementById('news-form-title').textContent = 'Edit Berita #' + item.id;
+      document.getElementById('news-submit-label').textContent = 'Simpan Perubahan Berita';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetNewsForm() {
+      document.getElementById('form-news').reset();
+      document.getElementById('news_id').value = '';
+      document.getElementById('news-form-title').textContent = 'Tambah Berita / Kegiatan Baru';
+      document.getElementById('news-submit-label').textContent = 'Terbitkan Berita';
+    }
+
+    async function saveNews(e) {
+      e.preventDefault();
+      var id = document.getElementById('news_id').value;
+      var payload = {
+        title: document.getElementById('news_title').value,
+        category: document.getElementById('news_category').value,
+        published_date: document.getElementById('news_date').value,
+        image_url: document.getElementById('news_image').value,
+        excerpt: document.getElementById('news_excerpt').value,
+        is_published: true
+      };
+
+      var url = id ? '/api/v1/cms/news/' + id : '/api/v1/cms/news';
+      var method = id ? 'PUT' : 'POST';
+
+      var res = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      var data = await res.json();
+      if (data.success) {
+        showToast(data.message);
+        resetNewsForm();
+        loadCmsData();
+      }
+    }
+
+    async function deleteNewsItem(id) {
+      if (!confirm('Hapus berita ini dari Landing Page?')) return;
+      var res = await fetch('/api/v1/cms/news/' + id, { method: 'DELETE' });
+      var data = await res.json();
+      if (data.success) {
+        showToast(data.message);
+        loadCmsData();
+      }
+    }
+
+    function renderRegistrations(regs) {
+      document.getElementById('badge-reg-count').textContent = regs.length;
+      var tbody = document.getElementById('ppdb-reg-tbody');
+      tbody.innerHTML = '';
+      if (regs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-zinc-400">Belum ada pendaftar PPDB yang masuk.</td></tr>';
+        return;
+      }
+      regs.forEach(function (r) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td class="py-3 px-3 font-bold text-forest-950">' + r.student_name + '</td>' +
+          '<td class="py-3 px-3"><span class="font-bold">' + r.level + '</span> <span class="text-xs text-zinc-500">(' + r.track + ')</span></td>' +
+          '<td class="py-3 px-3">' + r.parent_name + '</td>' +
+          '<td class="py-3 px-3 font-semibold text-emerald-700">' + r.whatsapp + '</td>' +
+          '<td class="py-3 px-3 text-zinc-600">' + (r.origin_school || '-') + '</td>' +
+          '<td class="py-3 px-3"><span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">' + r.status + '</span></td>' +
+          '<td class="py-3 px-3 text-right space-x-1">' +
+            '<button onclick="verifyReg(' + r.id + ')" class="px-2.5 py-1 rounded-lg bg-forest-900 text-white text-xs font-bold cursor-pointer">Verifikasi</button>' +
+            '<button onclick="deleteReg(' + r.id + ')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 text-xs font-bold cursor-pointer">Hapus</button>' +
+          '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function verifyReg(id) {
+      await fetch('/api/v1/cms/ppdb/registrations/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'Terverifikasi' })
+      });
+      showToast('Status pendaftar diperbarui menjadi Terverifikasi');
+      loadCmsData();
+    }
+
+    async function deleteReg(id) {
+      if (!confirm('Hapus data pendaftar PPDB ini?')) return;
+      await fetch('/api/v1/cms/ppdb/registrations/' + id, { method: 'DELETE' });
+      showToast('Data pendaftar dihapus');
+      loadCmsData();
+    }
+
+    loadCmsData();
+  </script>
+</body>
+</html>

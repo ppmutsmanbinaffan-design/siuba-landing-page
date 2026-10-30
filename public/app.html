@@ -40,6 +40,42 @@
         }
         setInterval(syncBackLink, 400);
         window.addEventListener('DOMContentLoaded', syncBackLink);
+
+        function injectSidebarCmsMenu() {
+          var navList = document.getElementById('nav-list');
+          if (!navList || document.getElementById('nav-btn-cms-landing')) return;
+
+          try {
+            var userStr = localStorage.getItem('siuba_auth_user') || sessionStorage.getItem('siuba_auth_user');
+            if (userStr) {
+              var u = JSON.parse(userStr);
+              var role = (u.role || '').toLowerCase();
+              var allowedRoles = ['super-admin', 'super_admin', 'admin', 'operator', 'pimpinan', 'kepala-sekolah'];
+              if (allowedRoles.indexOf(role) === -1) return;
+            }
+          } catch (e) {}
+
+          var wrapper = document.createElement('div');
+          wrapper.id = 'sidebar-cms-group';
+          wrapper.className = 'space-y-1 pt-2 border-t border-[#1a4a39]';
+          wrapper.innerHTML =
+            '<p class="px-2 text-[10px] font-bold uppercase tracking-wider text-emerald-300/50">WEBSITE &amp; PPDB</p>' +
+            '<a id="nav-btn-cms-landing" href="/cms-landing" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all min-h-[42px] cursor-pointer text-emerald-100/90 hover:bg-[#1a4a39] hover:text-white">' +
+              '<div class="flex items-center gap-2.5 truncate">' +
+                '<span style="color:#EADAA2;font-size:15px;">&#9998;</span>' +
+                '<span class="truncate">CMS Berita, Profil &amp; PPDB</span>' +
+              '</div>' +
+              '<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold shrink-0 bg-[#C9A227]/20 text-[#EADAA2] border border-[#C9A227]/30">CMS</span>' +
+            '</a>' +
+            '<a href="/beranda" target="_blank" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer text-emerald-200/75 hover:bg-[#1a4a39] hover:text-white">' +
+              '<div class="flex items-center gap-2.5 truncate">' +
+                '<span style="color:#6ee7b7;font-size:14px;">&#127760;</span>' +
+                '<span class="truncate">Lihat Landing Page</span>' +
+              '</div>' +
+            '</a>';
+          navList.insertBefore(wrapper, navList.firstChild);
+        }
+        setInterval(injectSidebarCmsMenu, 500);
       })();
     </script>
   </body>

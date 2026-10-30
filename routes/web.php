@@ -24,6 +24,17 @@ Route::get('/', $serveLanding);
 Route::get('/beranda', $serveLanding);
 Route::get('/landing', $serveLanding);
 
+Route::get('/cms-landing', function () {
+    $cmsPath = public_path('cms-landing.html');
+    if (File::exists($cmsPath)) {
+        return response()->file($cmsPath, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        ]);
+    }
+    return redirect('/dashboard');
+});
+
 Route::get('/{any}', function () {
     $indexPath = public_path('app.html');
     if (!File::exists($indexPath)) {

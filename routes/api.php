@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AttendanceApiController;
 use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\DataImportApiController;
 use App\Http\Controllers\Api\DomainManagementApiController;
+use App\Http\Controllers\Api\LandingCmsApiController;
 use App\Http\Controllers\Api\MaintenanceApiController;
 use App\Http\Controllers\Api\OfflineSyncApiController;
 use Illuminate\Support\Facades\Route;
@@ -156,5 +157,18 @@ Route::prefix('v1')->group(function () {
     // System Maintenance & Database Reset (Guarded by exact phrase verification)
     Route::prefix('maintenance')->group(function () {
         Route::post('/reset', [MaintenanceApiController::class, 'reset']);
+    });
+
+    // Landing Page CMS & PPDB Management Endpoints
+    Route::prefix('cms')->group(function () {
+        Route::get('/landing', [LandingCmsApiController::class, 'getPublicData']);
+        Route::post('/profile', [LandingCmsApiController::class, 'updateProfile']);
+        Route::post('/ppdb', [LandingCmsApiController::class, 'updatePpdb']);
+        Route::post('/news', [LandingCmsApiController::class, 'storeNews']);
+        Route::put('/news/{id}', [LandingCmsApiController::class, 'updateNews']);
+        Route::delete('/news/{id}', [LandingCmsApiController::class, 'deleteNews']);
+        Route::post('/ppdb/register', [LandingCmsApiController::class, 'submitPpdbRegistration']);
+        Route::put('/ppdb/registrations/{id}', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
+        Route::delete('/ppdb/registrations/{id}', [LandingCmsApiController::class, 'deletePpdbRegistration']);
     });
 });
