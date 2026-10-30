@@ -82,8 +82,16 @@
       line-height: 1.08;
     }
     .fluid-section-title {
-      font-size: clamp(1.35rem, 2.4vw + 0.6rem, 2.35rem);
-      line-height: 1.15;
+      font-size: clamp(1.05rem, 1.35vw + 0.45rem, 1.45rem);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .section-menu-card {
+      background: linear-gradient(135deg, #ffffff 0%, #eef6f0 100%);
+      border: 1.5px solid #b7d1be;
+      border-left: 6px solid #14492b;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 24px -8px rgba(13, 51, 29, 0.08);
     }
     .fluid-stat-number {
       font-size: clamp(1.85rem, 3vw + 0.5rem, 3rem);
@@ -337,19 +345,19 @@
 
   <!-- ==================== 3. PROFIL PESANTREN, VISI & MISI (SECTION 01) ==================== -->
   <section id="profil" class="fluid-container py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-12">
-    <!-- Top Header Row -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
+    <!-- Top Header Row (Menu Card) -->
+    <div class="section-menu-card p-4 sm:p-5 lg:p-6 grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-6 items-center">
       <!-- Small Campus Photo Card -->
       <div class="md:col-span-4 lg:col-span-3">
-        <div class="relative rounded-2xl overflow-hidden h-36 sm:h-40 md:h-36 shadow-md group">
+        <div class="relative rounded-2xl overflow-hidden h-28 sm:h-32 md:h-28 border border-emerald-900/15 shadow-sm group">
           <img
             src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80"
             alt="Gedung Pesantren Utsman Bin Affan"
             class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
           />
           <div class="absolute inset-0 bg-forest-950/40 flex items-center justify-center">
-            <span class="px-3 py-1.5 rounded-full bg-white/95 text-forest-950 text-xs font-extrabold flex items-center gap-1.5 shadow">
-              <span class="material-symbols-rounded text-[16px] text-forest-700">verified</span>
+            <span class="px-3 py-1 rounded-full bg-white/95 text-forest-950 text-[11px] font-extrabold flex items-center gap-1.5 shadow">
+              <span class="material-symbols-rounded text-[15px] text-forest-700">verified</span>
               <span id="cms-profile-since">Sejak 2012</span>
             </span>
           </div>
@@ -357,35 +365,39 @@
       </div>
 
       <!-- Section Title -->
-      <div class="md:col-span-8 lg:col-span-6 min-w-0">
-        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+      <div class="md:col-span-8 lg:col-span-5 min-w-0 md:border-l md:border-emerald-900/15 md:pl-5">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU UTAMA &bull; BAGIAN 01</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             PROFIL PESANTREN
           </h2>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold shrink-0">
+          <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold shrink-0">
             01
           </span>
         </div>
-        <div class="flex items-center gap-2 sm:gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest shrink-0">//</span>
-          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800 break-words">
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600 uppercase tracking-widest shrink-0">//</span>
+          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800 break-words">
             VISI, MISI &amp; NILAI INTI
           </h3>
         </div>
       </div>
 
       <!-- Right Description & CTA -->
-      <div class="md:col-span-12 lg:col-span-3 flex flex-col sm:flex-row lg:flex-col sm:items-center lg:items-start justify-between gap-4">
-        <p id="cms-profile-desc" class="text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-xl">
+      <div class="md:col-span-12 lg:col-span-4 flex flex-col sm:flex-row lg:flex-col sm:items-center lg:items-start justify-between gap-3 pt-3 md:pt-0 border-t md:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6">
+        <p id="cms-profile-desc" class="text-xs text-zinc-600 leading-relaxed max-w-xl">
           Lembaga pendidikan Islam terpadu yang menyeimbangkan kafa&rsquo;ah syar&rsquo;iyyah, hafalan Al-Qur&rsquo;an, dan keunggulan akademik modern.
         </p>
         <a
           href="#ppdb"
-          class="inline-flex items-center gap-2.5 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-bold text-xs pl-4 pr-2 py-2 rounded-full transition shrink-0 w-fit"
+          class="inline-flex items-center gap-2 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs pl-3.5 pr-1.5 py-1.5 rounded-full transition shrink-0 w-fit shadow-xs"
         >
           <span>Gabung Bersama Kami</span>
-          <span class="w-6 h-6 rounded-full bg-forest-950 text-white flex items-center justify-center">
-            <span class="material-symbols-rounded text-[14px]">arrow_forward</span>
+          <span class="w-5 h-5 rounded-full bg-forest-950 text-white flex items-center justify-center">
+            <span class="material-symbols-rounded text-[13px]">arrow_forward</span>
           </span>
         </a>
       </div>
@@ -689,28 +701,34 @@
 
   <!-- ==================== 4. PROGRAM PENDIDIKAN & KEHIDUPAN SANTRI (SECTION 02) ==================== -->
   <section id="program" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-6 sm:space-y-8">
-    <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+    <!-- Header (Menu Card) -->
+    <div class="section-menu-card p-4 sm:p-5 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
       <div class="lg:col-span-6 min-w-0">
-        <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
-          PROGRAM PENDIDIKAN &amp;
-        </h2>
-        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
-            5 PILAR KURIKULUM UNGGULAN
-          </h3>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU AKADEMIK &bull; BAGIAN 02</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
+            PROGRAM PENDIDIKAN
+          </h2>
+          <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
             02
           </span>
         </div>
+        <div class="flex flex-wrap items-center gap-2 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
+          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800">
+            5 PILAR KURIKULUM UNGGULAN
+          </h3>
+        </div>
       </div>
-      <div class="lg:col-span-6 space-y-2">
+      <div class="lg:col-span-6 space-y-1.5 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6">
         <a href="#ppdb" class="inline-flex items-center gap-1 text-xs font-extrabold uppercase tracking-wider text-forest-800 hover:text-forest-950">
           <span>LIHAT KURIKULUM &amp; PENDAFTARAN</span>
           <span class="material-symbols-rounded text-[16px]">chevron_right</span>
         </a>
-        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+        <p class="text-xs text-zinc-600 leading-relaxed">
           Dirancang secara komprehensif mencakup Kurikulum Terpadu, Tahfidz Al-Qur&rsquo;an, Bahasa Arab &amp; Inggris, Pembinaan Akhlak &amp; Kepemimpinan, serta Life Skill Islami.
         </p>
       </div>
@@ -882,31 +900,35 @@
 
   <!-- ==================== 5. INFORMASI PPDB SANTRI BARU (SECTION 03) ==================== -->
   <section id="ppdb" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
-    <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+    <!-- Header (Menu Card) -->
+    <div class="section-menu-card p-4 sm:p-5 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
       <div class="lg:col-span-7 min-w-0">
-        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU PENDAFTARAN &bull; BAGIAN 03</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             PENERIMAAN SANTRI BARU
           </h2>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
+          <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
             03
           </span>
         </div>
-        <div class="flex items-center gap-2 sm:gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 id="cms-ppdb-tahun" class="fluid-section-title font-extrabold tracking-tight text-forest-800">
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
+          <h3 id="cms-ppdb-tahun" class="fluid-section-title font-bold tracking-tight text-forest-800">
             PPDB TAHUN AJARAN 2026 / 2027
           </h3>
         </div>
       </div>
 
-      <div class="lg:col-span-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="flex items-center gap-3 text-xs font-extrabold uppercase tracking-wider text-forest-800 shrink-0">
-          <span id="cms-ppdb-status" class="bg-limeaccent-400 text-forest-950 px-3 py-1 rounded-full">GELOMBANG 1 BUKA</span>
-          <span class="text-zinc-500">SMP IT &amp; SMA IT</span>
+      <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col sm:items-center lg:items-start justify-between gap-2.5 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6">
+        <div class="flex items-center gap-2.5 text-xs font-extrabold uppercase tracking-wider text-forest-800 shrink-0">
+          <span id="cms-ppdb-status" class="bg-limeaccent-400 text-forest-950 px-3 py-1 rounded-full shadow-2xs">GELOMBANG 1 BUKA</span>
+          <span class="text-zinc-600">SMP IT &amp; SMA IT</span>
         </div>
-        <p class="text-xs text-zinc-500 sm:max-w-xs">
+        <p class="text-xs text-zinc-600">
           Kuota terbatas untuk menjaga rasio pembinaan kelas dan kenyamanan kamar asrama.
         </p>
       </div>
@@ -1127,26 +1149,30 @@
 
   <!-- ==================== 6. BIAYA PENDIDIKAN & INFORMASI PEMBAYARAN (SECTION 04) ==================== -->
   <section id="biaya" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8">
-    <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+    <!-- Header (Menu Card) -->
+    <div class="section-menu-card p-4 sm:p-5 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
       <div class="lg:col-span-6 min-w-0">
-        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU BIAYA &bull; BAGIAN 04</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             BIAYA PENDIDIKAN
           </h2>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
+          <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
             04
           </span>
         </div>
-        <div class="flex items-center gap-2 sm:gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
+          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800">
             INVESTASI &amp; INFORMASI PEMBAYARAN
           </h3>
         </div>
       </div>
-      <div class="lg:col-span-6 space-y-2">
-        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+      <div class="lg:col-span-6 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6">
+        <p class="text-xs text-zinc-600 leading-relaxed">
           Rincian biaya pendidikan transparan mencakup Biaya Pendaftaran, Biaya Masuk (DSP), Biaya Bulanan (Syahriyah), Rincian Biaya Lainnya, serta Informasi Rekening Pembayaran Resmi.
         </p>
       </div>
@@ -1247,26 +1273,30 @@
 
   <!-- ==================== 7. FASILITAS PESANTREN (SECTION 05) ==================== -->
   <section id="fasilitas" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8">
-    <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+    <!-- Header (Menu Card) -->
+    <div class="section-menu-card p-4 sm:p-5 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
       <div class="lg:col-span-6 min-w-0">
-        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU SARANA &bull; BAGIAN 05</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             FASILITAS PESANTREN
           </h2>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
+          <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
             05
           </span>
         </div>
-        <div class="flex items-center gap-2 sm:gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
+          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800">
             SARANA PENDIDIKAN &amp; ASRAMA
           </h3>
         </div>
       </div>
-      <div class="lg:col-span-6">
-        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+      <div class="lg:col-span-6 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6">
+        <p class="text-xs text-zinc-600 leading-relaxed">
           Lingkungan belajar dan mukim yang representatif, bersih, aman, serta dilengkapi integrasi reader kartu pintar RFID SIUBA di setiap titik kegiatan.
         </p>
       </div>
@@ -1350,32 +1380,36 @@
 
   <!-- ==================== 8. GALERI & VIDEO PROFIL PESANTREN (SECTION 06) ==================== -->
   <section id="galeri" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8">
-    <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
-      <div class="lg:col-span-6 min-w-0">
-        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+    <!-- Header (Menu Card) -->
+    <div class="section-menu-card p-4 sm:p-5 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
+      <div class="lg:col-span-5 min-w-0">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU DOKUMENTASI &bull; BAGIAN 06</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             GALERI &amp; VIDEO
           </h2>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
+          <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
             06
           </span>
         </div>
-        <div class="flex items-center gap-2 sm:gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
+          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800">
             DOKUMENTASI &amp; VIDEO PROFIL
           </h3>
         </div>
       </div>
 
       <!-- Filter Kategori Galeri -->
-      <div class="lg:col-span-6 flex flex-wrap items-center lg:justify-end gap-2 text-xs font-bold">
-        <button type="button" onclick="filterGallery('all')" id="gal-btn-all" class="gal-filter-btn bg-forest-950 text-limeaccent-400 px-4 py-2 rounded-full cursor-pointer transition">Semua</button>
-        <button type="button" onclick="filterGallery('video')" id="gal-btn-video" class="gal-filter-btn bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100 px-3.5 py-2 rounded-full cursor-pointer transition">Video Profil</button>
-        <button type="button" onclick="filterGallery('kegiatan')" id="gal-btn-kegiatan" class="gal-filter-btn bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100 px-3.5 py-2 rounded-full cursor-pointer transition">Foto Kegiatan</button>
-        <button type="button" onclick="filterGallery('aktivitas')" id="gal-btn-aktivitas" class="gal-filter-btn bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100 px-3.5 py-2 rounded-full cursor-pointer transition">Aktivitas Santri</button>
-        <button type="button" onclick="filterGallery('lingkungan')" id="gal-btn-lingkungan" class="gal-filter-btn bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100 px-3.5 py-2 rounded-full cursor-pointer transition">Lingkungan Pesantren</button>
+      <div class="lg:col-span-7 flex flex-wrap items-center lg:justify-end gap-2 text-xs font-bold pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6">
+        <button type="button" onclick="filterGallery('all')" id="gal-btn-all" class="gal-filter-btn bg-forest-950 text-limeaccent-400 px-3.5 py-1.5 rounded-full cursor-pointer transition">Semua</button>
+        <button type="button" onclick="filterGallery('video')" id="gal-btn-video" class="gal-filter-btn bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100 px-3 py-1.5 rounded-full cursor-pointer transition">Video Profil</button>
+        <button type="button" onclick="filterGallery('kegiatan')" id="gal-btn-kegiatan" class="gal-filter-btn bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100 px-3 py-1.5 rounded-full cursor-pointer transition">Foto Kegiatan</button>
+        <button type="button" onclick="filterGallery('aktivitas')" id="gal-btn-aktivitas" class="gal-filter-btn bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100 px-3 py-1.5 rounded-full cursor-pointer transition">Aktivitas Santri</button>
+        <button type="button" onclick="filterGallery('lingkungan')" id="gal-btn-lingkungan" class="gal-filter-btn bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100 px-3 py-1.5 rounded-full cursor-pointer transition">Lingkungan Pesantren</button>
       </div>
     </div>
 
@@ -1469,33 +1503,37 @@
 
   <!-- ==================== 6. BERITA, KABAR & AGENDA PESANTREN (SECTION 04) ==================== -->
   <section id="berita" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
-    <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+    <!-- Header (Menu Card) -->
+    <div class="section-menu-card p-4 sm:p-5 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
       <div class="lg:col-span-6 min-w-0">
-        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU PUBLIKASI &bull; BAGIAN 07</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             BERITA &amp; AGENDA
           </h2>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
-            04
+          <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
+            07
           </span>
         </div>
-        <div class="flex items-center gap-2 sm:gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
+          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800">
             KABAR TERKINI PESANTREN
           </h3>
         </div>
       </div>
-      <div class="lg:col-span-6 space-y-2">
-        <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs font-extrabold uppercase tracking-wider text-forest-800">
+      <div class="lg:col-span-6 space-y-1.5 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6">
+        <div class="flex flex-wrap items-center gap-2 text-[11px] font-extrabold uppercase tracking-wider text-forest-800">
           <span>PRESTASI SANTRI</span>
           <span>&bull;</span>
           <span>WISUDA TAHFIDZ</span>
           <span>&bull;</span>
           <span>KEGIATAN PONDOK</span>
         </div>
-        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+        <p class="text-xs text-zinc-600 leading-relaxed">
           Ikuti perkembangan kegiatan, prestasi santri di tingkat nasional, serta agenda akademik terbaru Pondok Pesantren Utsman Bin Affan.
         </p>
       </div>
@@ -1603,26 +1641,30 @@
 
   <!-- ==================== 9. PORTAL DIGITAL SIUBA & FAQ CALON SANTRI / WALI (SECTION 08) ==================== -->
   <section id="faq" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
-    <!-- Header -->
-    <div id="siuba" class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+    <!-- Header (Menu Card) -->
+    <div id="siuba" class="section-menu-card p-4 sm:p-5 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center">
       <div class="lg:col-span-6 min-w-0">
-        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU BANTUAN &bull; BAGIAN 08</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             TANYA JAWAB (FAQ)
           </h2>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
+          <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
             08
           </span>
         </div>
-        <div class="flex items-center gap-2 sm:gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
+          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800">
             INFORMASI CALON SANTRI &amp; WALI SANTRI
           </h3>
         </div>
       </div>
-      <div class="lg:col-span-6 space-y-2">
-        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+      <div class="lg:col-span-6 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6">
+        <p class="text-xs text-zinc-600 leading-relaxed">
           Pertanyaan yang sering diajukan oleh calon santri dan orang tua/wali santri seputar pendaftaran PPDB, kehidupan asrama, perizinan, biaya, serta sistem presensi SIUBA.
         </p>
       </div>
