@@ -9,15 +9,20 @@ use Illuminate\Support\Facades\File;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
+$serveLanding = function () {
     $landingPath = public_path('landing.html');
     if (File::exists($landingPath)) {
         return response()->file($landingPath, [
             'Content-Type' => 'text/html; charset=UTF-8',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
         ]);
     }
     return redirect('/login');
-});
+};
+
+Route::get('/', $serveLanding);
+Route::get('/beranda', $serveLanding);
+Route::get('/landing', $serveLanding);
 
 Route::get('/{any}', function () {
     $indexPath = public_path('app.html');

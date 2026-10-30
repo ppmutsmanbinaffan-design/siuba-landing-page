@@ -2,7 +2,7 @@
 <html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>SIUBA — Sistem Informasi & Presensi Terpadu Pesantren Utsman Bin Affan</title>
   <meta name="description" content="Transformasi Digital Manajemen Presensi Santri, KBM, Asrama, Ibadah & SDM Berbasis Smart Card RFID & QR Code di Pesantren Utsman Bin Affan." />
 
@@ -19,6 +19,14 @@
   <script>
     tailwind.config = {
       theme: {
+        screens: {
+          'xs': '420px',
+          'sm': '640px',
+          'md': '768px',
+          'lg': '1024px',
+          'xl': '1280px',
+          '2xl': '1440px',
+        },
         extend: {
           fontFamily: {
             sans: ['Urbanist', 'sans-serif'],
@@ -42,36 +50,61 @@
   </script>
 
   <style>
-    body {
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
       font-family: 'Urbanist', sans-serif;
       background-color: #f8faf7;
       color: #0f2417;
+      overflow-x: hidden;
+      width: 100%;
     }
     .material-symbols-rounded {
       font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
       vertical-align: middle;
+      line-height: 1;
     }
     .glass-nav {
-      background: rgba(13, 51, 29, 0.55);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(13, 51, 29, 0.62);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.18);
     }
     .glass-card {
-      background: rgba(15, 48, 27, 0.72);
+      background: rgba(15, 48, 27, 0.76);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(163, 230, 53, 0.25);
     }
+    /* Fluid typography helper classes */
+    .fluid-hero-title {
+      font-size: clamp(1.75rem, 3.8vw + 0.75rem, 3.5rem);
+      line-height: 1.08;
+    }
+    .fluid-section-title {
+      font-size: clamp(1.4rem, 2.5vw + 0.6rem, 2.4rem);
+      line-height: 1.15;
+    }
+    .fluid-stat-number {
+      font-size: clamp(1.85rem, 3vw + 0.5rem, 3rem);
+      line-height: 1.05;
+    }
+    .fluid-container {
+      width: 100%;
+      max-width: 1360px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: clamp(1rem, 3.5vw, 3rem);
+      padding-right: clamp(1rem, 3.5vw, 3rem);
+    }
   </style>
 
-  <!-- Auto-redirect to /dashboard if already authenticated in browser storage -->
   <script>
     (function () {
       try {
         var token = localStorage.getItem('siuba_auth_token') || sessionStorage.getItem('siuba_auth_token');
-        if (token && window.location.search.indexOf('preview=1') === -1) {
-          // Keep user on landing page unless they click "Dashboard" or let button text update dynamically
+        if (token) {
           window.__SIUBA_HAS_TOKEN__ = true;
         }
       } catch (e) {}
@@ -81,91 +114,129 @@
 <body class="antialiased selection:bg-limeaccent-400 selection:text-forest-950">
 
   <!-- ==================== 1. HERO SECTION ==================== -->
-  <section class="p-3 sm:p-5 lg:p-6">
-    <div class="relative rounded-[28px] sm:rounded-[36px] overflow-hidden min-h-[620px] lg:min-h-[680px] flex flex-col justify-between p-5 sm:p-8 lg:p-12 text-white shadow-2xl">
+  <section class="p-2.5 xs:p-3.5 sm:p-5 lg:p-6 max-w-[1440px] mx-auto">
+    <div class="relative rounded-[22px] sm:rounded-[32px] lg:rounded-[38px] overflow-hidden min-h-[520px] sm:min-h-[600px] lg:min-h-[660px] flex flex-col justify-between p-4 xs:p-6 sm:p-8 lg:p-11 text-white shadow-2xl">
       <!-- Background Image & Gradient Overlay -->
       <img
         src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1920&q=80"
         alt="Pesantren Utsman Bin Affan"
         class="absolute inset-0 w-full h-full object-cover object-center scale-105 transition-transform duration-1000"
       />
-      <div class="absolute inset-0 bg-gradient-to-b from-forest-950/75 via-forest-900/55 to-forest-950/90"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-forest-950/80 via-forest-900/60 to-forest-950/92"></div>
 
       <!-- Top Floating Navigation Bar -->
-      <header class="relative z-20 flex flex-wrap items-center justify-between gap-4">
-        <!-- Brand Pill -->
-        <a href="/" class="glass-nav px-4 py-2 rounded-full flex items-center gap-2.5 text-white font-bold tracking-tight text-base shadow-sm">
-          <span class="w-7 h-7 rounded-full bg-limeaccent-400 text-forest-950 flex items-center justify-center">
-            <span class="material-symbols-rounded text-[18px]">mosque</span>
-          </span>
-          <span>SIUBA</span>
-          <span class="text-xs font-medium text-limeaccent-400 bg-limeaccent-400/15 px-2 py-0.5 rounded-full">v1.2</span>
-        </a>
-
-        <!-- Center Menu Pills -->
-        <nav class="hidden md:flex items-center gap-1 glass-nav p-1.5 rounded-full text-sm font-medium">
-          <a href="#beranda" class="bg-white text-forest-950 font-semibold px-4 py-1.5 rounded-full transition">Beranda</a>
-          <a href="#layanan" class="text-white/85 hover:text-white px-4 py-1.5 rounded-full transition">Fitur Utama</a>
-          <a href="#analitik" class="text-white/85 hover:text-white px-4 py-1.5 rounded-full transition">Monitoring</a>
-          <a href="#domain" class="text-white/85 hover:text-white px-4 py-1.5 rounded-full transition">KBM & Asrama</a>
-          <a href="#sinergi" class="text-white/85 hover:text-white px-4 py-1.5 rounded-full transition">Peran Akses</a>
-        </nav>
-
-        <!-- Right Search & Login CTA -->
-        <div class="flex items-center gap-3">
-          <div class="hidden lg:flex items-center gap-2 glass-nav px-4 py-2 rounded-full text-xs text-white/80">
-            <span class="material-symbols-rounded text-[16px] text-limeaccent-400">verified_user</span>
-            <span>Smart RFID & QR Engine</span>
-          </div>
-          <a
-            id="nav-login-btn"
-            href="/login"
-            class="bg-white hover:bg-limeaccent-400 text-forest-950 font-bold text-sm pl-5 pr-2 py-2 rounded-full flex items-center gap-2.5 shadow-lg transition duration-200 group"
-          >
-            <span id="nav-login-text">Masuk Sistem</span>
-            <span class="w-7 h-7 rounded-full bg-forest-950 text-white flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-              <span class="material-symbols-rounded text-[16px]">arrow_outward</span>
+      <header class="relative z-30">
+        <div class="flex items-center justify-between gap-2 sm:gap-4">
+          <!-- Brand Pill -->
+          <a href="/beranda" class="glass-nav px-3.5 sm:px-4 py-2 rounded-full flex items-center gap-2 text-white font-bold tracking-tight text-sm sm:text-base shadow-sm shrink-0">
+            <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-limeaccent-400 text-forest-950 flex items-center justify-center shrink-0">
+              <span class="material-symbols-rounded text-[16px] sm:text-[18px]">mosque</span>
             </span>
+            <span>SIUBA</span>
+            <span class="text-[10px] sm:text-xs font-semibold text-limeaccent-400 bg-limeaccent-400/15 px-2 py-0.5 rounded-full">v1.2</span>
+          </a>
+
+          <!-- Center Menu Pills (Desktop & Tablet Landscape) -->
+          <nav class="hidden lg:flex items-center gap-1 glass-nav p-1.5 rounded-full text-xs xl:text-sm font-medium">
+            <a href="#beranda" class="bg-white text-forest-950 font-bold px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">Beranda</a>
+            <a href="#layanan" class="text-white/85 hover:text-white hover:bg-white/10 px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">Fitur Utama</a>
+            <a href="#analitik" class="text-white/85 hover:text-white hover:bg-white/10 px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">Monitoring</a>
+            <a href="#domain" class="text-white/85 hover:text-white hover:bg-white/10 px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">KBM &amp; Asrama</a>
+            <a href="#sinergi" class="text-white/85 hover:text-white hover:bg-white/10 px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">Peran Akses</a>
+          </nav>
+
+          <!-- Right Search/Badge & Login CTA + Mobile Menu Toggle -->
+          <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div class="hidden xl:flex items-center gap-2 glass-nav px-3.5 py-2 rounded-full text-xs text-white/85 whitespace-nowrap">
+              <span class="material-symbols-rounded text-[16px] text-limeaccent-400">verified_user</span>
+              <span>Smart RFID &amp; QR Engine</span>
+            </div>
+
+            <a
+              id="nav-login-btn"
+              href="/login"
+              class="bg-white hover:bg-limeaccent-400 text-forest-950 font-bold text-xs sm:text-sm pl-3.5 sm:pl-5 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full flex items-center gap-2 shadow-lg transition duration-200 group whitespace-nowrap"
+            >
+              <span id="nav-login-text">Masuk Sistem</span>
+              <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-forest-950 text-white flex items-center justify-center group-hover:translate-x-0.5 transition-transform shrink-0">
+                <span class="material-symbols-rounded text-[14px] sm:text-[16px]">arrow_outward</span>
+              </span>
+            </a>
+
+            <!-- Mobile / Tablet Menu Button -->
+            <button
+              id="mobile-menu-btn"
+              type="button"
+              aria-label="Toggle Menu"
+              class="lg:hidden glass-nav w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-white hover:text-limeaccent-400 transition cursor-pointer"
+            >
+              <span id="mobile-menu-icon" class="material-symbols-rounded text-[20px]">menu</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Collapsible Mobile & Tablet Navigation Drawer -->
+        <div
+          id="mobile-menu-drawer"
+          class="hidden lg:hidden mt-3 glass-card rounded-2xl p-3.5 space-y-1.5 text-sm font-semibold animate-fadeIn"
+        >
+          <a href="#beranda" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white/15 text-limeaccent-400">
+            <span>Beranda</span>
+            <span class="material-symbols-rounded text-[18px]">chevron_right</span>
+          </a>
+          <a href="#layanan" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
+            <span>Fitur Utama SIUBA</span>
+            <span class="material-symbols-rounded text-[18px]">chevron_right</span>
+          </a>
+          <a href="#analitik" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
+            <span>Monitoring Real-Time</span>
+            <span class="material-symbols-rounded text-[18px]">chevron_right</span>
+          </a>
+          <a href="#domain" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
+            <span>Modul KBM &amp; Asrama</span>
+            <span class="material-symbols-rounded text-[18px]">chevron_right</span>
+          </a>
+          <a href="#sinergi" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
+            <span>Peran &amp; Hak Akses</span>
+            <span class="material-symbols-rounded text-[18px]">chevron_right</span>
           </a>
         </div>
       </header>
 
       <!-- Hero Main Content Grid -->
-      <div id="beranda" class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mt-16 lg:mt-24">
+      <div id="beranda" class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-end mt-10 sm:mt-16 lg:mt-20">
         <!-- Left Headline -->
-        <div class="lg:col-span-7 space-y-6">
-          <div class="inline-flex items-center gap-2 glass-nav px-3.5 py-1.5 rounded-full text-xs font-semibold text-limeaccent-400 uppercase tracking-wider">
-            <span class="w-2 h-2 rounded-full bg-limeaccent-400 animate-pulse"></span>
-            Sistem Informasi Utsman Bin Affan (SIUBA)
+        <div class="lg:col-span-7 xl:col-span-8 space-y-4 sm:space-y-6 min-w-0">
+          <div class="inline-flex items-center gap-2 glass-nav px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold text-limeaccent-400 uppercase tracking-wider max-w-full">
+            <span class="w-2 h-2 rounded-full bg-limeaccent-400 animate-pulse shrink-0"></span>
+            <span class="truncate">Sistem Informasi Utsman Bin Affan (SIUBA)</span>
           </div>
 
-          <h1 class="text-3xl sm:text-5xl lg:text-[54px] font-extrabold leading-[1.08] tracking-tight">
-            TRANSFORMASI DIGITAL <br class="hidden sm:inline" />
-            PRESENSI &amp; MANAJEMEN <br class="hidden sm:inline" />
-            PESANTREN MODERN
+          <h1 class="fluid-hero-title font-extrabold tracking-tight break-words">
+            TRANSFORMASI DIGITAL PRESENSI &amp; MANAJEMEN PESANTREN MODERN
           </h1>
 
-          <div class="flex flex-col sm:flex-row sm:items-center gap-5 pt-2">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5 pt-1 sm:pt-2">
             <a
               href="/login"
-              class="inline-flex items-center justify-between sm:justify-start gap-3 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-sm pl-6 pr-2.5 py-2.5 rounded-full shadow-xl transition group w-fit"
+              class="inline-flex items-center justify-between sm:justify-start gap-3 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full shadow-xl transition group w-full xs:w-fit shrink-0"
             >
               <span>Mulai Presensi Sekarang</span>
-              <span class="w-8 h-8 rounded-full bg-forest-950 text-limeaccent-400 flex items-center justify-center group-hover:rotate-45 transition-transform">
-                <span class="material-symbols-rounded text-[18px]">arrow_outward</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-forest-950 text-limeaccent-400 flex items-center justify-center group-hover:rotate-45 transition-transform shrink-0">
+                <span class="material-symbols-rounded text-[16px] sm:text-[18px]">arrow_outward</span>
               </span>
             </a>
 
-            <p class="text-xs sm:text-sm text-white/80 max-w-md leading-relaxed">
+            <p class="text-xs sm:text-sm text-white/85 max-w-md leading-relaxed">
               Integrasi penuh pemantauan kehadiran KBM Sekolah, Asrama, Shalat Berjamaah, Halaqah Tahfidz, hingga SDM Guru secara real-time maupun offline.
             </p>
           </div>
         </div>
 
         <!-- Right Floating Preview Card -->
-        <div class="lg:col-span-5 flex flex-col items-start lg:items-end justify-end space-y-4">
-          <div class="glass-card p-3.5 rounded-3xl w-full max-w-sm shadow-2xl">
-            <div class="relative rounded-2xl overflow-hidden h-36 mb-3">
+        <div class="lg:col-span-5 xl:col-span-4 flex flex-col items-stretch sm:items-start lg:items-end justify-end">
+          <div class="glass-card p-3 sm:p-3.5 rounded-2xl sm:rounded-3xl w-full sm:max-w-md lg:max-w-sm shadow-2xl">
+            <div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-32 sm:h-36 mb-3">
               <img
                 src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
                 alt="Aktivitas Belajar Santri"
@@ -174,19 +245,18 @@
               <div class="absolute inset-0 bg-gradient-to-t from-forest-950/80 via-transparent to-transparent"></div>
               <a
                 href="/login"
-                class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shadow-md hover:bg-limeaccent-400 transition"
+                class="absolute top-2.5 right-2.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shadow-md hover:bg-limeaccent-400 transition"
                 title="Buka Portal"
               >
-                <span class="material-symbols-rounded text-[18px]">qr_code_scanner</span>
+                <span class="material-symbols-rounded text-[16px] sm:text-[18px]">qr_code_scanner</span>
               </a>
-              <span class="absolute bottom-2.5 left-3 text-xs font-bold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">
+              <span class="absolute bottom-2.5 left-3 text-[11px] font-bold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">
                 Live QR &amp; RFID Ready
               </span>
             </div>
-            <p class="text-sm font-semibold text-white leading-snug px-1">
+            <p class="text-xs sm:text-sm font-semibold text-white leading-snug px-1">
               Memaksimalkan kedisiplinan santri &amp; akurasi laporan kehadiran di seluruh unit pesantren.
             </p>
-            <!-- Mini pagination indicator -->
             <div class="flex items-center gap-2 mt-3 px-1">
               <span class="h-1 flex-1 rounded-full bg-limeaccent-400"></span>
               <span class="h-1 flex-1 rounded-full bg-white/25"></span>
@@ -199,37 +269,39 @@
   </section>
 
   <!-- ==================== 2. PARTNER / ECOSYSTEM STRIP ==================== -->
-  <section class="max-w-7xl mx-auto px-6 py-8">
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center border-b border-zinc-200 pb-8 text-zinc-500">
-      <div class="text-xs font-semibold uppercase tracking-wider text-zinc-400 col-span-2 sm:col-span-3 lg:col-span-1">
+  <section class="fluid-container py-6 sm:py-8">
+    <div class="flex flex-wrap items-center justify-between gap-4 sm:gap-6 border-b border-zinc-200 pb-6 sm:pb-8 text-zinc-500">
+      <div class="text-xs font-bold uppercase tracking-wider text-zinc-400 w-full sm:w-auto">
         Ekosistem Terintegrasi:
       </div>
-      <div class="flex items-center gap-2.5 font-bold text-sm text-forest-900">
-        <span class="material-symbols-rounded text-forest-700">school</span>
-        <span>KBM Akademik</span>
-      </div>
-      <div class="flex items-center gap-2.5 font-bold text-sm text-forest-900">
-        <span class="material-symbols-rounded text-forest-700">night_shelter</span>
-        <span>Kesantrian &amp; Asrama</span>
-      </div>
-      <div class="flex items-center gap-2.5 font-bold text-sm text-forest-900">
-        <span class="material-symbols-rounded text-forest-700">mosque</span>
-        <span>Ibadah &amp; Halaqah</span>
-      </div>
-      <div class="flex items-center gap-2.5 font-bold text-sm text-forest-900">
-        <span class="material-symbols-rounded text-forest-700">badge</span>
-        <span>Kepegawaian SDM</span>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 w-full sm:w-auto flex-1 max-w-4xl">
+        <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-forest-900 bg-white sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-zinc-200/70">
+          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">school</span>
+          <span class="truncate">KBM Akademik</span>
+        </div>
+        <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-forest-900 bg-white sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-zinc-200/70">
+          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">night_shelter</span>
+          <span class="truncate">Kesantrian &amp; Asrama</span>
+        </div>
+        <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-forest-900 bg-white sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-zinc-200/70">
+          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">mosque</span>
+          <span class="truncate">Ibadah &amp; Halaqah</span>
+        </div>
+        <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-forest-900 bg-white sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-zinc-200/70">
+          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">badge</span>
+          <span class="truncate">Kepegawaian SDM</span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ==================== 3. SMART TOOLS FOR MODERN PESANTREN (01) ==================== -->
-  <section id="layanan" class="max-w-7xl mx-auto px-6 py-10 lg:py-16 space-y-12">
+  <section id="layanan" class="fluid-container py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-12">
     <!-- Top Header Row -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
       <!-- Small Video/Image Card -->
-      <div class="lg:col-span-3">
-        <div class="relative rounded-2xl overflow-hidden h-36 shadow-md group">
+      <div class="md:col-span-4 lg:col-span-3">
+        <div class="relative rounded-2xl overflow-hidden h-36 sm:h-40 md:h-36 shadow-md group">
           <img
             src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
             alt="Smart Scanner"
@@ -244,31 +316,31 @@
       </div>
 
       <!-- Section Title -->
-      <div class="lg:col-span-6">
-        <div class="flex items-center gap-3">
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-forest-950">
+      <div class="md:col-span-8 lg:col-span-6 min-w-0">
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             TEKNOLOGI CERDAS
           </h2>
-          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
+          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold shrink-0">
             01
           </span>
         </div>
-        <div class="flex items-center gap-3 mt-1">
-          <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest">//</span>
-          <h3 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-forest-800">
+        <div class="flex items-center gap-2 sm:gap-3 mt-1">
+          <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest shrink-0">//</span>
+          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800 break-words">
             MANAJEMEN PRESENSI SANTRI
           </h3>
         </div>
       </div>
 
       <!-- Right Description & CTA -->
-      <div class="lg:col-span-3 space-y-4">
-        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+      <div class="md:col-span-12 lg:col-span-3 flex flex-col sm:flex-row lg:flex-col sm:items-center lg:items-start justify-between gap-4">
+        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-xl">
           Meningkatkan ketertiban kegiatan belajar, ibadah, dan asrama dengan teknologi pemindaian berkecepatan tinggi.
         </p>
         <a
           href="/login"
-          class="inline-flex items-center gap-2.5 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-bold text-xs pl-4 pr-2 py-2 rounded-full transition"
+          class="inline-flex items-center gap-2.5 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-bold text-xs pl-4 pr-2 py-2 rounded-full transition shrink-0 w-fit"
         >
           <span>Jelajahi Fitur</span>
           <span class="w-6 h-6 rounded-full bg-forest-950 text-white flex items-center justify-center">
@@ -278,80 +350,80 @@
       </div>
     </div>
 
-    <!-- Bottom 3-Column Bento Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4 items-stretch">
+    <!-- Bottom Responsive Bento Grid (1 col mobile -> 2 col tablet -> 3 col desktop) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 pt-2 items-stretch">
       <!-- Left: Core Services List -->
-      <div class="lg:col-span-4 flex flex-col justify-between bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-sm">
+      <div class="md:col-span-1 lg:col-span-4 flex flex-col justify-between bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm">
         <div>
           <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800">
             LAYANAN INTI SIUBA
           </span>
-          <div class="mt-5 divide-y divide-zinc-100">
-            <a href="/login" class="py-3.5 flex items-center justify-between group">
-              <div class="flex items-center gap-3">
-                <span class="text-xs font-bold text-zinc-400">01</span>
-                <span class="text-sm font-bold text-forest-950 group-hover:text-forest-700">Live QR &amp; RFID Terminal</span>
+          <div class="mt-4 sm:mt-5 divide-y divide-zinc-100">
+            <a href="/login" class="py-3 sm:py-3.5 flex items-center justify-between gap-2 group">
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="text-xs font-bold text-zinc-400 shrink-0">01</span>
+                <span class="text-xs sm:text-sm font-bold text-forest-950 group-hover:text-forest-700 truncate">Live QR &amp; RFID Terminal</span>
               </div>
-              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition">chevron_right</span>
+              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition shrink-0">chevron_right</span>
             </a>
-            <a href="/login" class="py-3.5 flex items-center justify-between group">
-              <div class="flex items-center gap-3">
-                <span class="text-xs font-bold text-zinc-400">02</span>
-                <span class="text-sm font-bold text-forest-950 group-hover:text-forest-700">Monitoring KBM &amp; Guru Piket</span>
+            <a href="/login" class="py-3 sm:py-3.5 flex items-center justify-between gap-2 group">
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="text-xs font-bold text-zinc-400 shrink-0">02</span>
+                <span class="text-xs sm:text-sm font-bold text-forest-950 group-hover:text-forest-700 truncate">Monitoring KBM &amp; Guru Piket</span>
               </div>
-              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition">chevron_right</span>
+              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition shrink-0">chevron_right</span>
             </a>
-            <a href="/login" class="py-3.5 flex items-center justify-between group">
-              <div class="flex items-center gap-3">
-                <span class="text-xs font-bold text-zinc-400">03</span>
-                <span class="text-sm font-bold text-forest-950 group-hover:text-forest-700">Kontrol Shalat &amp; Kamar Asrama</span>
+            <a href="/login" class="py-3 sm:py-3.5 flex items-center justify-between gap-2 group">
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="text-xs font-bold text-zinc-400 shrink-0">03</span>
+                <span class="text-xs sm:text-sm font-bold text-forest-950 group-hover:text-forest-700 truncate">Kontrol Shalat &amp; Kamar Asrama</span>
               </div>
-              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition">chevron_right</span>
+              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition shrink-0">chevron_right</span>
             </a>
-            <a href="/login" class="py-3.5 flex items-center justify-between group">
-              <div class="flex items-center gap-3">
-                <span class="text-xs font-bold text-zinc-400">04</span>
-                <span class="text-sm font-bold text-forest-950 group-hover:text-forest-700">Desain &amp; Cetak Kartu Santri CR80</span>
+            <a href="/login" class="py-3 sm:py-3.5 flex items-center justify-between gap-2 group">
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="text-xs font-bold text-zinc-400 shrink-0">04</span>
+                <span class="text-xs sm:text-sm font-bold text-forest-950 group-hover:text-forest-700 truncate">Desain &amp; Cetak Kartu Santri CR80</span>
               </div>
-              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition">chevron_right</span>
+              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition shrink-0">chevron_right</span>
             </a>
           </div>
         </div>
-        <p class="text-xs text-zinc-500 mt-6 pt-4 border-t border-zinc-100">
+        <p class="text-xs text-zinc-500 mt-5 pt-4 border-t border-zinc-100">
           Dirancang khusus untuk alur kerja Pesantren Utsman Bin Affan yang cepat, akurat, dan tahan gangguan jaringan.
         </p>
       </div>
 
       <!-- Center: Quote + Visual Card -->
-      <div class="lg:col-span-4 flex flex-col justify-between space-y-5">
-        <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-sm space-y-3">
+      <div class="md:col-span-1 lg:col-span-4 flex flex-col justify-between gap-5">
+        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm space-y-3 flex-1 flex flex-col justify-between">
           <div class="flex items-center justify-between text-xs text-zinc-400 font-semibold">
             <span>VISI DIGITALISASI</span>
             <span>SIUBA ENGINE</span>
           </div>
-          <blockquote class="text-base sm:text-lg font-bold text-forest-950 leading-snug">
+          <blockquote class="text-sm sm:text-base lg:text-lg font-bold text-forest-950 leading-snug">
             &ldquo;Dengan SIUBA, rekapitulasi kehadiran santri di kelas, masjid, dan asrama terhubung dalam satu layar secara instan.&rdquo;
           </blockquote>
-          <div class="flex items-center gap-4 text-xs text-zinc-500 pt-1">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-zinc-500 pt-1">
             <span class="font-bold text-forest-800">Utsman Bin Affan</span>
             <span>&bull;</span>
             <span>Smart Pesantren System</span>
           </div>
         </div>
 
-        <div class="relative rounded-3xl overflow-hidden h-48 shadow-md group">
+        <div class="relative rounded-3xl overflow-hidden min-h-[180px] sm:h-48 shadow-md group">
           <img
             src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
             alt="Santri Digital"
-            class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent p-5 flex flex-col justify-between text-white">
-            <div class="flex items-center justify-between text-xs font-bold tracking-wider">
+          <div class="relative z-10 h-full bg-gradient-to-t from-forest-950/90 via-forest-950/35 to-transparent p-5 flex flex-col justify-between text-white">
+            <div class="flex items-center justify-between gap-2 text-xs font-bold tracking-wider">
               <span class="bg-white/20 backdrop-blur px-2.5 py-1 rounded-full">OFFLINE-FIRST PWA</span>
               <span>SIUBA</span>
             </div>
-            <div class="flex items-end justify-between gap-2">
-              <p class="text-xs font-medium text-white/85 max-w-[200px]">
+            <div class="flex items-end justify-between gap-3 pt-6">
+              <p class="text-xs font-medium text-white/90 max-w-[220px]">
                 Tetap berjalan meski tanpa internet &amp; sinkron otomatis ke server MySQL.
               </p>
               <a href="/login" class="bg-white text-forest-950 text-xs font-extrabold px-3.5 py-1.5 rounded-full flex items-center gap-1 hover:bg-limeaccent-400 transition shrink-0">
@@ -364,45 +436,44 @@
       </div>
 
       <!-- Right: Gauge / Rate Card -->
-      <div class="lg:col-span-4 bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
-        <div class="flex items-center justify-between">
+      <div class="md:col-span-2 lg:col-span-4 bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
+        <div class="flex items-center justify-between gap-2">
           <div>
             <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800 block">
               TINGKAT AKURASI &amp; KEHADIRAN
             </span>
             <span class="text-xs text-zinc-400">Real-Time Attendance Engine</span>
           </div>
-          <a href="/login" class="w-9 h-9 rounded-full bg-forest-950 text-white flex items-center justify-center hover:bg-limeaccent-400 hover:text-forest-950 transition">
+          <a href="/login" class="w-9 h-9 rounded-full bg-forest-950 text-white flex items-center justify-center hover:bg-limeaccent-400 hover:text-forest-950 transition shrink-0">
             <span class="material-symbols-rounded text-[18px]">insights</span>
           </a>
         </div>
 
-        <!-- Segmented Semi-Circle Gauge Visual -->
-        <div class="my-6 flex flex-col items-center justify-center">
-          <div class="relative w-56 h-28 overflow-hidden flex items-end justify-center">
+        <!-- Responsive SVG Gauge -->
+        <div class="my-5 sm:my-6 flex flex-col items-center justify-center">
+          <div class="relative w-full max-w-[220px] aspect-[2/1] overflow-hidden flex items-end justify-center">
             <svg viewBox="0 0 200 105" class="w-full h-full">
-              <!-- Gauge segments -->
               <path d="M 20 95 A 80 80 0 0 1 180 95" fill="none" stroke="#e4ebe5" stroke-width="18" stroke-linecap="butt" stroke-dasharray="10 4" />
               <path d="M 20 95 A 80 80 0 0 1 168 52" fill="none" stroke="#14492b" stroke-width="18" stroke-linecap="butt" stroke-dasharray="10 4" />
               <path d="M 168 52 A 80 80 0 0 1 180 95" fill="none" stroke="#84cc16" stroke-width="18" stroke-linecap="butt" stroke-dasharray="10 4" />
             </svg>
             <div class="absolute bottom-0 text-center">
-              <span class="text-3xl font-extrabold text-forest-950">98.4%</span>
+              <span class="text-2xl sm:text-3xl font-extrabold text-forest-950">98.4%</span>
             </div>
           </div>
-          <p class="text-xs text-zinc-500 mt-3 text-center">
+          <p class="text-xs text-zinc-500 mt-3 text-center max-w-xs">
             Kecepatan validasi kartu &lt; 0.3 detik dengan perlindungan anti-duplikasi scan.
           </p>
         </div>
 
         <div class="grid grid-cols-2 gap-3 pt-3 border-t border-zinc-100 text-xs">
-          <div class="bg-zinc-50 p-3 rounded-2xl">
-            <span class="text-zinc-400 block">Metode Scan</span>
-            <span class="font-extrabold text-forest-950 text-sm">QR + RFID + Manual</span>
+          <div class="bg-zinc-50 p-3 rounded-2xl min-w-0">
+            <span class="text-zinc-400 block truncate">Metode Scan</span>
+            <span class="font-extrabold text-forest-950 text-xs sm:text-sm block truncate">QR + RFID + Manual</span>
           </div>
-          <div class="bg-zinc-50 p-3 rounded-2xl">
-            <span class="text-zinc-400 block">Database</span>
-            <span class="font-extrabold text-forest-950 text-sm">MySQL + IndexedDB</span>
+          <div class="bg-zinc-50 p-3 rounded-2xl min-w-0">
+            <span class="text-zinc-400 block truncate">Database</span>
+            <span class="font-extrabold text-forest-950 text-xs sm:text-sm block truncate">MySQL + IndexedDB</span>
           </div>
         </div>
       </div>
@@ -410,16 +481,16 @@
   </section>
 
   <!-- ==================== 4. INSIGHTS FOR SMARTER MANAGEMENT (02) ==================== -->
-  <section id="analitik" class="max-w-7xl mx-auto px-6 py-10 lg:py-14 space-y-8">
+  <section id="analitik" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-6 sm:space-y-8">
     <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-      <div class="lg:col-span-6">
-        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-forest-950">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+      <div class="lg:col-span-6 min-w-0">
+        <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
           ANALITIK REAL-TIME &amp;
         </h2>
-        <div class="flex items-center gap-3 mt-1">
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 mt-1">
           <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-forest-800">
+          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
             PEMANTAUAN TERPADU
           </h3>
           <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
@@ -439,31 +510,31 @@
     </div>
 
     <!-- Wide Banner with 3 Glass Widgets -->
-    <div class="relative rounded-[32px] overflow-hidden p-6 sm:p-10 lg:p-12 shadow-xl">
+    <div class="relative rounded-[24px] sm:rounded-[32px] overflow-hidden p-4 xs:p-6 sm:p-8 lg:p-11 shadow-xl">
       <img
         src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80"
         alt="Monitoring Banner"
         class="absolute inset-0 w-full h-full object-cover"
       />
-      <div class="absolute inset-0 bg-gradient-to-r from-forest-950/90 via-forest-900/80 to-forest-950/85"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-forest-950/92 via-forest-900/82 to-forest-950/88"></div>
 
-      <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+      <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2 sm:pt-6">
         <!-- Widget 1 -->
-        <div class="glass-card rounded-3xl p-6 text-white flex flex-col justify-between space-y-6">
-          <div class="flex items-start justify-between">
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-white flex flex-col justify-between space-y-5">
+          <div class="flex items-start justify-between gap-2">
             <div>
               <span class="text-xs font-bold uppercase tracking-wider text-limeaccent-400 block">PRESENSI HARIAN</span>
               <span class="text-xs text-white/70">Seluruh Sesi Aktif</span>
             </div>
-            <span class="w-9 h-9 rounded-full bg-white text-forest-950 flex items-center justify-center">
+            <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shrink-0">
               <span class="material-symbols-rounded text-[18px]">bolt</span>
             </span>
           </div>
-          <div class="flex items-baseline justify-between pt-2">
-            <span class="text-4xl font-extrabold tracking-tight">24/7</span>
+          <div class="flex items-baseline justify-between gap-3 pt-2">
+            <span class="fluid-stat-number font-extrabold tracking-tight">24/7</span>
             <div class="text-right">
               <span class="text-xs text-limeaccent-400 font-bold block">Sinkronisasi Live</span>
-              <div class="w-24 h-1.5 bg-white/20 rounded-full mt-1 overflow-hidden">
+              <div class="w-20 sm:w-24 h-1.5 bg-white/20 rounded-full mt-1 overflow-hidden ml-auto">
                 <div class="w-4/5 h-full bg-limeaccent-400 rounded-full"></div>
               </div>
             </div>
@@ -471,50 +542,50 @@
         </div>
 
         <!-- Widget 2 -->
-        <div class="glass-card rounded-3xl p-6 text-white flex flex-col justify-between space-y-6">
-          <div class="flex items-start justify-between">
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-white flex flex-col justify-between space-y-5">
+          <div class="flex items-start justify-between gap-2">
             <div>
               <span class="text-xs font-bold uppercase tracking-wider text-limeaccent-400 block">SHALAT 5 WAKTU</span>
               <span class="text-xs text-white/70">Monitoring Berjamaah Masjid</span>
             </div>
-            <span class="w-9 h-9 rounded-full bg-white text-forest-950 flex items-center justify-center">
+            <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shrink-0">
               <span class="material-symbols-rounded text-[18px]">mosque</span>
             </span>
           </div>
-          <div class="grid grid-cols-5 gap-2 text-center pt-2">
-            <div class="bg-white/10 rounded-xl py-2">
-              <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">wb_twilight</span>
-              <span class="block text-[10px] font-bold mt-1">Subuh</span>
+          <div class="grid grid-cols-5 gap-1.5 sm:gap-2 text-center pt-1">
+            <div class="bg-white/10 rounded-xl py-2 px-1">
+              <span class="material-symbols-rounded text-limeaccent-400 text-[16px] sm:text-[18px]">wb_twilight</span>
+              <span class="block text-[9px] sm:text-[10px] font-bold mt-1 truncate">Subuh</span>
             </div>
-            <div class="bg-white/10 rounded-xl py-2">
-              <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">light_mode</span>
-              <span class="block text-[10px] font-bold mt-1">Dzuhur</span>
+            <div class="bg-white/10 rounded-xl py-2 px-1">
+              <span class="material-symbols-rounded text-limeaccent-400 text-[16px] sm:text-[18px]">light_mode</span>
+              <span class="block text-[9px] sm:text-[10px] font-bold mt-1 truncate">Dzuhur</span>
             </div>
-            <div class="bg-white/10 rounded-xl py-2">
-              <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">wb_sunny</span>
-              <span class="block text-[10px] font-bold mt-1">Ashar</span>
+            <div class="bg-white/10 rounded-xl py-2 px-1">
+              <span class="material-symbols-rounded text-limeaccent-400 text-[16px] sm:text-[18px]">wb_sunny</span>
+              <span class="block text-[9px] sm:text-[10px] font-bold mt-1 truncate">Ashar</span>
             </div>
-            <div class="bg-white/10 rounded-xl py-2">
-              <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">routine</span>
-              <span class="block text-[10px] font-bold mt-1">Maghrib</span>
+            <div class="bg-white/10 rounded-xl py-2 px-1">
+              <span class="material-symbols-rounded text-limeaccent-400 text-[16px] sm:text-[18px]">routine</span>
+              <span class="block text-[9px] sm:text-[10px] font-bold mt-1 truncate">Maghrib</span>
             </div>
-            <div class="bg-white/10 rounded-xl py-2">
-              <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">dark_mode</span>
-              <span class="block text-[10px] font-bold mt-1">Isya</span>
+            <div class="bg-white/10 rounded-xl py-2 px-1">
+              <span class="material-symbols-rounded text-limeaccent-400 text-[16px] sm:text-[18px]">dark_mode</span>
+              <span class="block text-[9px] sm:text-[10px] font-bold mt-1 truncate">Isya</span>
             </div>
           </div>
         </div>
 
         <!-- Widget 3 -->
-        <div class="glass-card rounded-3xl p-6 text-white flex flex-col justify-between space-y-6">
-          <div class="flex items-center gap-2 bg-forest-950/60 p-1.5 rounded-full text-xs font-bold">
+        <div class="md:col-span-2 lg:col-span-1 glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-white flex flex-col justify-between space-y-5">
+          <div class="flex flex-wrap items-center gap-1.5 bg-forest-950/60 p-1.5 rounded-full text-xs font-bold w-fit">
             <span class="bg-white text-forest-950 px-3.5 py-1 rounded-full">KBM</span>
             <span class="px-3 py-1 text-white/75">Asrama</span>
             <span class="px-3 py-1 text-white/75">Ekskul</span>
           </div>
           <div class="space-y-2">
             <span class="text-xs font-semibold text-white/80 block">Status Kehadiran Santri:</span>
-            <div class="flex flex-wrap items-center gap-4 text-xs font-bold">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold">
               <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-limeaccent-400"></span> Hadir</span>
               <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Terlambat</span>
               <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> Izin/Sakit</span>
@@ -526,16 +597,16 @@
     </div>
 
     <!-- Bottom Metric Strip -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center pt-4 pb-6 border-b border-zinc-200">
-      <div class="md:col-span-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-6 items-center pt-3 pb-6 border-b border-zinc-200">
+      <div class="lg:col-span-4">
         <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800 block">REKAPITULASI TERPADU</span>
         <span class="text-xs text-zinc-500">Laporan Harian, Bulanan &amp; Ekspor CSV/Excel</span>
       </div>
-      <div class="md:col-span-3 flex items-baseline gap-2">
-        <span class="text-4xl font-extrabold text-forest-950">360&deg;</span>
+      <div class="lg:col-span-3 flex items-baseline gap-2">
+        <span class="fluid-stat-number font-extrabold text-forest-950">360&deg;</span>
         <span class="text-xs font-bold text-zinc-500 uppercase">Profil Rekam Jejak Santri</span>
       </div>
-      <div class="md:col-span-5">
+      <div class="sm:col-span-2 lg:col-span-5">
         <p class="text-sm sm:text-base font-bold text-forest-950 leading-snug">
           Pemantauan menyeluruh mendorong kedisiplinan ibadah dan prestasi akademik santri secara konsisten.
         </p>
@@ -544,41 +615,41 @@
   </section>
 
   <!-- ==================== 5. KEY MODULES & DATA REPORT (03) ==================== -->
-  <section id="domain" class="max-w-7xl mx-auto px-6 py-10 lg:py-14 space-y-10">
+  <section id="domain" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
     <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-      <div class="lg:col-span-7">
-        <div class="flex items-center gap-3">
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-forest-950">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+      <div class="lg:col-span-7 min-w-0">
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             MODUL UTAMA
           </h2>
           <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
             03
           </span>
         </div>
-        <div class="flex items-center gap-3 mt-1">
+        <div class="flex items-center gap-2 sm:gap-3 mt-1">
           <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-forest-800">
+          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
             DAN LAPORAN KEHADIRAN
           </h3>
         </div>
       </div>
 
       <div class="lg:col-span-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="flex items-center gap-4 text-xs font-extrabold uppercase tracking-wider text-forest-800">
+        <div class="flex items-center gap-4 text-xs font-extrabold uppercase tracking-wider text-forest-800 shrink-0">
           <span class="border-b-2 border-forest-900 pb-1">KBM &amp; KELAS</span>
           <span class="text-zinc-400">ASRAMA &amp; TAHFIDZ</span>
         </div>
-        <p class="text-xs text-zinc-500 max-w-xs">
+        <p class="text-xs text-zinc-500 sm:max-w-xs">
           Data kehadiran tersimpan aman di MySQL dengan dukungan import/export Excel massal.
         </p>
       </div>
     </div>
 
-    <!-- Content Row: Left Stats + 2 Tall Image Cards -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+    <!-- Content Row: Responsive 1 -> 2 -> 3 Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
       <!-- Left Column -->
-      <div class="lg:col-span-4 bg-white p-7 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
+      <div class="md:col-span-2 lg:col-span-4 bg-white p-6 sm:p-7 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
         <div class="space-y-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-zinc-400">KAPASITAS SISTEM</span>
@@ -586,7 +657,7 @@
               <span class="material-symbols-rounded text-[18px]">groups</span>
             </span>
           </div>
-          <div class="text-5xl font-extrabold text-forest-950 tracking-tight">10+ Role</div>
+          <div class="fluid-stat-number font-extrabold text-forest-950 tracking-tight">10+ Role</div>
           <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
             Mendukung multi-peran mulai dari Super Admin, Pimpinan, Kepala Sekolah, Kepala Asrama, Guru KBM, Musyrif, Petugas Masjid, Pelatih Ekskul, hingga Operator.
           </p>
@@ -595,7 +666,7 @@
         <div class="space-y-4 pt-6 border-t border-zinc-100 mt-6">
           <a
             href="/login"
-            class="inline-flex items-center gap-2.5 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs pl-4 pr-2 py-2 rounded-full transition"
+            class="inline-flex items-center gap-2.5 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs pl-4 pr-2 py-2 rounded-full transition w-fit"
           >
             <span>Lihat Pusat Laporan</span>
             <span class="w-6 h-6 rounded-full bg-forest-950 text-white flex items-center justify-center">
@@ -609,7 +680,7 @@
       </div>
 
       <!-- Card 1: KBM & Sekolah -->
-      <div class="lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[380px] shadow-lg group flex flex-col justify-end p-5">
+      <div class="md:col-span-1 lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[340px] sm:min-h-[380px] shadow-lg group flex flex-col justify-end p-4 sm:p-5">
         <img
           src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
           alt="KBM Akademik"
@@ -617,38 +688,38 @@
         />
         <div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent"></div>
 
-        <div class="relative z-10 glass-card rounded-2xl p-5 text-white space-y-4">
-          <div class="w-10 h-10 rounded-full bg-white text-forest-950 flex items-center justify-center font-bold">
+        <div class="relative z-10 glass-card rounded-2xl p-4 sm:p-5 text-white space-y-4">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-forest-950 flex items-center justify-center font-bold">
             <span class="material-symbols-rounded text-[20px]">menu_book</span>
           </div>
-          <div class="flex items-center justify-between">
-            <div>
-              <h4 class="text-lg font-extrabold">JURNAL &amp; ABSENSI KBM</h4>
-              <p class="text-xs text-white/75">Jadwal Pelajaran &amp; Guru Pengganti</p>
+          <div class="flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <h4 class="text-base sm:text-lg font-extrabold truncate">JURNAL &amp; ABSENSI KBM</h4>
+              <p class="text-xs text-white/75 truncate">Jadwal Pelajaran &amp; Guru Pengganti</p>
             </div>
-            <a href="/login" class="w-8 h-8 rounded-full bg-white/15 hover:bg-limeaccent-400 hover:text-forest-950 flex items-center justify-center transition">
+            <a href="/login" class="w-8 h-8 rounded-full bg-white/15 hover:bg-limeaccent-400 hover:text-forest-950 flex items-center justify-center transition shrink-0">
               <span class="material-symbols-rounded text-[18px]">chevron_right</span>
             </a>
           </div>
           <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-[11px]">
-            <div>
+            <div class="min-w-0">
               <span class="text-white/60 block">Fitur</span>
-              <span class="font-bold">Jurnal Kelas</span>
+              <span class="font-bold block truncate">Jurnal Kelas</span>
             </div>
-            <div>
+            <div class="min-w-0">
               <span class="text-white/60 block">Akses</span>
-              <span class="font-bold">Guru &amp; Kepsek</span>
+              <span class="font-bold block truncate">Guru &amp; Kepsek</span>
             </div>
-            <div>
+            <div class="min-w-0">
               <span class="text-white/60 block">Ekspor</span>
-              <span class="font-bold">CSV / Rekap</span>
+              <span class="font-bold block truncate">CSV / Rekap</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Card 2: Asrama & Kesantrian -->
-      <div class="lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[380px] shadow-lg group flex flex-col justify-end p-5">
+      <div class="md:col-span-1 lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[340px] sm:min-h-[380px] shadow-lg group flex flex-col justify-end p-4 sm:p-5">
         <img
           src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80"
           alt="Asrama & Tahfidz"
@@ -656,62 +727,62 @@
         />
         <div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent"></div>
 
-        <div class="relative z-10 glass-card rounded-2xl p-5 text-white space-y-4">
-          <div class="w-10 h-10 rounded-full bg-white text-forest-950 flex items-center justify-center font-bold">
+        <div class="relative z-10 glass-card rounded-2xl p-4 sm:p-5 text-white space-y-4">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-forest-950 flex items-center justify-center font-bold">
             <span class="material-symbols-rounded text-[20px]">night_shelter</span>
           </div>
-          <div class="flex items-center justify-between">
-            <div>
-              <h4 class="text-lg font-extrabold">ASRAMA &amp; HALAQAH</h4>
-              <p class="text-xs text-white/75">Malam, Tahfidz, Izin &amp; Dispensasi</p>
+          <div class="flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <h4 class="text-base sm:text-lg font-extrabold truncate">ASRAMA &amp; HALAQAH</h4>
+              <p class="text-xs text-white/75 truncate">Malam, Tahfidz, Izin &amp; Dispensasi</p>
             </div>
-            <a href="/login" class="w-8 h-8 rounded-full bg-white/15 hover:bg-limeaccent-400 hover:text-forest-950 flex items-center justify-center transition">
+            <a href="/login" class="w-8 h-8 rounded-full bg-white/15 hover:bg-limeaccent-400 hover:text-forest-950 flex items-center justify-center transition shrink-0">
               <span class="material-symbols-rounded text-[18px]">chevron_right</span>
             </a>
           </div>
           <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-[11px]">
-            <div>
+            <div class="min-w-0">
               <span class="text-white/60 block">Fitur</span>
-              <span class="font-bold">Kamar &amp; Piket</span>
+              <span class="font-bold block truncate">Kamar &amp; Piket</span>
             </div>
-            <div>
+            <div class="min-w-0">
               <span class="text-white/60 block">Akses</span>
-              <span class="font-bold">Musyrif</span>
+              <span class="font-bold block truncate">Musyrif</span>
             </div>
-            <div>
+            <div class="min-w-0">
               <span class="text-white/60 block">Kontrol</span>
-              <span class="font-bold">Surat Izin</span>
+              <span class="font-bold block truncate">Surat Izin</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5-Step Horizontal Timeline -->
-    <div class="pt-8">
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-6 border-t border-zinc-200 pt-6">
-        <div class="space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase">TAHAP 01</span>
+    <!-- 5-Step Responsive Timeline -->
+    <div class="pt-4 sm:pt-8">
+      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6 border-t border-zinc-200 pt-6">
+        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 01</span>
           <div class="w-3 h-3 rounded-full bg-limeaccent-500 ring-4 ring-limeaccent-400/20"></div>
           <p class="text-xs font-bold text-forest-950 pt-1">Import Data Santri &amp; Guru via CSV/Excel</p>
         </div>
-        <div class="space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase">TAHAP 02</span>
+        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 02</span>
           <div class="w-3 h-3 rounded-full bg-forest-900"></div>
           <p class="text-xs font-semibold text-zinc-600 pt-1">Cetak Kartu Pintar Santri (QR &amp; RFID)</p>
         </div>
-        <div class="space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase">TAHAP 03</span>
+        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 03</span>
           <div class="w-3 h-3 rounded-full bg-forest-900"></div>
           <p class="text-xs font-semibold text-zinc-600 pt-1">Buka Sesi KBM, Shalat, Asrama &amp; Ekskul</p>
         </div>
-        <div class="space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase">TAHAP 04</span>
+        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 04</span>
           <div class="w-3 h-3 rounded-full bg-forest-900"></div>
           <p class="text-xs font-semibold text-zinc-600 pt-1">Scan Kehadiran Cepat (Online / Offline)</p>
         </div>
-        <div class="space-y-2 col-span-2 sm:col-span-1">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase">TAHAP 05</span>
+        <div class="xs:col-span-2 md:col-span-1 bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 05</span>
           <div class="w-3 h-3 rounded-full bg-forest-900"></div>
           <p class="text-xs font-semibold text-zinc-600 pt-1">Analitik Eksekutif &amp; Audit Laporan</p>
         </div>
@@ -720,27 +791,27 @@
   </section>
 
   <!-- ==================== 6. PARTNERING FOR A BETTER GENERATION (04) ==================== -->
-  <section id="sinergi" class="max-w-7xl mx-auto px-6 py-10 lg:py-14 space-y-10">
+  <section id="sinergi" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
     <!-- Header -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-      <div class="lg:col-span-6">
-        <div class="flex items-center gap-3">
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-forest-950">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+      <div class="lg:col-span-6 min-w-0">
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
             SINERGI DIGITAL
           </h2>
           <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
             04
           </span>
         </div>
-        <div class="flex items-center gap-3 mt-1">
+        <div class="flex items-center gap-2 sm:gap-3 mt-1">
           <span class="text-xs font-bold text-zinc-400">//</span>
-          <h3 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-forest-800">
+          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
             GENERASI QURANI UNGGUL
           </h3>
         </div>
       </div>
       <div class="lg:col-span-6 space-y-2">
-        <div class="flex flex-wrap items-center gap-4 text-xs font-extrabold uppercase tracking-wider text-forest-800">
+        <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs font-extrabold uppercase tracking-wider text-forest-800">
           <span>KEAMANAN RBAC</span>
           <span>&bull;</span>
           <span>OFFLINE SYNC</span>
@@ -754,10 +825,10 @@
     </div>
 
     <!-- Bottom Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
       <!-- Left CTA Image Box -->
-      <div class="lg:col-span-5 flex flex-col justify-between space-y-6">
-        <div class="relative rounded-3xl overflow-hidden h-52 p-6 flex flex-col justify-between text-white shadow-lg">
+      <div class="md:col-span-2 lg:col-span-5 flex flex-col justify-between gap-5">
+        <div class="relative rounded-3xl overflow-hidden min-h-[200px] p-5 sm:p-6 flex flex-col justify-between text-white shadow-lg flex-1">
           <img
             src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80"
             alt="Portal Login"
@@ -765,8 +836,8 @@
           />
           <div class="absolute inset-0 bg-forest-950/75"></div>
 
-          <div class="relative z-10 flex items-center justify-between">
-            <span class="text-sm font-extrabold tracking-wide uppercase">PORTAL LOGIN SIUBA</span>
+          <div class="relative z-10 flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs sm:text-sm font-extrabold tracking-wide uppercase">PORTAL LOGIN SIUBA</span>
             <a
               href="/login"
               class="bg-white text-forest-950 hover:bg-limeaccent-400 text-xs font-extrabold pl-3.5 pr-2 py-1.5 rounded-full flex items-center gap-1.5 transition"
@@ -780,19 +851,19 @@
 
           <a
             href="/login"
-            class="relative z-10 glass-nav rounded-full px-4 py-2.5 flex items-center justify-between text-xs font-semibold hover:bg-white/20 transition"
+            class="relative z-10 glass-nav rounded-2xl sm:rounded-full px-4 py-2.5 flex items-center justify-between gap-2 text-xs font-semibold hover:bg-white/20 transition mt-6"
           >
-            <span class="flex items-center gap-2">
-              <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">key</span>
-              <span>Gunakan Akun Guru, Musyrif, atau Admin</span>
+            <span class="flex items-center gap-2 min-w-0">
+              <span class="material-symbols-rounded text-limeaccent-400 text-[18px] shrink-0">key</span>
+              <span class="truncate">Gunakan Akun Guru, Musyrif, atau Admin</span>
             </span>
-            <span class="material-symbols-rounded text-[18px]">arrow_forward</span>
+            <span class="material-symbols-rounded text-[18px] shrink-0">arrow_forward</span>
           </a>
         </div>
 
-        <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex items-center justify-between">
+        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <span class="w-10 h-10 rounded-full bg-forest-900 text-limeaccent-400 flex items-center justify-center font-extrabold text-xs">
+            <span class="w-10 h-10 rounded-full bg-forest-900 text-limeaccent-400 flex items-center justify-center font-extrabold text-xs shrink-0">
               100%
             </span>
             <div>
@@ -804,7 +875,7 @@
       </div>
 
       <!-- Center Story Card -->
-      <div class="lg:col-span-4 bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between space-y-4">
+      <div class="md:col-span-1 lg:col-span-4 bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between space-y-4">
         <div class="space-y-2">
           <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800">KEANDALAN SISTEM</span>
           <p class="text-xs text-zinc-500">
@@ -818,7 +889,7 @@
             class="w-full h-full object-cover"
           />
         </div>
-        <div class="flex items-center justify-between pt-2">
+        <div class="flex items-center justify-between gap-2 pt-2">
           <a
             href="/login"
             class="inline-flex items-center gap-2 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs pl-4 pr-2 py-1.5 rounded-full transition"
@@ -833,13 +904,13 @@
       </div>
 
       <!-- Right Stat Highlight -->
-      <div class="lg:col-span-3 bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
+      <div class="md:col-span-1 lg:col-span-3 bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
         <div class="space-y-2">
           <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800 block">
             KECEPATAN REKAP DATA
           </span>
-          <div class="flex items-baseline gap-1 pt-2">
-            <span class="text-4xl font-extrabold text-forest-950">10x</span>
+          <div class="flex items-baseline gap-1.5 pt-2">
+            <span class="fluid-stat-number font-extrabold text-forest-950">10x</span>
             <span class="text-xs text-zinc-500 font-semibold">lebih cepat</span>
           </div>
           <p class="text-xs text-zinc-500 pt-2 leading-relaxed">
@@ -847,9 +918,9 @@
           </p>
         </div>
 
-        <div class="pt-6 border-t border-zinc-100 flex items-center justify-between">
+        <div class="pt-6 mt-6 border-t border-zinc-100 flex items-center justify-between">
           <span class="text-xs font-bold text-forest-950">Buka Halaman Login</span>
-          <a href="/login" class="w-9 h-9 rounded-full bg-forest-950 text-white flex items-center justify-center hover:bg-limeaccent-400 hover:text-forest-950 transition">
+          <a href="/login" class="w-9 h-9 rounded-full bg-forest-950 text-white flex items-center justify-center hover:bg-limeaccent-400 hover:text-forest-950 transition shrink-0">
             <span class="material-symbols-rounded text-[18px]">arrow_outward</span>
           </a>
         </div>
@@ -858,22 +929,22 @@
   </section>
 
   <!-- ==================== 7. FOOTER ==================== -->
-  <footer class="max-w-7xl mx-auto px-6 pt-6 pb-8 space-y-8">
+  <footer class="fluid-container pt-4 sm:pt-6 pb-8 space-y-8">
     <!-- Panoramic Strip Image -->
-    <div class="relative rounded-3xl overflow-hidden h-36 sm:h-44 shadow-md">
+    <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden min-h-[140px] sm:h-44 shadow-md flex items-center">
       <img
         src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1920&q=80"
         alt="Pesantren Panorama"
-        class="w-full h-full object-cover object-center"
+        class="absolute inset-0 w-full h-full object-cover object-center"
       />
-      <div class="absolute inset-0 bg-gradient-to-r from-forest-950/85 via-forest-900/50 to-forest-950/85 flex items-center justify-between px-6 sm:px-10 text-white">
+      <div class="relative z-10 w-full bg-gradient-to-r from-forest-950/90 via-forest-900/65 to-forest-950/90 p-5 sm:px-10 sm:py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-white">
         <div>
-          <span class="text-xs uppercase tracking-widest text-limeaccent-400 font-bold">Siap Memulai?</span>
-          <h3 class="text-xl sm:text-2xl font-extrabold mt-0.5">Masuk ke Portal Presensi Terpadu SIUBA</h3>
+          <span class="text-[11px] sm:text-xs uppercase tracking-widest text-limeaccent-400 font-bold block">Siap Memulai?</span>
+          <h3 class="text-lg sm:text-2xl font-extrabold mt-0.5">Masuk ke Portal Presensi Terpadu SIUBA</h3>
         </div>
         <a
           href="/login"
-          class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-full flex items-center gap-2 shadow-lg transition shrink-0"
+          class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-full flex items-center justify-center gap-2 shadow-lg transition w-full xs:w-fit shrink-0"
         >
           <span>Login Aplikasi</span>
           <span class="material-symbols-rounded text-[18px]">login</span>
@@ -882,10 +953,10 @@
     </div>
 
     <!-- Footer Links -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 py-6 text-xs text-zinc-600">
-      <div class="md:col-span-5 space-y-3">
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-12 gap-6 sm:gap-8 py-4 sm:py-6 text-xs text-zinc-600">
+      <div class="col-span-2 md:col-span-5 space-y-3">
         <div class="flex items-center gap-2 font-extrabold text-base text-forest-950">
-          <span class="w-6 h-6 rounded-full bg-forest-900 text-limeaccent-400 flex items-center justify-center">
+          <span class="w-6 h-6 rounded-full bg-forest-900 text-limeaccent-400 flex items-center justify-center shrink-0">
             <span class="material-symbols-rounded text-[15px]">mosque</span>
           </span>
           <span>SIUBA — Utsman Bin Affan</span>
@@ -893,28 +964,28 @@
         <p class="text-zinc-500 max-w-sm leading-relaxed">
           Sistem Informasi &amp; Presensi Santri Terpadu (KBM, Asrama, Ibadah Shalat, Halaqah Tahfidz, Ekstrakurikuler &amp; SDM).
         </p>
-        <p class="text-zinc-400 font-semibold pt-2">
+        <p class="text-zinc-400 font-semibold pt-1">
           &copy; 2026 Pesantren Utsman Bin Affan. Hak Cipta Dilindungi.
         </p>
       </div>
 
-      <div class="md:col-span-2 space-y-2">
+      <div class="col-span-1 md:col-span-2 space-y-2">
         <span class="font-extrabold text-forest-950 uppercase block mb-2">Navigasi</span>
-        <a href="#beranda" class="block hover:text-forest-900">Beranda</a>
-        <a href="#layanan" class="block hover:text-forest-900">Fitur Utama</a>
-        <a href="#analitik" class="block hover:text-forest-900">Monitoring</a>
-        <a href="#domain" class="block hover:text-forest-900">Modul KBM &amp; Asrama</a>
+        <a href="#beranda" class="block hover:text-forest-900 py-0.5">Beranda</a>
+        <a href="#layanan" class="block hover:text-forest-900 py-0.5">Fitur Utama</a>
+        <a href="#analitik" class="block hover:text-forest-900 py-0.5">Monitoring</a>
+        <a href="#domain" class="block hover:text-forest-900 py-0.5">Modul KBM &amp; Asrama</a>
       </div>
 
-      <div class="md:col-span-2 space-y-2">
+      <div class="col-span-1 md:col-span-2 space-y-2">
         <span class="font-extrabold text-forest-950 uppercase block mb-2">Portal Akses</span>
-        <a href="/login" class="block hover:text-forest-900">Login Super Admin</a>
-        <a href="/login" class="block hover:text-forest-900">Login Guru &amp; KBM</a>
-        <a href="/login" class="block hover:text-forest-900">Login Musyrif Asrama</a>
-        <a href="/login" class="block hover:text-forest-900">Login Pimpinan</a>
+        <a href="/login" class="block hover:text-forest-900 py-0.5">Login Super Admin</a>
+        <a href="/login" class="block hover:text-forest-900 py-0.5">Login Guru &amp; KBM</a>
+        <a href="/login" class="block hover:text-forest-900 py-0.5">Login Musyrif Asrama</a>
+        <a href="/login" class="block hover:text-forest-900 py-0.5">Login Pimpinan</a>
       </div>
 
-      <div class="md:col-span-3 space-y-2">
+      <div class="col-span-2 md:col-span-3 space-y-2">
         <span class="font-extrabold text-forest-950 uppercase block mb-2">Teknologi</span>
         <span class="block text-zinc-500">Laravel 12 + MySQL Database</span>
         <span class="block text-zinc-500">Live QR &amp; RFID Reader Engine</span>
@@ -924,8 +995,8 @@
   </footer>
 
   <!-- Bottom Lime Contact Bar -->
-  <div class="bg-limeaccent-400 text-forest-950 py-3.5 px-6 text-xs font-bold">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+  <div class="bg-limeaccent-400 text-forest-950 py-3.5 px-4 sm:px-6 text-xs font-bold">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
       <div class="flex items-center gap-2">
         <span class="material-symbols-rounded text-[16px]">call</span>
         <span>Layanan Informasi SIUBA</span>
@@ -942,13 +1013,39 @@
   </div>
 
   <script>
-    // Update button label if user already has an active session token
+    // 1. Update button label if user already has an active session token
     if (window.__SIUBA_HAS_TOKEN__) {
       var btn = document.getElementById('nav-login-btn');
       var txt = document.getElementById('nav-login-text');
       if (btn && txt) {
         btn.setAttribute('href', '/dashboard');
         txt.textContent = 'Buka Dashboard';
+      }
+    }
+
+    // 2. Mobile & Tablet Hamburger Menu Toggle
+    var menuBtn = document.getElementById('mobile-menu-btn');
+    var menuDrawer = document.getElementById('mobile-menu-drawer');
+    var menuIcon = document.getElementById('mobile-menu-icon');
+
+    if (menuBtn && menuDrawer && menuIcon) {
+      menuBtn.addEventListener('click', function () {
+        var isHidden = menuDrawer.classList.contains('hidden');
+        if (isHidden) {
+          menuDrawer.classList.remove('hidden');
+          menuIcon.textContent = 'close';
+        } else {
+          menuDrawer.classList.add('hidden');
+          menuIcon.textContent = 'menu';
+        }
+      });
+
+      var navLinks = document.querySelectorAll('.mobile-nav-link');
+      for (var i = 0; i < navLinks.length; i++) {
+        navLinks[i].addEventListener('click', function () {
+          menuDrawer.classList.add('hidden');
+          menuIcon.textContent = 'menu';
+        });
       }
     }
   </script>
