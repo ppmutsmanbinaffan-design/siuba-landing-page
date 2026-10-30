@@ -969,7 +969,7 @@
           </div>
         </div>
 
-        <div class="space-y-3 pt-5 border-t border-zinc-100 mt-5">
+        <div class="space-y-2.5 pt-5 border-t border-zinc-100 mt-5">
           <button
             type="button"
             onclick="document.getElementById('ppdb-modal').classList.remove('hidden')"
@@ -980,6 +980,13 @@
               <span class="material-symbols-rounded text-[16px]">edit_document</span>
             </span>
           </button>
+          <a
+            href="/ppdb"
+            class="w-full inline-flex items-center justify-between bg-forest-950 hover:bg-forest-800 text-limeaccent-400 font-extrabold text-xs pl-5 pr-2.5 py-2.5 rounded-full transition shadow-sm"
+          >
+            <span>Buka Halaman Lengkap PPDB &amp; Biaya</span>
+            <span class="material-symbols-rounded text-[16px]">open_in_new</span>
+          </a>
           <p id="cms-ppdb-beasiswa" class="text-[11px] text-zinc-500 text-center">
             Tersedia jalur Beasiswa Tahfidz (Hafal min. 5 Juz) &amp; Prestasi Akademik.
           </p>
@@ -1058,99 +1065,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- 5-Step Alur Pendaftaran PPDB -->
-    <div class="pt-4 sm:pt-8">
-      <div class="text-xs font-extrabold uppercase tracking-wider text-forest-800 mb-4">
-        ALUR PENDAFTARAN SANTRI BARU (5 TAHAP MUDAH):
-      </div>
-      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6 border-t border-zinc-200 pt-6">
-        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 01</span>
-          <div class="w-3 h-3 rounded-full bg-limeaccent-500 ring-4 ring-limeaccent-400/20"></div>
-          <p class="text-xs font-bold text-forest-950 pt-1">Registrasi Formulir Online &amp; Pilih Jenjang</p>
-        </div>
-        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 02</span>
-          <div class="w-3 h-3 rounded-full bg-forest-900"></div>
-          <p class="text-xs font-semibold text-zinc-600 pt-1">Upload Berkas Rapor, KK, Akta &amp; Pas Foto</p>
-        </div>
-        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 03</span>
-          <div class="w-3 h-3 rounded-full bg-forest-900"></div>
-          <p class="text-xs font-semibold text-zinc-600 pt-1">Tes Baca Al-Qur&rsquo;an, Akademik &amp; Wawancara Wali</p>
-        </div>
-        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 04</span>
-          <div class="w-3 h-3 rounded-full bg-forest-900"></div>
-          <p class="text-xs font-semibold text-zinc-600 pt-1">Pengumuman Kelulusan &amp; Daftar Ulang</p>
-        </div>
-        <div class="xs:col-span-2 md:col-span-1 bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 05</span>
-          <div class="w-3 h-3 rounded-full bg-forest-900"></div>
-          <p class="text-xs font-semibold text-zinc-600 pt-1">Penerbitan Kartu Pintar SIUBA &amp; Masuk Asrama</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Rincian Syarat, Materi Seleksi, Biaya & Beasiswa + Link Portal Lengkap PPDB -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
-      <!-- Card A: Syarat Berkas & Materi Tes -->
-      <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-extrabold uppercase text-forest-800">SYARAT &amp; MATERI TES</span>
-          <span class="material-symbols-rounded text-forest-700 text-[20px]">fact_check</span>
-        </div>
-        <ul class="space-y-1.5 text-xs text-zinc-600">
-          <li>&bull; Fotokopi Akta Kelahiran, KK, NISN &amp; Rapor 2 Semester</li>
-          <li>&bull; Pas Foto 3x4 (4 Lembar) &amp; Surat Keterangan Sehat</li>
-          <li>&bull; <strong>Materi Tes:</strong> Baca &amp; Hafalan Al-Qur&rsquo;an, Akademik Dasar, Psikotes Asrama &amp; Wawancara Wali</li>
-        </ul>
-      </div>
-
-      <!-- Card B: Ringkasan Biaya & Beasiswa -->
-      <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-3">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold uppercase text-forest-800">BIAYA &amp; BEASISWA TAHFIDZ</span>
-            <span class="material-symbols-rounded text-forest-700 text-[20px]">payments</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <div class="bg-zinc-50 p-2.5 rounded-xl">
-              <span class="text-zinc-400 block text-[10px]">Biaya Pendaftaran</span>
-              <span id="cms-ppdb-fee-reg" class="font-extrabold text-forest-950">Rp 350.000</span>
-            </div>
-            <div class="bg-zinc-50 p-2.5 rounded-xl">
-              <span class="text-zinc-400 block text-[10px]">SPP Bulanan (All-In)</span>
-              <span id="cms-ppdb-fee-spp" class="font-extrabold text-forest-950">Rp 1.650.000/bln</span>
-            </div>
-          </div>
-          <p class="text-[11px] text-zinc-500">
-            <strong>Beasiswa Potongan DSP 25%–100%</strong> bagi Hafidz 5–30 Juz, Juara OSN/KSM &amp; Yatim Berprestasi.
-          </p>
-        </div>
-        <a href="/ppdb#biaya" class="inline-flex items-center justify-between text-xs font-extrabold text-forest-800 hover:text-forest-950 pt-2 border-t border-zinc-100">
-          <span>Lihat Rincian Biaya Lengkap di Halaman PPDB</span>
-          <span class="material-symbols-rounded text-[16px]">arrow_forward</span>
-        </a>
-      </div>
-
-      <!-- Card C: Portal Lengkap PPDB & Cek Status Kelulusan -->
-      <div class="bg-forest-950 text-white p-5 sm:p-6 rounded-3xl shadow-md flex flex-col justify-between space-y-4">
-        <div class="space-y-1.5">
-          <span class="text-[11px] font-extrabold uppercase text-limeaccent-400">PORTAL KHUSUS PPDB ONLINE</span>
-          <h4 class="text-base sm:text-lg font-extrabold leading-snug">Lihat Brosur Lengkap, Rincian Biaya &amp; Cek Status Kelulusan</h4>
-          <p class="text-xs text-white/75">Sudah mendaftar? Cek jadwal tes dan pengumuman kelulusan menggunakan Nomor Registrasi / WA.</p>
-        </div>
-        <a
-          href="/ppdb"
-          class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs px-4 py-2.5 rounded-full flex items-center justify-between transition shadow"
-        >
-          <span>Buka Halaman Lengkap PPDB &amp; Cek Kelulusan</span>
-          <span class="material-symbols-rounded text-[18px]">open_in_new</span>
-        </a>
       </div>
     </div>
   </section>
