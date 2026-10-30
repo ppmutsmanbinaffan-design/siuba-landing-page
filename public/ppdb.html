@@ -32,6 +32,14 @@
     body { font-family: 'Urbanist', sans-serif; background-color: #f6f8f5; color: #0f2417; }
     .material-symbols-rounded { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 22; vertical-align: middle; }
     .glass-card { background: rgba(13, 51, 29, 0.72); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.18); }
+    .fluid-section-title { font-size: clamp(1.05rem, 1.35vw + 0.45rem, 1.45rem); line-height: 1.25; letter-spacing: -0.01em; }
+    .section-menu-card {
+      background: linear-gradient(135deg, #ffffff 0%, #eef6f0 100%);
+      border: 1.5px solid #b7d1be;
+      border-left: 6px solid #14492b;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 24px -8px rgba(13, 51, 29, 0.08);
+    }
   </style>
 </head>
 <body class="antialiased">
@@ -277,39 +285,132 @@
     </div>
   </section>
 
-  <!-- ==================== 4. RINCIAN BIAYA PENDIDIKAN & BEASISWA ==================== -->
-  <section id="biaya" class="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-    <div>
-      <span class="text-xs font-extrabold uppercase tracking-wider text-forest-700">INFORMASI INVESTASI PENDIDIKAN</span>
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-forest-950 mt-1">Rincian Biaya Pendidikan &amp; Program Beasiswa</h2>
+  <!-- ==================== 4. BIAYA PENDIDIKAN & INFORMASI PEMBAYARAN (SECTION 04) ==================== -->
+  <section id="biaya" class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-5 sm:space-y-6">
+    <!-- Header (Menu Card) -->
+    <div class="section-menu-card p-3.5 sm:p-4 lg:px-5 lg:py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-5">
+      <div class="shrink-0">
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
+          <span>MENU BIAYA &bull; BAGIAN 04</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
+            BIAYA PENDIDIKAN
+          </h2>
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
+            04
+          </span>
+        </div>
+        <div class="flex items-center gap-1.5 mt-0.5">
+          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
+          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800">
+            INVESTASI &amp; INFORMASI PEMBAYARAN
+          </h3>
+        </div>
+      </div>
+      <div class="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-3.5 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-5">
+        <p class="text-xs text-zinc-600 leading-relaxed max-w-2xl">
+          Rincian biaya pendidikan transparan mencakup Biaya Pendaftaran, Biaya Masuk (DSP), Biaya Bulanan (Syahriyah), Rincian Biaya Lainnya, serta Informasi Rekening Pembayaran Resmi.
+        </p>
+        <span class="bg-white border border-emerald-900/15 text-forest-900 text-[11px] font-extrabold px-3 py-1.5 rounded-full shrink-0 w-fit">
+          Tersedia Beasiswa Prestasi
+        </span>
+      </div>
     </div>
 
-    <!-- 4 Kartu Komponen Biaya -->
+    <!-- 4 Kartu Rincian Biaya Pendidikan -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-2">
-        <span class="text-xs font-extrabold uppercase text-zinc-400">1. Biaya Pendaftaran &amp; Tes</span>
-        <div id="p-fee-reg" class="text-2xl font-extrabold text-forest-950">Rp 350.000</div>
-        <p class="text-xs text-zinc-500">Dibayarkan saat registrasi awal untuk mengikuti ujian seleksi &amp; psikotes.</p>
+      <!-- 1. Biaya Pendaftaran -->
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-0.5 rounded-full">01. BIAYA PENDAFTARAN</span>
+            <span class="material-symbols-rounded text-forest-800 text-[20px]">receipt_long</span>
+          </div>
+          <div id="p-fee-reg" class="text-2xl sm:text-3xl font-extrabold text-forest-950 pt-1">Rp 350.000</div>
+          <p class="text-xs text-zinc-600 leading-relaxed">
+            Dibayarkan satu kali saat registrasi formulir PPDB (Sudah termasuk biaya Tes Seleksi Al-Qur&rsquo;an, Akademik, &amp; Psikotes Kesiapan Asrama).
+          </p>
+        </div>
+        <span class="text-[11px] font-bold text-zinc-400 pt-3 border-t border-zinc-100 block">Sekali Saat Pendaftaran</span>
       </div>
 
-      <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-2">
-        <span class="text-xs font-extrabold uppercase text-zinc-400">2. Dana Pengembangan (DSP)</span>
-        <div id="p-fee-dsp" class="text-2xl font-extrabold text-forest-950">Rp 14.500.000</div>
-        <p class="text-xs text-zinc-500">Sekali selama masa studi (Pengembangan sarana prasarana kamar asrama &amp; kelas).</p>
+      <!-- 2. Biaya Masuk (Dana Pengembangan / Pangkal) -->
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-0.5 rounded-full">02. BIAYA MASUK (DSP)</span>
+            <span class="material-symbols-rounded text-forest-800 text-[20px]">domain</span>
+          </div>
+          <div id="p-fee-dsp" class="text-2xl sm:text-3xl font-extrabold text-forest-950 pt-1">Rp 14.500.000</div>
+          <p class="text-xs text-zinc-600 leading-relaxed">
+            Dana Pengembangan Sarana Asrama &amp; Pendidikan (dibayarkan saat daftar ulang setelah dinyatakan lulus, dapat diangsur sesuai ketentuan).
+          </p>
+        </div>
+        <span class="text-[11px] font-bold text-emerald-700 pt-3 border-t border-zinc-100 block">Tersedia Potongan Beasiswa 25%–100%</span>
       </div>
 
-      <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-2">
-        <span class="text-xs font-extrabold uppercase text-zinc-400">3. Seragam, Kitab &amp; Perlengkapan</span>
-        <div id="p-fee-uniform" class="text-2xl font-extrabold text-forest-950">Rp 3.200.000</div>
-        <p class="text-xs text-zinc-500">5 stel seragam pesantren, buku/kitab diniyah tahun pertama, lemari &amp; kasur.</p>
+      <!-- 3. Biaya Bulanan (SPP / Syahriyah) -->
+      <div class="bg-forest-950 text-white p-6 rounded-3xl shadow-lg flex flex-col justify-between space-y-4">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase text-forest-950 bg-limeaccent-400 px-2.5 py-0.5 rounded-full">03. BIAYA BULANAN (SPP)</span>
+            <span class="material-symbols-rounded text-limeaccent-400 text-[20px]">calendar_today</span>
+          </div>
+          <div id="p-fee-spp" class="text-2xl sm:text-3xl font-extrabold text-white pt-1">Rp 1.650.000 / bulan</div>
+          <p id="p-fee-includes" class="text-xs text-white/80 leading-relaxed">
+            Makan 3x sehari bergizi, Asrama ber-AC/nyaman, Laundry pakaian, Layanan Poskestren, SPP Sekolah &amp; Halaqah Tahfidz, serta Kartu Pintar RFID SIUBA.
+          </p>
+        </div>
+        <span class="text-[11px] font-bold text-limeaccent-400 pt-3 border-t border-white/15 block">Sudah Mencakup Makan &amp; Laundry</span>
       </div>
 
-      <div class="bg-forest-950 text-white p-5 sm:p-6 rounded-3xl shadow-md space-y-2">
-        <span class="text-xs font-extrabold uppercase text-limeaccent-400">4. Syahriyah / SPP Bulanan</span>
-        <div id="p-fee-spp" class="text-2xl font-extrabold text-white">Rp 1.650.000 / bulan</div>
-        <p id="p-fee-includes" class="text-xs text-white/80 leading-relaxed">
-          Makan 3x sehari, Asrama, Laundry, Layanan Poskestren, Sekolah &amp; Tahfidz, serta Kartu Pintar RFID SIUBA.
+      <!-- 4. Rincian Biaya Lainnya -->
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-0.5 rounded-full">04. RINCIAN BIAYA LAINNYA</span>
+            <span class="material-symbols-rounded text-forest-800 text-[20px]">checkroom</span>
+          </div>
+          <div id="p-fee-uniform" class="text-2xl sm:text-3xl font-extrabold text-forest-950 pt-1">Rp 3.200.000</div>
+          <ul class="text-xs text-zinc-600 space-y-1 pt-1">
+            <li>&bull; 5 Stel Seragam Sekolah &amp; Kepesantrenan</li>
+            <li>&bull; Paket Buku Pelajaran &amp; Kitab Diniyah Tahun I</li>
+            <li>&bull; Kasur, Bantal, Sprei &amp; Lemari Pribadi Asrama</li>
+            <li>&bull; Kartu Pintar Santri RFID &amp; QR SIUBA</li>
+          </ul>
+        </div>
+        <span class="text-[11px] font-bold text-zinc-400 pt-3 border-t border-zinc-100 block">Perlengkapan Awal Santri Baru</span>
+      </div>
+    </div>
+
+    <!-- 5. Informasi Pembayaran Resmi -->
+    <div class="bg-white rounded-3xl border border-zinc-200/80 p-5 sm:p-7 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+      <div class="lg:col-span-8 space-y-2">
+        <div class="flex items-center gap-2 text-xs font-extrabold uppercase text-forest-800">
+          <span class="material-symbols-rounded text-[18px] text-limeaccent-600">account_balance</span>
+          <span>05. INFORMASI PEMBAYARAN &amp; REKENING RESMI YAYASAN</span>
+        </div>
+        <h4 id="p-bank-account" class="text-base sm:text-lg font-extrabold text-forest-950">
+          Bank Syariah Indonesia (BSI) — No. Rek: 7123-456-789 a.n. Yayasan Ponpes Utsman Bin Affan
+        </h4>
+        <p class="text-xs text-zinc-600 leading-relaxed">
+          Seluruh transaksi pembayaran resmi hanya melalui rekening Yayasan di atas atau Loket Keuangan Sekretariat PPDB. Simpan bukti transfer dan kirimkan konfirmasi ke WhatsApp Panitia PPDB. Ketua Panitia: <strong id="p-admin-name">Ustadz H. Ahmad Fauzi, S.Pd.I</strong> &bull; Layanan: <span id="p-sec-hours">Senin – Sabtu (08.00 – 16.00 WIB)</span>.
         </p>
+      </div>
+      <div class="lg:col-span-4 flex flex-wrap lg:justify-end gap-2.5">
+        <a id="p-wa-btn" href="https://wa.me/6281234567890" target="_blank" class="bg-forest-950 hover:bg-forest-800 text-limeaccent-400 font-extrabold text-xs px-4 py-3 rounded-full flex items-center gap-1.5 shadow transition">
+          <span class="material-symbols-rounded text-[17px]">chat</span>
+          <span>WA: <span id="p-wa-num">0812-3456-7890</span></span>
+        </a>
+        <a
+          href="#daftar-online"
+          class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs px-5 py-3 rounded-full flex items-center gap-2 shadow cursor-pointer transition"
+        >
+          <span class="material-symbols-rounded text-[18px]">how_to_reg</span>
+          <span>Daftar PPDB Sekarang</span>
+        </a>
       </div>
     </div>
 
@@ -338,19 +439,6 @@
         </div>
         <p id="p-sch-orphan" class="text-xs sm:text-sm text-zinc-600 leading-relaxed"></p>
       </div>
-    </div>
-
-    <!-- Info Rekening & Kontak Sekretariat -->
-    <div class="bg-limeaccent-400/25 border border-limeaccent-500/40 rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs sm:text-sm">
-      <div class="space-y-1">
-        <span class="font-extrabold text-forest-950 uppercase block">Rekening Resmi Panitia PPDB &amp; Sekretariat:</span>
-        <div id="p-bank-account" class="font-bold text-forest-900">Bank Syariah Indonesia (BSI) — No. Rek: 7123-456-789 a.n. Yayasan Ponpes Utsman Bin Affan</div>
-        <div class="text-zinc-600">Ketua Panitia: <strong id="p-admin-name">Ustadz H. Ahmad Fauzi, S.Pd.I</strong> &bull; Layanan: <span id="p-sec-hours">Senin – Sabtu (08.00 – 16.00 WIB)</span></div>
-      </div>
-      <a id="p-wa-btn" href="https://wa.me/6281234567890" target="_blank" class="bg-forest-950 hover:bg-forest-800 text-limeaccent-400 font-extrabold px-5 py-3 rounded-full flex items-center gap-2 shrink-0 w-fit shadow">
-        <span class="material-symbols-rounded text-[18px]">chat</span>
-        <span>Konsultasi WA Panitia: <span id="p-wa-num">0812-3456-7890</span></span>
-      </a>
     </div>
   </section>
 
