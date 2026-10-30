@@ -35,6 +35,20 @@ Route::get('/cms-landing', function () {
     return redirect('/dashboard');
 });
 
+$servePpdbAdmin = function () {
+    $ppdbPath = public_path('manajemen-ppdb.html');
+    if (File::exists($ppdbPath)) {
+        return response()->file($ppdbPath, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        ]);
+    }
+    return redirect('/dashboard');
+};
+
+Route::get('/manajemen-ppdb', $servePpdbAdmin);
+Route::get('/ppdb-admin', $servePpdbAdmin);
+
 Route::get('/{any}', function () {
     $indexPath = public_path('app.html');
     if (!File::exists($indexPath)) {

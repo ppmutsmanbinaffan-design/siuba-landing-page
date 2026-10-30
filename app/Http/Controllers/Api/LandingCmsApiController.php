@@ -212,14 +212,21 @@ class LandingCmsApiController extends Controller
 
     public function submitPpdbRegistration(Request $request): JsonResponse
     {
+        $studentName = $request->input('student_name') ?? $request->input('nama_lengkap') ?? 'Calon Santri';
+        $level = $request->input('level') ?? $request->input('jenjang') ?? 'SMP IT';
+        $track = $request->input('track') ?? $request->input('jalur') ?? 'Reguler';
+        $parentName = $request->input('parent_name') ?? $request->input('nama_wali') ?? '-';
+        $whatsapp = $request->input('whatsapp') ?? $request->input('no_whatsapp') ?? '-';
+        $originSchool = $request->input('origin_school') ?? $request->input('asal_sekolah') ?? '-';
+
         $id = DB::table('ppdb_registrations')->insertGetId([
-            'student_name' => (string) $request->input('student_name'),
-            'level' => (string) $request->input('level', 'SMP IT'),
-            'track' => (string) $request->input('track', 'Reguler'),
-            'parent_name' => (string) $request->input('parent_name'),
-            'whatsapp' => (string) $request->input('whatsapp'),
-            'origin_school' => (string) $request->input('origin_school', '-'),
-            'status' => 'Baru',
+            'student_name' => (string) $studentName,
+            'level' => (string) $level,
+            'track' => (string) $track,
+            'parent_name' => (string) $parentName,
+            'whatsapp' => (string) $whatsapp,
+            'origin_school' => (string) ($originSchool ?: '-'),
+            'status' => (string) $request->input('status', 'Baru'),
             'created_at' => now(),
             'updated_at' => now(),
         ]);

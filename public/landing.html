@@ -1391,7 +1391,7 @@
       if (!item) return;
       document.getElementById('modal-news-img').src = item.image_url || 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80';
       document.getElementById('modal-news-cat').textContent = item.category || 'Berita';
-      document.getElementById('modal-news-date').textContent = item.published_date_label || '';
+      document.getElementById('modal-news-date').textContent = item.published_date || item.published_date_label || '';
       document.getElementById('modal-news-title').textContent = item.title || '';
       document.getElementById('modal-news-content').textContent = item.content || item.excerpt || '';
       document.getElementById('news-detail-modal').classList.remove('hidden');
@@ -1409,53 +1409,56 @@
         var res = await fetch('/api/v1/cms/landing', { headers: { 'Accept': 'application/json' } });
         if (!res.ok) return;
         var json = await res.json();
-        if (!json || !json.data) return;
+        if (!json) return;
 
-        var p = json.data.profile || {};
-        setTxt('cms-hero-badge', p.hero_badge);
+        var p = json.profile || (json.data && json.data.profile) || {};
+        setTxt('cms-hero-badge', p.pesantren_name || p.hero_badge);
         setTxt('cms-hero-title', p.hero_title);
         setTxt('cms-hero-subtitle', p.hero_subtitle);
-        setTxt('cms-profile-since', p.profile_since);
+        setTxt('cms-profile-since', p.founded_year || p.profile_since);
         setTxt('cms-profile-desc', p.profile_description);
-        if (p.visi) setTxt('cms-visi', '“' + p.visi + '”');
+        var visiVal = p.vision || p.visi;
+        if (visiVal) setTxt('cms-visi', '“' + visiVal + '”');
         setTxt('cms-motto', p.motto);
-        setTxt('cms-misi-1', p.misi_1);
-        setTxt('cms-misi-2', p.misi_2);
-        setTxt('cms-misi-3', p.misi_3);
-        setTxt('cms-misi-4', p.misi_4);
+        var missions = p.missions || [];
+        setTxt('cms-misi-1', missions[0] || p.misi_1);
+        setTxt('cms-misi-2', missions[1] || p.misi_2);
+        setTxt('cms-misi-3', missions[2] || p.misi_3);
+        setTxt('cms-misi-4', missions[3] || p.misi_4);
         if (p.mudir_quote) setTxt('cms-mudir-quote', '“' + p.mudir_quote + '”');
         setTxt('cms-mudir-name', p.mudir_name);
-        setTxt('cms-stat-kelulusan', p.stat_kelulusan);
+        setTxt('cms-stat-kelulusan', p.stat_graduation || p.stat_kelulusan);
         setTxt('cms-stat-kelulusan-desc', p.stat_kelulusan_desc);
-        setTxt('cms-stat-santri', p.stat_santri_aktif);
-        setTxt('cms-stat-ustadz', p.stat_ustadz);
+        setTxt('cms-stat-santri', p.stat_students || p.stat_santri_aktif);
+        setTxt('cms-stat-ustadz', p.stat_teachers || p.stat_ustadz);
         setTxt('cms-stat-jenjang', p.stat_jenjang);
         setTxt('cms-stat-asrama', p.stat_asrama);
         setTxt('cms-contact-phone', p.contact_phone);
         setTxt('cms-contact-email', p.contact_email);
         setTxt('cms-contact-address', p.contact_address);
 
-        var d = json.data.ppdb || {};
-        if (d.tahun_ajaran) setTxt('cms-ppdb-tahun', 'PPDB TAHUN AJARAN ' + d.tahun_ajaran);
-        setTxt('cms-ppdb-status', d.status_gelombang);
-        setTxt('cms-ppdb-kuota', d.total_kuota);
-        setTxt('cms-ppdb-kuota-desc', d.deskripsi_kuota);
+        var d = json.ppdb || (json.data && json.data.ppdb) || {};
+        var thn = d.academic_year || d.tahun_ajaran;
+        if (thn) setTxt('cms-ppdb-tahun', 'PPDB TAHUN AJARAN ' + thn);
+        setTxt('cms-ppdb-status', d.status_badge || d.status_gelombang);
+        setTxt('cms-ppdb-kuota', d.total_quota || d.total_kuota);
+        setTxt('cms-ppdb-kuota-desc', d.quota_description || d.deskripsi_kuota);
         setTxt('cms-ppdb-g1-label', d.gelombang_1_label);
-        setTxt('cms-ppdb-g1-date', d.gelombang_1_waktu);
+        setTxt('cms-ppdb-g1-date', d.wave_1 || d.gelombang_1_waktu);
         setTxt('cms-ppdb-g2-label', d.gelombang_2_label);
-        setTxt('cms-ppdb-g2-date', d.gelombang_2_waktu);
+        setTxt('cms-ppdb-g2-date', d.wave_2 || d.gelombang_2_waktu);
         setTxt('cms-ppdb-tes-label', d.jadwal_tes_label);
-        setTxt('cms-ppdb-tes-date', d.jadwal_tes_waktu);
-        setTxt('cms-ppdb-beasiswa', d.info_beasiswa);
+        setTxt('cms-ppdb-tes-date', d.test_schedule || d.jadwal_tes_waktu);
+        setTxt('cms-ppdb-beasiswa', d.scholarship_note || d.info_beasiswa);
         setTxt('cms-smp-title', d.smp_title);
         setTxt('cms-smp-desc', d.smp_desc);
-        setTxt('cms-smp-kuota', d.smp_kuota);
+        setTxt('cms-smp-kuota', d.smp_quota || d.smp_kuota);
         setTxt('cms-sma-title', d.sma_title);
         setTxt('cms-sma-desc', d.sma_desc);
-        setTxt('cms-sma-kuota', d.sma_kuota);
-        setTxt('cms-ppdb-whatsapp', d.whatsapp_ppdb);
+        setTxt('cms-sma-kuota', d.sma_quota || d.sma_kuota);
+        setTxt('cms-ppdb-whatsapp', d.whatsapp_contact || d.whatsapp_ppdb);
 
-        var news = json.data.news || [];
+        var news = json.news || (json.data && json.data.news) || [];
         if (news.length > 0) {
           window.__CMS_NEWS_LIST__ = news;
           var grid = document.getElementById('cms-news-grid');
@@ -1465,6 +1468,7 @@
                 ? 'bg-forest-900 text-limeaccent-400'
                 : 'bg-limeaccent-400 text-forest-950';
               var img = item.image_url || 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80';
+              var pubDate = item.published_date || item.published_date_label || '';
               return '<article onclick="openNewsDetail(' + idx + ')" class="cursor-pointer bg-white rounded-3xl border border-zinc-200/80 shadow-sm overflow-hidden flex flex-col justify-between group">' +
                 '<div>' +
                   '<div class="relative h-48 overflow-hidden bg-zinc-100">' +
@@ -1474,7 +1478,7 @@
                   '<div class="p-5 sm:p-6 space-y-2.5">' +
                     '<div class="flex items-center gap-2 text-xs text-zinc-400 font-semibold">' +
                       '<span class="material-symbols-rounded text-[15px]">calendar_month</span>' +
-                      '<span>' + (item.published_date_label || '') + '</span>' +
+                      '<span>' + pubDate + '</span>' +
                     '</div>' +
                     '<h4 class="text-base sm:text-lg font-extrabold text-forest-950 leading-snug group-hover:text-forest-700 transition">' + (item.title || '') + '</h4>' +
                     '<p class="text-xs text-zinc-600 leading-relaxed">' + (item.excerpt || '') + '</p>' +
