@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>SIUBA — Sistem Informasi & Presensi Terpadu Pesantren Utsman Bin Affan</title>
-  <meta name="description" content="Transformasi Digital Manajemen Presensi Santri, KBM, Asrama, Ibadah & SDM Berbasis Smart Card RFID & QR Code di Pesantren Utsman Bin Affan." />
+  <title>Pondok Pesantren Utsman Bin Affan — Portal Resmi, PPDB & Sistem SIUBA</title>
+  <meta name="description" content="Portal Resmi Pondok Pesantren Utsman Bin Affan: Profil Pesantren, Visi & Misi, Program Pendidikan, Berita Terkini, Informasi PPDB Santri Baru, dan Sistem Presensi Digital SIUBA." />
 
   <!-- Google Fonts: Urbanist -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -66,24 +66,23 @@
       line-height: 1;
     }
     .glass-nav {
-      background: rgba(13, 51, 29, 0.62);
+      background: rgba(13, 51, 29, 0.65);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.18);
     }
     .glass-card {
-      background: rgba(15, 48, 27, 0.76);
+      background: rgba(15, 48, 27, 0.78);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(163, 230, 53, 0.25);
     }
-    /* Fluid typography helper classes */
     .fluid-hero-title {
-      font-size: clamp(1.75rem, 3.8vw + 0.75rem, 3.5rem);
+      font-size: clamp(1.75rem, 3.6vw + 0.75rem, 3.4rem);
       line-height: 1.08;
     }
     .fluid-section-title {
-      font-size: clamp(1.4rem, 2.5vw + 0.6rem, 2.4rem);
+      font-size: clamp(1.35rem, 2.4vw + 0.6rem, 2.35rem);
       line-height: 1.15;
     }
     .fluid-stat-number {
@@ -97,6 +96,12 @@
       margin-right: auto;
       padding-left: clamp(1rem, 3.5vw, 3rem);
       padding-right: clamp(1rem, 3.5vw, 3rem);
+    }
+    details > summary {
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
     }
   </style>
 
@@ -115,11 +120,11 @@
 
   <!-- ==================== 1. HERO SECTION ==================== -->
   <section class="p-2.5 xs:p-3.5 sm:p-5 lg:p-6 max-w-[1440px] mx-auto">
-    <div class="relative rounded-[22px] sm:rounded-[32px] lg:rounded-[38px] overflow-hidden min-h-[520px] sm:min-h-[600px] lg:min-h-[660px] flex flex-col justify-between p-4 xs:p-6 sm:p-8 lg:p-11 text-white shadow-2xl">
+    <div class="relative rounded-[22px] sm:rounded-[32px] lg:rounded-[38px] overflow-hidden min-h-[540px] sm:min-h-[620px] lg:min-h-[680px] flex flex-col justify-between p-4 xs:p-6 sm:p-8 lg:p-11 text-white shadow-2xl">
       <!-- Background Image & Gradient Overlay -->
       <img
         src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1920&q=80"
-        alt="Pesantren Utsman Bin Affan"
+        alt="Pondok Pesantren Utsman Bin Affan"
         class="absolute inset-0 w-full h-full object-cover object-center scale-105 transition-transform duration-1000"
       />
       <div class="absolute inset-0 bg-gradient-to-b from-forest-950/80 via-forest-900/60 to-forest-950/92"></div>
@@ -132,32 +137,36 @@
             <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-limeaccent-400 text-forest-950 flex items-center justify-center shrink-0">
               <span class="material-symbols-rounded text-[16px] sm:text-[18px]">mosque</span>
             </span>
-            <span>SIUBA</span>
-            <span class="text-[10px] sm:text-xs font-semibold text-limeaccent-400 bg-limeaccent-400/15 px-2 py-0.5 rounded-full">v1.2</span>
+            <span>UTSMAN BIN AFFAN</span>
+            <span class="hidden xs:inline-block text-[10px] sm:text-xs font-semibold text-limeaccent-400 bg-limeaccent-400/15 px-2 py-0.5 rounded-full">SIUBA</span>
           </a>
 
-          <!-- Center Menu Pills (Desktop & Tablet Landscape) -->
+          <!-- Center Menu Pills (Desktop) -->
           <nav class="hidden lg:flex items-center gap-1 glass-nav p-1.5 rounded-full text-xs xl:text-sm font-medium">
-            <a href="#beranda" class="bg-white text-forest-950 font-bold px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">Beranda</a>
-            <a href="#layanan" class="text-white/85 hover:text-white hover:bg-white/10 px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">Fitur Utama</a>
-            <a href="#analitik" class="text-white/85 hover:text-white hover:bg-white/10 px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">Monitoring</a>
-            <a href="#domain" class="text-white/85 hover:text-white hover:bg-white/10 px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">KBM &amp; Asrama</a>
-            <a href="#sinergi" class="text-white/85 hover:text-white hover:bg-white/10 px-3.5 xl:px-4 py-1.5 rounded-full transition whitespace-nowrap">Peran Akses</a>
+            <a href="#beranda" class="bg-white text-forest-950 font-bold px-3.5 py-1.5 rounded-full transition whitespace-nowrap">Beranda</a>
+            <a href="#profil" class="text-white/85 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition whitespace-nowrap">Profil &amp; Visi Misi</a>
+            <a href="#program" class="text-white/85 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition whitespace-nowrap">Program</a>
+            <a href="#ppdb" class="text-limeaccent-400 hover:bg-white/10 font-bold px-3 py-1.5 rounded-full transition whitespace-nowrap">PPDB 2026/2027</a>
+            <a href="#berita" class="text-white/85 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition whitespace-nowrap">Berita</a>
+            <a href="#siuba" class="text-white/85 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition whitespace-nowrap">Sistem SIUBA</a>
           </nav>
 
-          <!-- Right Search/Badge & Login CTA + Mobile Menu Toggle -->
-          <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-            <div class="hidden xl:flex items-center gap-2 glass-nav px-3.5 py-2 rounded-full text-xs text-white/85 whitespace-nowrap">
-              <span class="material-symbols-rounded text-[16px] text-limeaccent-400">verified_user</span>
-              <span>Smart RFID &amp; QR Engine</span>
-            </div>
+          <!-- Right PPDB & Login CTA + Mobile Menu Toggle -->
+          <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <a
+              href="#ppdb"
+              class="hidden xl:flex items-center gap-1.5 glass-nav hover:bg-white/15 px-3.5 py-2 rounded-full text-xs font-bold text-limeaccent-400 whitespace-nowrap transition"
+            >
+              <span class="material-symbols-rounded text-[16px]">how_to_reg</span>
+              <span>Daftar PPDB</span>
+            </a>
 
             <a
               id="nav-login-btn"
               href="/login"
               class="bg-white hover:bg-limeaccent-400 text-forest-950 font-bold text-xs sm:text-sm pl-3.5 sm:pl-5 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full flex items-center gap-2 shadow-lg transition duration-200 group whitespace-nowrap"
             >
-              <span id="nav-login-text">Masuk Sistem</span>
+              <span id="nav-login-text">Portal SIUBA</span>
               <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-forest-950 text-white flex items-center justify-center group-hover:translate-x-0.5 transition-transform shrink-0">
                 <span class="material-symbols-rounded text-[14px] sm:text-[16px]">arrow_outward</span>
               </span>
@@ -178,26 +187,30 @@
         <!-- Collapsible Mobile & Tablet Navigation Drawer -->
         <div
           id="mobile-menu-drawer"
-          class="hidden lg:hidden mt-3 glass-card rounded-2xl p-3.5 space-y-1.5 text-sm font-semibold animate-fadeIn"
+          class="hidden lg:hidden mt-3 glass-card rounded-2xl p-3.5 space-y-1.5 text-sm font-semibold"
         >
           <a href="#beranda" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white/15 text-limeaccent-400">
             <span>Beranda</span>
             <span class="material-symbols-rounded text-[18px]">chevron_right</span>
           </a>
-          <a href="#layanan" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
-            <span>Fitur Utama SIUBA</span>
+          <a href="#profil" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
+            <span>Profil, Sejarah &amp; Visi Misi</span>
             <span class="material-symbols-rounded text-[18px]">chevron_right</span>
           </a>
-          <a href="#analitik" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
-            <span>Monitoring Real-Time</span>
+          <a href="#program" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
+            <span>Jenjang &amp; Program Unggulan</span>
             <span class="material-symbols-rounded text-[18px]">chevron_right</span>
           </a>
-          <a href="#domain" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
-            <span>Modul KBM &amp; Asrama</span>
+          <a href="#ppdb" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-limeaccent-400 hover:bg-white/10">
+            <span>Info PPDB Santri Baru 2026/2027</span>
+            <span class="material-symbols-rounded text-[18px]">how_to_reg</span>
+          </a>
+          <a href="#berita" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
+            <span>Berita &amp; Agenda Pesantren</span>
             <span class="material-symbols-rounded text-[18px]">chevron_right</span>
           </a>
-          <a href="#sinergi" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
-            <span>Peran &amp; Hak Akses</span>
+          <a href="#siuba" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/90 hover:bg-white/10">
+            <span>Sistem Digital SIUBA &amp; FAQ</span>
             <span class="material-symbols-rounded text-[18px]">chevron_right</span>
           </a>
         </div>
@@ -209,58 +222,75 @@
         <div class="lg:col-span-7 xl:col-span-8 space-y-4 sm:space-y-6 min-w-0">
           <div class="inline-flex items-center gap-2 glass-nav px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold text-limeaccent-400 uppercase tracking-wider max-w-full">
             <span class="w-2 h-2 rounded-full bg-limeaccent-400 animate-pulse shrink-0"></span>
-            <span class="truncate">Sistem Informasi Utsman Bin Affan (SIUBA)</span>
+            <span class="truncate">Pondok Pesantren Modern Utsman Bin Affan</span>
           </div>
 
           <h1 class="fluid-hero-title font-extrabold tracking-tight break-words">
-            TRANSFORMASI DIGITAL PRESENSI &amp; MANAJEMEN PESANTREN MODERN
+            MEMBANGUN GENERASI RABBANI, HAFIDZ QUR&rsquo;AN &amp; UNGGUL DALAM SAINS TEKNOLOGI
           </h1>
 
-          <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5 pt-1 sm:pt-2">
+          <div class="flex flex-col xs:flex-row flex-wrap sm:items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
             <a
-              href="/login"
-              class="inline-flex items-center justify-between sm:justify-start gap-3 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full shadow-xl transition group w-full xs:w-fit shrink-0"
+              href="#ppdb"
+              class="inline-flex items-center justify-between xs:justify-start gap-3 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full shadow-xl transition group w-full xs:w-fit shrink-0"
             >
-              <span>Mulai Presensi Sekarang</span>
+              <span>Pendaftaran Santri Baru (PPDB)</span>
               <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-forest-950 text-limeaccent-400 flex items-center justify-center group-hover:rotate-45 transition-transform shrink-0">
                 <span class="material-symbols-rounded text-[16px] sm:text-[18px]">arrow_outward</span>
               </span>
             </a>
 
-            <p class="text-xs sm:text-sm text-white/85 max-w-md leading-relaxed">
-              Integrasi penuh pemantauan kehadiran KBM Sekolah, Asrama, Shalat Berjamaah, Halaqah Tahfidz, hingga SDM Guru secara real-time maupun offline.
-            </p>
+            <a
+              href="/login"
+              class="inline-flex items-center justify-center gap-2 glass-nav hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full transition w-full xs:w-fit"
+            >
+              <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">qr_code_scanner</span>
+              <span>Login Sistem Presensi SIUBA</span>
+            </a>
           </div>
+
+          <p class="text-xs sm:text-sm text-white/80 max-w-2xl leading-relaxed">
+            Memadukan kurikulum Tahfidzul Qur&rsquo;an bersanad, penguasaan Bahasa Arab &amp; Inggris, serta ekosistem manajemen pesantren digital terpadu (SIUBA Smart Card RFID &amp; QR).
+          </p>
         </div>
 
         <!-- Right Floating Preview Card -->
         <div class="lg:col-span-5 xl:col-span-4 flex flex-col items-stretch sm:items-start lg:items-end justify-end">
-          <div class="glass-card p-3 sm:p-3.5 rounded-2xl sm:rounded-3xl w-full sm:max-w-md lg:max-w-sm shadow-2xl">
-            <div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-32 sm:h-36 mb-3">
+          <div class="glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl w-full sm:max-w-md lg:max-w-sm shadow-2xl">
+            <div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-36 sm:h-40 mb-3">
               <img
                 src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
-                alt="Aktivitas Belajar Santri"
+                alt="Kehidupan Santri Utsman Bin Affan"
                 class="w-full h-full object-cover"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-forest-950/80 via-transparent to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-forest-950/85 via-transparent to-transparent"></div>
               <a
-                href="/login"
+                href="#profil"
                 class="absolute top-2.5 right-2.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shadow-md hover:bg-limeaccent-400 transition"
-                title="Buka Portal"
+                title="Profil Pesantren"
               >
-                <span class="material-symbols-rounded text-[16px] sm:text-[18px]">qr_code_scanner</span>
+                <span class="material-symbols-rounded text-[16px] sm:text-[18px]">auto_stories</span>
               </a>
               <span class="absolute bottom-2.5 left-3 text-[11px] font-bold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">
-                Live QR &amp; RFID Ready
+                Akreditasi A &bull; Boarding School
               </span>
             </div>
             <p class="text-xs sm:text-sm font-semibold text-white leading-snug px-1">
-              Memaksimalkan kedisiplinan santri &amp; akurasi laporan kehadiran di seluruh unit pesantren.
+              Lingkungan pendidikan berasrama yang asri, kondusif, dan terpantau secara digital 24 jam.
             </p>
-            <div class="flex items-center gap-2 mt-3 px-1">
-              <span class="h-1 flex-1 rounded-full bg-limeaccent-400"></span>
-              <span class="h-1 flex-1 rounded-full bg-white/25"></span>
-              <span class="h-1 flex-1 rounded-full bg-white/25"></span>
+            <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-white/15 text-center text-[11px]">
+              <div>
+                <span class="font-extrabold text-limeaccent-400 text-sm block">30 Juz</span>
+                <span class="text-white/70">Target Tahfidz</span>
+              </div>
+              <div>
+                <span class="font-extrabold text-limeaccent-400 text-sm block">2 Bahasa</span>
+                <span class="text-white/70">Arab &amp; Inggris</span>
+              </div>
+              <div>
+                <span class="font-extrabold text-limeaccent-400 text-sm block">100%</span>
+                <span class="text-white/70">Digital Presensi</span>
+              </div>
             </div>
           </div>
         </div>
@@ -268,49 +298,50 @@
     </div>
   </section>
 
-  <!-- ==================== 2. PARTNER / ECOSYSTEM STRIP ==================== -->
+  <!-- ==================== 2. PILAR PENDIDIKAN STRIP ==================== -->
   <section class="fluid-container py-6 sm:py-8">
     <div class="flex flex-wrap items-center justify-between gap-4 sm:gap-6 border-b border-zinc-200 pb-6 sm:pb-8 text-zinc-500">
       <div class="text-xs font-bold uppercase tracking-wider text-zinc-400 w-full sm:w-auto">
-        Ekosistem Terintegrasi:
+        Pilar Pendidikan Kami:
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 w-full sm:w-auto flex-1 max-w-4xl">
         <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-forest-900 bg-white sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-zinc-200/70">
-          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">school</span>
-          <span class="truncate">KBM Akademik</span>
+          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">menu_book</span>
+          <span class="truncate">Tahfidzul Qur&rsquo;an</span>
         </div>
         <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-forest-900 bg-white sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-zinc-200/70">
-          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">night_shelter</span>
-          <span class="truncate">Kesantrian &amp; Asrama</span>
+          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">translate</span>
+          <span class="truncate">Dwi Bahasa Aktif</span>
         </div>
         <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-forest-900 bg-white sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-zinc-200/70">
-          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">mosque</span>
-          <span class="truncate">Ibadah &amp; Halaqah</span>
+          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">psychology</span>
+          <span class="truncate">Adab &amp; Kepemimpinan</span>
         </div>
         <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-forest-900 bg-white sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-zinc-200/70">
-          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">badge</span>
-          <span class="truncate">Kepegawaian SDM</span>
+          <span class="material-symbols-rounded text-forest-700 text-[20px] shrink-0">memory</span>
+          <span class="truncate">Sains &amp; Teknologi IT</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 3. SMART TOOLS FOR MODERN PESANTREN (01) ==================== -->
-  <section id="layanan" class="fluid-container py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-12">
+  <!-- ==================== 3. PROFIL PESANTREN, VISI & MISI (SECTION 01) ==================== -->
+  <section id="profil" class="fluid-container py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-12">
     <!-- Top Header Row -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
-      <!-- Small Video/Image Card -->
+      <!-- Small Campus Photo Card -->
       <div class="md:col-span-4 lg:col-span-3">
         <div class="relative rounded-2xl overflow-hidden h-36 sm:h-40 md:h-36 shadow-md group">
           <img
-            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
-            alt="Smart Scanner"
+            src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80"
+            alt="Gedung Pesantren Utsman Bin Affan"
             class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
           />
-          <div class="absolute inset-0 bg-forest-950/35 flex items-center justify-center">
-            <a href="/login" class="w-10 h-10 rounded-full bg-white text-forest-950 flex items-center justify-center shadow-lg hover:bg-limeaccent-400 transition">
-              <span class="material-symbols-rounded text-[20px]">play_arrow</span>
-            </a>
+          <div class="absolute inset-0 bg-forest-950/40 flex items-center justify-center">
+            <span class="px-3 py-1.5 rounded-full bg-white/95 text-forest-950 text-xs font-extrabold flex items-center gap-1.5 shadow">
+              <span class="material-symbols-rounded text-[16px] text-forest-700">verified</span>
+              Sejak 2012
+            </span>
           </div>
         </div>
       </div>
@@ -319,7 +350,7 @@
       <div class="md:col-span-8 lg:col-span-6 min-w-0">
         <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
-            TEKNOLOGI CERDAS
+            PROFIL PESANTREN
           </h2>
           <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold shrink-0">
             01
@@ -328,7 +359,7 @@
         <div class="flex items-center gap-2 sm:gap-3 mt-1">
           <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest shrink-0">//</span>
           <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800 break-words">
-            MANAJEMEN PRESENSI SANTRI
+            VISI, MISI &amp; NILAI INTI
           </h3>
         </div>
       </div>
@@ -336,13 +367,13 @@
       <!-- Right Description & CTA -->
       <div class="md:col-span-12 lg:col-span-3 flex flex-col sm:flex-row lg:flex-col sm:items-center lg:items-start justify-between gap-4">
         <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-xl">
-          Meningkatkan ketertiban kegiatan belajar, ibadah, dan asrama dengan teknologi pemindaian berkecepatan tinggi.
+          Lembaga pendidikan Islam terpadu yang menyeimbangkan kafa&rsquo;ah syar&rsquo;iyyah, hafalan Al-Qur&rsquo;an, dan keunggulan akademik modern.
         </p>
         <a
-          href="/login"
+          href="#ppdb"
           class="inline-flex items-center gap-2.5 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-bold text-xs pl-4 pr-2 py-2 rounded-full transition shrink-0 w-fit"
         >
-          <span>Jelajahi Fitur</span>
+          <span>Gabung Bersama Kami</span>
           <span class="w-6 h-6 rounded-full bg-forest-950 text-white flex items-center justify-center">
             <span class="material-symbols-rounded text-[14px]">arrow_forward</span>
           </span>
@@ -350,148 +381,155 @@
       </div>
     </div>
 
-    <!-- Bottom Responsive Bento Grid (1 col mobile -> 2 col tablet -> 3 col desktop) -->
+    <!-- Bottom Bento Grid: Misi + Visi/Sambutan + Fakta Singkat -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 pt-2 items-stretch">
-      <!-- Left: Core Services List -->
+      <!-- Left: Misi Pesantren (4 Poin Utama) -->
       <div class="md:col-span-1 lg:col-span-4 flex flex-col justify-between bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm">
         <div>
-          <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800">
-            LAYANAN INTI SIUBA
-          </span>
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800">
+              MISI UTAMA PESANTREN
+            </span>
+            <span class="material-symbols-rounded text-forest-700 text-[20px]">flag</span>
+          </div>
           <div class="mt-4 sm:mt-5 divide-y divide-zinc-100">
-            <a href="/login" class="py-3 sm:py-3.5 flex items-center justify-between gap-2 group">
-              <div class="flex items-center gap-3 min-w-0">
-                <span class="text-xs font-bold text-zinc-400 shrink-0">01</span>
-                <span class="text-xs sm:text-sm font-bold text-forest-950 group-hover:text-forest-700 truncate">Live QR &amp; RFID Terminal</span>
-              </div>
-              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition shrink-0">chevron_right</span>
-            </a>
-            <a href="/login" class="py-3 sm:py-3.5 flex items-center justify-between gap-2 group">
-              <div class="flex items-center gap-3 min-w-0">
-                <span class="text-xs font-bold text-zinc-400 shrink-0">02</span>
-                <span class="text-xs sm:text-sm font-bold text-forest-950 group-hover:text-forest-700 truncate">Monitoring KBM &amp; Guru Piket</span>
-              </div>
-              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition shrink-0">chevron_right</span>
-            </a>
-            <a href="/login" class="py-3 sm:py-3.5 flex items-center justify-between gap-2 group">
-              <div class="flex items-center gap-3 min-w-0">
-                <span class="text-xs font-bold text-zinc-400 shrink-0">03</span>
-                <span class="text-xs sm:text-sm font-bold text-forest-950 group-hover:text-forest-700 truncate">Kontrol Shalat &amp; Kamar Asrama</span>
-              </div>
-              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition shrink-0">chevron_right</span>
-            </a>
-            <a href="/login" class="py-3 sm:py-3.5 flex items-center justify-between gap-2 group">
-              <div class="flex items-center gap-3 min-w-0">
-                <span class="text-xs font-bold text-zinc-400 shrink-0">04</span>
-                <span class="text-xs sm:text-sm font-bold text-forest-950 group-hover:text-forest-700 truncate">Desain &amp; Cetak Kartu Santri CR80</span>
-              </div>
-              <span class="material-symbols-rounded text-[18px] text-zinc-400 group-hover:translate-x-1 transition shrink-0">chevron_right</span>
-            </a>
+            <div class="py-3.5 flex items-start gap-3">
+              <span class="text-xs font-extrabold text-limeaccent-600 bg-limeaccent-400/20 px-2 py-0.5 rounded-md shrink-0 mt-0.5">01</span>
+              <p class="text-xs sm:text-sm font-semibold text-forest-950 leading-relaxed">
+                Menyelenggarakan pendidikan <span class="font-extrabold">Tahfidzul Qur&rsquo;an</span> yang mutqin dan berakhlak Qur&rsquo;ani sesuai pemahaman Ahlussunnah wal Jama&rsquo;ah.
+              </p>
+            </div>
+            <div class="py-3.5 flex items-start gap-3">
+              <span class="text-xs font-extrabold text-limeaccent-600 bg-limeaccent-400/20 px-2 py-0.5 rounded-md shrink-0 mt-0.5">02</span>
+              <p class="text-xs sm:text-sm font-semibold text-forest-950 leading-relaxed">
+                Mengembangkan kompetensi akademik, sains, dan penguasaan <span class="font-extrabold">Bahasa Arab &amp; Inggris</span> secara aktif.
+              </p>
+            </div>
+            <div class="py-3.5 flex items-start gap-3">
+              <span class="text-xs font-extrabold text-limeaccent-600 bg-limeaccent-400/20 px-2 py-0.5 rounded-md shrink-0 mt-0.5">03</span>
+              <p class="text-xs sm:text-sm font-semibold text-forest-950 leading-relaxed">
+                Membina kemandirian, jiwa kepemimpinan (leadership), dan kepedulian sosial santri melalui pembiasaan asrama 24 jam.
+              </p>
+            </div>
+            <div class="py-3.5 flex items-start gap-3">
+              <span class="text-xs font-extrabold text-limeaccent-600 bg-limeaccent-400/20 px-2 py-0.5 rounded-md shrink-0 mt-0.5">04</span>
+              <p class="text-xs sm:text-sm font-semibold text-forest-950 leading-relaxed">
+                Menerapkan tata kelola pesantren modern yang transparan dan akuntabel berbasis teknologi <span class="font-extrabold">SIUBA Digital</span>.
+              </p>
+            </div>
           </div>
         </div>
-        <p class="text-xs text-zinc-500 mt-5 pt-4 border-t border-zinc-100">
-          Dirancang khusus untuk alur kerja Pesantren Utsman Bin Affan yang cepat, akurat, dan tahan gangguan jaringan.
-        </p>
+        <div class="mt-4 pt-4 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
+          <span>Kurikulum Terpadu Kemenag &amp; Kepesantrenan</span>
+          <span class="font-extrabold text-forest-800">100% Mukim</span>
+        </div>
       </div>
 
-      <!-- Center: Quote + Visual Card -->
+      <!-- Center: Visi Pesantren + Sambutan Mudir -->
       <div class="md:col-span-1 lg:col-span-4 flex flex-col justify-between gap-5">
-        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm space-y-3 flex-1 flex flex-col justify-between">
-          <div class="flex items-center justify-between text-xs text-zinc-400 font-semibold">
-            <span>VISI DIGITALISASI</span>
-            <span>SIUBA ENGINE</span>
+        <div class="bg-forest-950 text-white p-5 sm:p-6 rounded-3xl shadow-md space-y-3 flex-1 flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-28 h-28 rounded-full bg-limeaccent-400/10"></div>
+          <div class="flex items-center justify-between text-xs text-limeaccent-400 font-bold uppercase tracking-wider">
+            <span>VISI PESANTREN</span>
+            <span class="material-symbols-rounded text-[18px]">visibility</span>
           </div>
-          <blockquote class="text-sm sm:text-base lg:text-lg font-bold text-forest-950 leading-snug">
-            &ldquo;Dengan SIUBA, rekapitulasi kehadiran santri di kelas, masjid, dan asrama terhubung dalam satu layar secara instan.&rdquo;
+          <blockquote class="text-sm sm:text-base lg:text-lg font-extrabold text-white leading-snug">
+            &ldquo;Menjadi Lembaga Pendidikan Islam Terbaik dalam Mencetak Generasi Penghafal Al-Qur&rsquo;an yang Berakhlak Mulia, Cerdas, Mandiri, dan Berwawasan Global.&rdquo;
           </blockquote>
-          <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-zinc-500 pt-1">
-            <span class="font-bold text-forest-800">Utsman Bin Affan</span>
-            <span>&bull;</span>
-            <span>Smart Pesantren System</span>
+          <div class="flex flex-wrap items-center gap-2 text-xs text-white/70 pt-2 border-t border-white/10">
+            <span class="font-bold text-limeaccent-400">Motto:</span>
+            <span>Beriman &bull; Berilmu &bull; Beramal &bull; Berprestasi</span>
           </div>
         </div>
 
-        <div class="relative rounded-3xl overflow-hidden min-h-[180px] sm:h-48 shadow-md group">
+        <div class="relative rounded-3xl overflow-hidden min-h-[190px] sm:h-48 shadow-md group">
           <img
             src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
-            alt="Santri Digital"
+            alt="Pimpinan Pesantren"
             class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500"
           />
-          <div class="relative z-10 h-full bg-gradient-to-t from-forest-950/90 via-forest-950/35 to-transparent p-5 flex flex-col justify-between text-white">
+          <div class="relative z-10 h-full bg-gradient-to-t from-forest-950/95 via-forest-950/50 to-transparent p-5 flex flex-col justify-between text-white">
             <div class="flex items-center justify-between gap-2 text-xs font-bold tracking-wider">
-              <span class="bg-white/20 backdrop-blur px-2.5 py-1 rounded-full">OFFLINE-FIRST PWA</span>
-              <span>SIUBA</span>
+              <span class="bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">SAMBUTAN PIMPINAN</span>
+              <span>PONDOK</span>
             </div>
-            <div class="flex items-end justify-between gap-3 pt-6">
-              <p class="text-xs font-medium text-white/90 max-w-[220px]">
-                Tetap berjalan meski tanpa internet &amp; sinkron otomatis ke server MySQL.
+            <div class="space-y-1 pt-4">
+              <p class="text-xs italic text-white/90 leading-relaxed">
+                &ldquo;Kami berkomitmen menjaga amanah orang tua dengan mendidik santri sepenuh hati serta pelaporan kehadiran real-time.&rdquo;
               </p>
-              <a href="/login" class="bg-white text-forest-950 text-xs font-extrabold px-3.5 py-1.5 rounded-full flex items-center gap-1 hover:bg-limeaccent-400 transition shrink-0">
-                <span>Masuk</span>
-                <span class="material-symbols-rounded text-[14px]">arrow_outward</span>
-              </a>
+              <p class="text-xs font-extrabold text-limeaccent-400 pt-1">
+                KH. Abdullah Gymnastiar, Lc. — Pimpinan Pondok
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right: Gauge / Rate Card -->
+      <!-- Right: Statistik & Profil Singkat Pesantren -->
       <div class="md:col-span-2 lg:col-span-4 bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
         <div class="flex items-center justify-between gap-2">
           <div>
             <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800 block">
-              TINGKAT AKURASI &amp; KEHADIRAN
+              CAPAIAN &amp; PROFIL SANTRI
             </span>
-            <span class="text-xs text-zinc-400">Real-Time Attendance Engine</span>
+            <span class="text-xs text-zinc-400">Kelulusan &amp; Ketuntasan Tahfidz</span>
           </div>
-          <a href="/login" class="w-9 h-9 rounded-full bg-forest-950 text-white flex items-center justify-center hover:bg-limeaccent-400 hover:text-forest-950 transition shrink-0">
-            <span class="material-symbols-rounded text-[18px]">insights</span>
-          </a>
+          <span class="w-9 h-9 rounded-full bg-forest-950 text-limeaccent-400 flex items-center justify-center shrink-0">
+            <span class="material-symbols-rounded text-[18px]">workspace_premium</span>
+          </span>
         </div>
 
         <!-- Responsive SVG Gauge -->
-        <div class="my-5 sm:my-6 flex flex-col items-center justify-center">
-          <div class="relative w-full max-w-[220px] aspect-[2/1] overflow-hidden flex items-end justify-center">
+        <div class="my-4 sm:my-5 flex flex-col items-center justify-center">
+          <div class="relative w-full max-w-[210px] aspect-[2/1] overflow-hidden flex items-end justify-center">
             <svg viewBox="0 0 200 105" class="w-full h-full">
               <path d="M 20 95 A 80 80 0 0 1 180 95" fill="none" stroke="#e4ebe5" stroke-width="18" stroke-linecap="butt" stroke-dasharray="10 4" />
               <path d="M 20 95 A 80 80 0 0 1 168 52" fill="none" stroke="#14492b" stroke-width="18" stroke-linecap="butt" stroke-dasharray="10 4" />
               <path d="M 168 52 A 80 80 0 0 1 180 95" fill="none" stroke="#84cc16" stroke-width="18" stroke-linecap="butt" stroke-dasharray="10 4" />
             </svg>
             <div class="absolute bottom-0 text-center">
-              <span class="text-2xl sm:text-3xl font-extrabold text-forest-950">98.4%</span>
+              <span class="text-2xl sm:text-3xl font-extrabold text-forest-950">96.8%</span>
             </div>
           </div>
-          <p class="text-xs text-zinc-500 mt-3 text-center max-w-xs">
-            Kecepatan validasi kartu &lt; 0.3 detik dengan perlindungan anti-duplikasi scan.
+          <p class="text-xs text-zinc-500 mt-2.5 text-center max-w-xs">
+            Alumni diterima di PTN Favorit, Timur Tengah (Al-Azhar, Madinah, LIPIA) &amp; Perguruan Tinggi Islam.
           </p>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 pt-3 border-t border-zinc-100 text-xs">
-          <div class="bg-zinc-50 p-3 rounded-2xl min-w-0">
-            <span class="text-zinc-400 block truncate">Metode Scan</span>
-            <span class="font-extrabold text-forest-950 text-xs sm:text-sm block truncate">QR + RFID + Manual</span>
+        <div class="grid grid-cols-2 gap-2.5 pt-3 border-t border-zinc-100 text-xs">
+          <div class="bg-zinc-50 p-3 rounded-2xl">
+            <span class="text-zinc-400 block">Santri Aktif</span>
+            <span class="font-extrabold text-forest-950 text-sm">850+ Santri</span>
           </div>
-          <div class="bg-zinc-50 p-3 rounded-2xl min-w-0">
-            <span class="text-zinc-400 block truncate">Database</span>
-            <span class="font-extrabold text-forest-950 text-xs sm:text-sm block truncate">MySQL + IndexedDB</span>
+          <div class="bg-zinc-50 p-3 rounded-2xl">
+            <span class="text-zinc-400 block">Pendidik &amp; Musyrif</span>
+            <span class="font-extrabold text-forest-950 text-sm">95+ Ustadz/ah</span>
+          </div>
+          <div class="bg-zinc-50 p-3 rounded-2xl">
+            <span class="text-zinc-400 block">Jenjang</span>
+            <span class="font-extrabold text-forest-950 text-sm">SMP IT &amp; SMA IT</span>
+          </div>
+          <div class="bg-zinc-50 p-3 rounded-2xl">
+            <span class="text-zinc-400 block">Fasilitas Asrama</span>
+            <span class="font-extrabold text-forest-950 text-sm">Putra &amp; Putri</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 4. INSIGHTS FOR SMARTER MANAGEMENT (02) ==================== -->
-  <section id="analitik" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-6 sm:space-y-8">
+  <!-- ==================== 4. PROGRAM PENDIDIKAN & KEHIDUPAN SANTRI (SECTION 02) ==================== -->
+  <section id="program" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-6 sm:space-y-8">
     <!-- Header -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
       <div class="lg:col-span-6 min-w-0">
         <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
-          ANALITIK REAL-TIME &amp;
+          PROGRAM PENDIDIKAN &amp;
         </h2>
         <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 mt-1">
           <span class="text-xs font-bold text-zinc-400">//</span>
           <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
-            PEMANTAUAN TERPADU
+            PEMBINAAN SANTRI 24 JAM
           </h3>
           <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
             02
@@ -499,12 +537,12 @@
         </div>
       </div>
       <div class="lg:col-span-6 space-y-2">
-        <a href="/login" class="inline-flex items-center gap-1 text-xs font-extrabold uppercase tracking-wider text-forest-800 hover:text-forest-950">
-          <span>BUKA DASHBOARD EKSEKUTIF</span>
+        <a href="#ppdb" class="inline-flex items-center gap-1 text-xs font-extrabold uppercase tracking-wider text-forest-800 hover:text-forest-950">
+          <span>LIHAT KURIKULUM &amp; PENDAFTARAN</span>
           <span class="material-symbols-rounded text-[16px]">chevron_right</span>
         </a>
         <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-          Pantau statistik kehadiran harian, keterlambatan, izin/sakit santri, hingga rekapitulasi shalat 5 waktu dari satu pusat kendali.
+          Seluruh aktivitas harian santri mulai dari Qiyamul Lail, Shalat Berjamaah, Halaqah Tahfidz, KBM Sekolah, hingga Ekstrakurikuler terpola dan tercatat di sistem SIUBA.
         </p>
       </div>
     </div>
@@ -512,43 +550,41 @@
     <!-- Wide Banner with 3 Glass Widgets -->
     <div class="relative rounded-[24px] sm:rounded-[32px] overflow-hidden p-4 xs:p-6 sm:p-8 lg:p-11 shadow-xl">
       <img
-        src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80"
-        alt="Monitoring Banner"
+        src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1920&q=80"
+        alt="Program Pendidikan Pesantren"
         class="absolute inset-0 w-full h-full object-cover"
       />
       <div class="absolute inset-0 bg-gradient-to-r from-forest-950/92 via-forest-900/82 to-forest-950/88"></div>
 
-      <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2 sm:pt-6">
-        <!-- Widget 1 -->
+      <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2 sm:pt-4">
+        <!-- Widget 1: Tahfidz & Diniyah -->
         <div class="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-white flex flex-col justify-between space-y-5">
           <div class="flex items-start justify-between gap-2">
             <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-limeaccent-400 block">PRESENSI HARIAN</span>
-              <span class="text-xs text-white/70">Seluruh Sesi Aktif</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-limeaccent-400 block">TAHFIDZ &amp; ULUMUDDIN</span>
+              <span class="text-xs text-white/75">Halaqah Pagi &amp; Ba&rsquo;da Maghrib</span>
             </div>
-            <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shrink-0">
-              <span class="material-symbols-rounded text-[18px]">bolt</span>
+            <span class="w-9 h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shrink-0">
+              <span class="material-symbols-rounded text-[18px]">menu_book</span>
             </span>
           </div>
-          <div class="flex items-baseline justify-between gap-3 pt-2">
-            <span class="fluid-stat-number font-extrabold tracking-tight">24/7</span>
-            <div class="text-right">
-              <span class="text-xs text-limeaccent-400 font-bold block">Sinkronisasi Live</span>
-              <div class="w-20 sm:w-24 h-1.5 bg-white/20 rounded-full mt-1 overflow-hidden ml-auto">
-                <div class="w-4/5 h-full bg-limeaccent-400 rounded-full"></div>
-              </div>
-            </div>
+          <p class="text-xs text-white/80 leading-relaxed">
+            Program intensif Tahsin Al-Qur&rsquo;an metode Talaqqi, setoran Ziyadah &amp; Muraja&rsquo;ah harian, serta kajian Kitab Turats.
+          </p>
+          <div class="flex items-baseline justify-between gap-3 pt-2 border-t border-white/15">
+            <span class="text-2xl sm:text-3xl font-extrabold tracking-tight text-limeaccent-400">15–30 Juz</span>
+            <span class="text-xs text-white/80 font-semibold">Target Lulusan</span>
           </div>
         </div>
 
-        <!-- Widget 2 -->
+        <!-- Widget 2: Disiplin Shalat 5 Waktu -->
         <div class="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-white flex flex-col justify-between space-y-5">
           <div class="flex items-start justify-between gap-2">
             <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-limeaccent-400 block">SHALAT 5 WAKTU</span>
-              <span class="text-xs text-white/70">Monitoring Berjamaah Masjid</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-limeaccent-400 block">IBADAH &amp; SHALAT 5 WAKTU</span>
+              <span class="text-xs text-white/75">Presensi Kartu Pintar di Masjid</span>
             </div>
-            <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shrink-0">
+            <span class="w-9 h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shrink-0">
               <span class="material-symbols-rounded text-[18px]">mosque</span>
             </span>
           </div>
@@ -576,52 +612,35 @@
           </div>
         </div>
 
-        <!-- Widget 3 -->
+        <!-- Widget 3: Jenjang & Ekstrakurikuler -->
         <div class="md:col-span-2 lg:col-span-1 glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-white flex flex-col justify-between space-y-5">
           <div class="flex flex-wrap items-center gap-1.5 bg-forest-950/60 p-1.5 rounded-full text-xs font-bold w-fit">
-            <span class="bg-white text-forest-950 px-3.5 py-1 rounded-full">KBM</span>
-            <span class="px-3 py-1 text-white/75">Asrama</span>
-            <span class="px-3 py-1 text-white/75">Ekskul</span>
+            <span class="bg-white text-forest-950 px-3.5 py-1 rounded-full">SMP IT</span>
+            <span class="px-3 py-1 text-white/80">SMA IT</span>
+            <span class="px-3 py-1 text-white/80">Takhassus</span>
           </div>
           <div class="space-y-2">
-            <span class="text-xs font-semibold text-white/80 block">Status Kehadiran Santri:</span>
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold">
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-limeaccent-400"></span> Hadir</span>
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Terlambat</span>
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> Izin/Sakit</span>
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> Alpha</span>
+            <span class="text-xs font-semibold text-white/80 block">Ekstrakurikuler &amp; Life Skill:</span>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-bold">
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-limeaccent-400"></span> Panahan</span>
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Bela Diri</span>
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span> Robotik &amp; Coding</span>
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Khitobah 3 Bahasa</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Bottom Metric Strip -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-6 items-center pt-3 pb-6 border-b border-zinc-200">
-      <div class="lg:col-span-4">
-        <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800 block">REKAPITULASI TERPADU</span>
-        <span class="text-xs text-zinc-500">Laporan Harian, Bulanan &amp; Ekspor CSV/Excel</span>
-      </div>
-      <div class="lg:col-span-3 flex items-baseline gap-2">
-        <span class="fluid-stat-number font-extrabold text-forest-950">360&deg;</span>
-        <span class="text-xs font-bold text-zinc-500 uppercase">Profil Rekam Jejak Santri</span>
-      </div>
-      <div class="sm:col-span-2 lg:col-span-5">
-        <p class="text-sm sm:text-base font-bold text-forest-950 leading-snug">
-          Pemantauan menyeluruh mendorong kedisiplinan ibadah dan prestasi akademik santri secara konsisten.
-        </p>
-      </div>
-    </div>
   </section>
 
-  <!-- ==================== 5. KEY MODULES & DATA REPORT (03) ==================== -->
-  <section id="domain" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
+  <!-- ==================== 5. INFORMASI PPDB SANTRI BARU (SECTION 03) ==================== -->
+  <section id="ppdb" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
     <!-- Header -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
       <div class="lg:col-span-7 min-w-0">
         <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
-            MODUL UTAMA
+            PENERIMAAN SANTRI BARU
           </h2>
           <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
             03
@@ -630,174 +649,190 @@
         <div class="flex items-center gap-2 sm:gap-3 mt-1">
           <span class="text-xs font-bold text-zinc-400">//</span>
           <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
-            DAN LAPORAN KEHADIRAN
+            PPDB TAHUN AJARAN 2026 / 2027
           </h3>
         </div>
       </div>
 
       <div class="lg:col-span-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="flex items-center gap-4 text-xs font-extrabold uppercase tracking-wider text-forest-800 shrink-0">
-          <span class="border-b-2 border-forest-900 pb-1">KBM &amp; KELAS</span>
-          <span class="text-zinc-400">ASRAMA &amp; TAHFIDZ</span>
+        <div class="flex items-center gap-3 text-xs font-extrabold uppercase tracking-wider text-forest-800 shrink-0">
+          <span class="bg-limeaccent-400 text-forest-950 px-3 py-1 rounded-full">GELOMBANG 1 BUKA</span>
+          <span class="text-zinc-500">SMP IT &amp; SMA IT</span>
         </div>
         <p class="text-xs text-zinc-500 sm:max-w-xs">
-          Data kehadiran tersimpan aman di MySQL dengan dukungan import/export Excel massal.
+          Kuota terbatas untuk menjaga rasio pembinaan kelas dan kenyamanan kamar asrama.
         </p>
       </div>
     </div>
 
-    <!-- Content Row: Responsive 1 -> 2 -> 3 Columns -->
+    <!-- Content Row: Kuota & Syarat + 2 Jenjang Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-      <!-- Left Column -->
+      <!-- Left Column: Info Gelombang & Syarat Pendaftaran -->
       <div class="md:col-span-2 lg:col-span-4 bg-white p-6 sm:p-7 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
         <div class="space-y-4">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-zinc-400">KAPASITAS SISTEM</span>
-            <span class="w-9 h-9 rounded-full bg-forest-950 text-white flex items-center justify-center">
-              <span class="material-symbols-rounded text-[18px]">groups</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-forest-800">KUOTA PENERIMAAN</span>
+            <span class="w-9 h-9 rounded-full bg-forest-950 text-limeaccent-400 flex items-center justify-center">
+              <span class="material-symbols-rounded text-[18px]">how_to_reg</span>
             </span>
           </div>
-          <div class="fluid-stat-number font-extrabold text-forest-950 tracking-tight">10+ Role</div>
+          <div class="fluid-stat-number font-extrabold text-forest-950 tracking-tight">240 Kursi</div>
           <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-            Mendukung multi-peran mulai dari Super Admin, Pimpinan, Kepala Sekolah, Kepala Asrama, Guru KBM, Musyrif, Petugas Masjid, Pelatih Ekskul, hingga Operator.
+            Terdiri dari 120 kursi jenjang <strong>SMP IT</strong> (Putra &amp; Putri) dan 120 kursi jenjang <strong>SMA IT / Takhassus</strong> (Putra &amp; Putri).
           </p>
+
+          <div class="bg-zinc-50 rounded-2xl p-4 space-y-2 text-xs">
+            <span class="font-extrabold text-forest-950 uppercase block">Jadwal Gelombang PPDB:</span>
+            <div class="flex justify-between py-1 border-b border-zinc-200/70">
+              <span class="text-zinc-600">Gelombang I (Prestasi &amp; Reguler)</span>
+              <span class="font-bold text-forest-800">Okt – Des 2026</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-zinc-200/70">
+              <span class="text-zinc-600">Gelombang II</span>
+              <span class="font-bold text-forest-800">Jan – Mar 2027</span>
+            </div>
+            <div class="flex justify-between pt-1">
+              <span class="text-zinc-600">Tes Seleksi &amp; Wawancara</span>
+              <span class="font-bold text-forest-800">Setiap Sabtu</span>
+            </div>
+          </div>
         </div>
 
-        <div class="space-y-4 pt-6 border-t border-zinc-100 mt-6">
-          <a
-            href="/login"
-            class="inline-flex items-center gap-2.5 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs pl-4 pr-2 py-2 rounded-full transition w-fit"
+        <div class="space-y-3 pt-5 border-t border-zinc-100 mt-5">
+          <button
+            type="button"
+            onclick="document.getElementById('ppdb-modal').classList.remove('hidden')"
+            class="w-full inline-flex items-center justify-between bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm pl-5 pr-2 py-2.5 rounded-full transition cursor-pointer shadow-md"
           >
-            <span>Lihat Pusat Laporan</span>
-            <span class="w-6 h-6 rounded-full bg-forest-950 text-white flex items-center justify-center">
-              <span class="material-symbols-rounded text-[14px]">arrow_outward</span>
+            <span>Isi Formulir PPDB Online</span>
+            <span class="w-7 h-7 rounded-full bg-forest-950 text-white flex items-center justify-center">
+              <span class="material-symbols-rounded text-[16px]">edit_document</span>
             </span>
-          </a>
-          <p class="text-xs text-zinc-500">
-            Dilengkapi pembatasan ruang lingkup data otomatis (Data Scope) sesuai amanah masing-masing ustadz/pengurus.
+          </button>
+          <p class="text-[11px] text-zinc-500 text-center">
+            Tersedia jalur Beasiswa Tahfidz (Hafal min. 5 Juz) &amp; Prestasi Akademik.
           </p>
         </div>
       </div>
 
-      <!-- Card 1: KBM & Sekolah -->
-      <div class="md:col-span-1 lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[340px] sm:min-h-[380px] shadow-lg group flex flex-col justify-end p-4 sm:p-5">
+      <!-- Card 1: Jenjang SMP IT -->
+      <div class="md:col-span-1 lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[350px] sm:min-h-[390px] shadow-lg group flex flex-col justify-end p-4 sm:p-5">
         <img
           src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
-          alt="KBM Akademik"
+          alt="SMP IT Utsman Bin Affan"
           class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-forest-950/92 via-forest-950/35 to-transparent"></div>
 
         <div class="relative z-10 glass-card rounded-2xl p-4 sm:p-5 text-white space-y-4">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-forest-950 flex items-center justify-center font-bold">
-            <span class="material-symbols-rounded text-[20px]">menu_book</span>
-          </div>
-          <div class="flex items-center justify-between gap-2">
-            <div class="min-w-0">
-              <h4 class="text-base sm:text-lg font-extrabold truncate">JURNAL &amp; ABSENSI KBM</h4>
-              <p class="text-xs text-white/75 truncate">Jadwal Pelajaran &amp; Guru Pengganti</p>
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-full bg-limeaccent-400 text-forest-950 flex items-center justify-center font-bold">
+              <span class="material-symbols-rounded text-[20px]">school</span>
             </div>
-            <a href="/login" class="w-8 h-8 rounded-full bg-white/15 hover:bg-limeaccent-400 hover:text-forest-950 flex items-center justify-center transition shrink-0">
-              <span class="material-symbols-rounded text-[18px]">chevron_right</span>
-            </a>
+            <span class="text-[11px] font-bold bg-white/15 px-3 py-1 rounded-full">Lulusan SD / MI</span>
+          </div>
+          <div>
+            <h4 class="text-base sm:text-lg font-extrabold">JENJANG SMP IT (BOARDING)</h4>
+            <p class="text-xs text-white/80 mt-1">Fondasi Tahsin, Tahfidz 10–15 Juz, Bahasa Arab Dasar &amp; Kurikulum Nasional.</p>
           </div>
           <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-[11px]">
-            <div class="min-w-0">
-              <span class="text-white/60 block">Fitur</span>
-              <span class="font-bold block truncate">Jurnal Kelas</span>
+            <div>
+              <span class="text-white/60 block">Masa Studi</span>
+              <span class="font-bold">3 Tahun</span>
             </div>
-            <div class="min-w-0">
-              <span class="text-white/60 block">Akses</span>
-              <span class="font-bold block truncate">Guru &amp; Kepsek</span>
+            <div>
+              <span class="text-white/60 block">Kuota</span>
+              <span class="font-bold">120 Santri</span>
             </div>
-            <div class="min-w-0">
-              <span class="text-white/60 block">Ekspor</span>
-              <span class="font-bold block truncate">CSV / Rekap</span>
+            <div>
+              <span class="text-white/60 block">Asrama</span>
+              <span class="font-bold">Terpisah Pa/Pi</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Card 2: Asrama & Kesantrian -->
-      <div class="md:col-span-1 lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[340px] sm:min-h-[380px] shadow-lg group flex flex-col justify-end p-4 sm:p-5">
+      <!-- Card 2: Jenjang SMA IT & Takhassus -->
+      <div class="md:col-span-1 lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[350px] sm:min-h-[390px] shadow-lg group flex flex-col justify-end p-4 sm:p-5">
         <img
           src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80"
-          alt="Asrama & Tahfidz"
+          alt="SMA IT Utsman Bin Affan"
           class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-forest-950/92 via-forest-950/35 to-transparent"></div>
 
         <div class="relative z-10 glass-card rounded-2xl p-4 sm:p-5 text-white space-y-4">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-forest-950 flex items-center justify-center font-bold">
-            <span class="material-symbols-rounded text-[20px]">night_shelter</span>
-          </div>
-          <div class="flex items-center justify-between gap-2">
-            <div class="min-w-0">
-              <h4 class="text-base sm:text-lg font-extrabold truncate">ASRAMA &amp; HALAQAH</h4>
-              <p class="text-xs text-white/75 truncate">Malam, Tahfidz, Izin &amp; Dispensasi</p>
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-full bg-limeaccent-400 text-forest-950 flex items-center justify-center font-bold">
+              <span class="material-symbols-rounded text-[20px]">workspace_premium</span>
             </div>
-            <a href="/login" class="w-8 h-8 rounded-full bg-white/15 hover:bg-limeaccent-400 hover:text-forest-950 flex items-center justify-center transition shrink-0">
-              <span class="material-symbols-rounded text-[18px]">chevron_right</span>
-            </a>
+            <span class="text-[11px] font-bold bg-white/15 px-3 py-1 rounded-full">Lulusan SMP / MTs</span>
+          </div>
+          <div>
+            <h4 class="text-base sm:text-lg font-extrabold">JENJANG SMA IT &amp; TAKHASSUS</h4>
+            <p class="text-xs text-white/80 mt-1">Tahfidz 30 Juz Bersanad, Kajian Kitab Kuning, Sains Olimpiade &amp; Persiapan PTN/Timteng.</p>
           </div>
           <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-[11px]">
-            <div class="min-w-0">
-              <span class="text-white/60 block">Fitur</span>
-              <span class="font-bold block truncate">Kamar &amp; Piket</span>
+            <div>
+              <span class="text-white/60 block">Masa Studi</span>
+              <span class="font-bold">3 Tahun</span>
             </div>
-            <div class="min-w-0">
-              <span class="text-white/60 block">Akses</span>
-              <span class="font-bold block truncate">Musyrif</span>
+            <div>
+              <span class="text-white/60 block">Kuota</span>
+              <span class="font-bold">120 Santri</span>
             </div>
-            <div class="min-w-0">
-              <span class="text-white/60 block">Kontrol</span>
-              <span class="font-bold block truncate">Surat Izin</span>
+            <div>
+              <span class="text-white/60 block">Program</span>
+              <span class="font-bold">MIPA &amp; Syariah</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5-Step Responsive Timeline -->
+    <!-- 5-Step Alur Pendaftaran PPDB -->
     <div class="pt-4 sm:pt-8">
+      <div class="text-xs font-extrabold uppercase tracking-wider text-forest-800 mb-4">
+        ALUR PENDAFTARAN SANTRI BARU (5 TAHAP MUDAH):
+      </div>
       <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6 border-t border-zinc-200 pt-6">
-        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 01</span>
+        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 01</span>
           <div class="w-3 h-3 rounded-full bg-limeaccent-500 ring-4 ring-limeaccent-400/20"></div>
-          <p class="text-xs font-bold text-forest-950 pt-1">Import Data Santri &amp; Guru via CSV/Excel</p>
+          <p class="text-xs font-bold text-forest-950 pt-1">Registrasi Formulir Online &amp; Pilih Jenjang</p>
         </div>
-        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 02</span>
+        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 02</span>
           <div class="w-3 h-3 rounded-full bg-forest-900"></div>
-          <p class="text-xs font-semibold text-zinc-600 pt-1">Cetak Kartu Pintar Santri (QR &amp; RFID)</p>
+          <p class="text-xs font-semibold text-zinc-600 pt-1">Upload Berkas Rapor, KK, Akta &amp; Pas Foto</p>
         </div>
-        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 03</span>
+        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 03</span>
           <div class="w-3 h-3 rounded-full bg-forest-900"></div>
-          <p class="text-xs font-semibold text-zinc-600 pt-1">Buka Sesi KBM, Shalat, Asrama &amp; Ekskul</p>
+          <p class="text-xs font-semibold text-zinc-600 pt-1">Tes Baca Al-Qur&rsquo;an, Akademik &amp; Wawancara Wali</p>
         </div>
-        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 04</span>
+        <div class="bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 04</span>
           <div class="w-3 h-3 rounded-full bg-forest-900"></div>
-          <p class="text-xs font-semibold text-zinc-600 pt-1">Scan Kehadiran Cepat (Online / Offline)</p>
+          <p class="text-xs font-semibold text-zinc-600 pt-1">Pengumuman Kelulusan &amp; Daftar Ulang</p>
         </div>
-        <div class="xs:col-span-2 md:col-span-1 bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5 sm:space-y-2">
-          <span class="text-[11px] font-bold text-zinc-400 uppercase block">TAHAP 05</span>
+        <div class="xs:col-span-2 md:col-span-1 bg-white sm:bg-transparent p-3.5 sm:p-0 rounded-2xl border sm:border-0 border-zinc-200/70 space-y-1.5">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase block">LANGKAH 05</span>
           <div class="w-3 h-3 rounded-full bg-forest-900"></div>
-          <p class="text-xs font-semibold text-zinc-600 pt-1">Analitik Eksekutif &amp; Audit Laporan</p>
+          <p class="text-xs font-semibold text-zinc-600 pt-1">Penerbitan Kartu Pintar SIUBA &amp; Masuk Asrama</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 6. PARTNERING FOR A BETTER GENERATION (04) ==================== -->
-  <section id="sinergi" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
+  <!-- ==================== 6. BERITA, KABAR & AGENDA PESANTREN (SECTION 04) ==================== -->
+  <section id="berita" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
     <!-- Header -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
       <div class="lg:col-span-6 min-w-0">
         <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
           <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
-            SINERGI DIGITAL
+            BERITA &amp; AGENDA
           </h2>
           <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
             04
@@ -806,190 +841,320 @@
         <div class="flex items-center gap-2 sm:gap-3 mt-1">
           <span class="text-xs font-bold text-zinc-400">//</span>
           <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
-            GENERASI QURANI UNGGUL
+            KABAR TERKINI PESANTREN
           </h3>
         </div>
       </div>
       <div class="lg:col-span-6 space-y-2">
         <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs font-extrabold uppercase tracking-wider text-forest-800">
-          <span>KEAMANAN RBAC</span>
+          <span>PRESTASI SANTRI</span>
           <span>&bull;</span>
-          <span>OFFLINE SYNC</span>
+          <span>WISUDA TAHFIDZ</span>
           <span>&bull;</span>
-          <span>MAINTENANCE HUB</span>
+          <span>KEGIATAN PONDOK</span>
         </div>
         <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-          Setiap pengajar, musyrif, dan pimpinan mendapatkan hak akses yang terukur demi menjaga integritas serta keamanan data pesantren.
+          Ikuti perkembangan kegiatan, prestasi santri di tingkat nasional, serta agenda akademik terbaru Pondok Pesantren Utsman Bin Affan.
         </p>
       </div>
     </div>
 
-    <!-- Bottom Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-      <!-- Left CTA Image Box -->
-      <div class="md:col-span-2 lg:col-span-5 flex flex-col justify-between gap-5">
-        <div class="relative rounded-3xl overflow-hidden min-h-[200px] p-5 sm:p-6 flex flex-col justify-between text-white shadow-lg flex-1">
+    <!-- 3 News Articles Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <!-- News 1 -->
+      <article class="bg-white rounded-3xl border border-zinc-200/80 shadow-sm overflow-hidden flex flex-col justify-between group">
+        <div>
+          <div class="relative h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80"
+              alt="Wisuda Tahfidz Akbar"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+            <span class="absolute top-3 left-3 bg-limeaccent-400 text-forest-950 text-[11px] font-extrabold px-3 py-1 rounded-full">
+              Tahfidz Al-Qur&rsquo;an
+            </span>
+          </div>
+          <div class="p-5 sm:p-6 space-y-2.5">
+            <div class="flex items-center gap-2 text-xs text-zinc-400 font-semibold">
+              <span class="material-symbols-rounded text-[15px]">calendar_month</span>
+              <span>25 Oktober 2026</span>
+            </div>
+            <h4 class="text-base sm:text-lg font-extrabold text-forest-950 leading-snug group-hover:text-forest-700 transition">
+              Wisuda Akbar Tahfidzul Qur&rsquo;an: 48 Santri Tuntaskan Setoran 30 Juz Sekali Duduk
+            </h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Alhamdulillah, sebanyak 48 santri putra dan putri jenjang SMP IT dan SMA IT berhasil menyelesaikan ujian tasmi&rsquo; hafalan 30 juz Al-Qur&rsquo;an tahun ini.
+            </p>
+          </div>
+        </div>
+        <div class="px-5 sm:px-6 pb-5 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-forest-800">
+          <span>Baca Selengkapnya</span>
+          <span class="material-symbols-rounded text-[18px]">arrow_forward</span>
+        </div>
+      </article>
+
+      <!-- News 2 -->
+      <article class="bg-white rounded-3xl border border-zinc-200/80 shadow-sm overflow-hidden flex flex-col justify-between group">
+        <div>
+          <div class="relative h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
+              alt="Peluncuran SIUBA Smart Card"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+            <span class="absolute top-3 left-3 bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold px-3 py-1 rounded-full">
+              Inovasi Digital
+            </span>
+          </div>
+          <div class="p-5 sm:p-6 space-y-2.5">
+            <div class="flex items-center gap-2 text-xs text-zinc-400 font-semibold">
+              <span class="material-symbols-rounded text-[15px]">calendar_month</span>
+              <span>18 Oktober 2026</span>
+            </div>
+            <h4 class="text-base sm:text-lg font-extrabold text-forest-950 leading-snug group-hover:text-forest-700 transition">
+              Implementasi Penuh SIUBA v1.2: Presensi RFID &amp; QR Terintegrasi di Masjid, Kelas &amp; Asrama
+            </h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Pesantren Utsman Bin Affan resmi mengoperasikan sistem presensi pintar real-time untuk memantau kehadiran santri dan ustadz secara akurat.
+            </p>
+          </div>
+        </div>
+        <div class="px-5 sm:px-6 pb-5 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-forest-800">
+          <a href="/login" class="hover:underline">Buka Sistem SIUBA</a>
+          <span class="material-symbols-rounded text-[18px]">arrow_forward</span>
+        </div>
+      </article>
+
+      <!-- News 3 -->
+      <article class="md:col-span-2 lg:col-span-1 bg-white rounded-3xl border border-zinc-200/80 shadow-sm overflow-hidden flex flex-col justify-between group">
+        <div>
+          <div class="relative h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80"
+              alt="Juara Olimpiade Sains"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+            <span class="absolute top-3 left-3 bg-limeaccent-400 text-forest-950 text-[11px] font-extrabold px-3 py-1 rounded-full">
+              Prestasi Akademik
+            </span>
+          </div>
+          <div class="p-5 sm:p-6 space-y-2.5">
+            <div class="flex items-center gap-2 text-xs text-zinc-400 font-semibold">
+              <span class="material-symbols-rounded text-[15px]">calendar_month</span>
+              <span>10 Oktober 2026</span>
+            </div>
+            <h4 class="text-base sm:text-lg font-extrabold text-forest-950 leading-snug group-hover:text-forest-700 transition">
+              Delegasi Santri Utsman Bin Affan Raih Medali Emas Olimpiade Sains &amp; Bahasa Arab Nasional
+            </h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Tim olimpiade pesantren kembali mengharumkan nama lembaga dengan memborong 3 medali emas cabang Matematika, Fisika, dan Debat Bahasa Arab.
+            </p>
+          </div>
+        </div>
+        <div class="px-5 sm:px-6 pb-5 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-forest-800">
+          <span>Baca Selengkapnya</span>
+          <span class="material-symbols-rounded text-[18px]">arrow_forward</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ==================== 7. PORTAL DIGITAL SIUBA & FAQ (SECTION 05) ==================== -->
+  <section id="siuba" class="fluid-container py-8 sm:py-12 lg:py-14 space-y-8 sm:space-y-10">
+    <!-- Header -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
+      <div class="lg:col-span-6 min-w-0">
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
+            PORTAL DIGITAL SIUBA
+          </h2>
+          <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-forest-900 text-limeaccent-400 text-xs font-extrabold">
+            05
+          </span>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3 mt-1">
+          <span class="text-xs font-bold text-zinc-400">//</span>
+          <h3 class="fluid-section-title font-extrabold tracking-tight text-forest-800">
+            AKSES SISTEM &amp; TANYA JAWAB (FAQ)
+          </h3>
+        </div>
+      </div>
+      <div class="lg:col-span-6 space-y-2">
+        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+          Portal khusus bagi Pimpinan, Kepala Sekolah, Guru KBM, Musyrif Asrama, Petugas Masjid, Pelatih Ekskul, dan Operator untuk mengelola presensi harian.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+      <!-- Left: Login Portal Card -->
+      <div class="lg:col-span-5 flex flex-col justify-between gap-5">
+        <div class="relative rounded-3xl overflow-hidden min-h-[240px] p-6 flex flex-col justify-between text-white shadow-lg flex-1">
           <img
             src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80"
-            alt="Portal Login"
+            alt="Portal Login SIUBA"
             class="absolute inset-0 w-full h-full object-cover"
           />
-          <div class="absolute inset-0 bg-forest-950/75"></div>
+          <div class="absolute inset-0 bg-forest-950/80"></div>
 
-          <div class="relative z-10 flex flex-wrap items-center justify-between gap-2">
-            <span class="text-xs sm:text-sm font-extrabold tracking-wide uppercase">PORTAL LOGIN SIUBA</span>
+          <div class="relative z-10 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold tracking-wider uppercase text-limeaccent-400">SIUBA ATTENDANCE ENGINE</span>
+              <span class="bg-white/15 text-[11px] font-bold px-2.5 py-0.5 rounded-full">10+ Role Akun</span>
+            </div>
+            <h4 class="text-xl sm:text-2xl font-extrabold">Masuk ke Dashboard Operasional SIUBA</h4>
+            <p class="text-xs text-white/80 leading-relaxed">
+              Kelola sesi absensi kelas, scan kartu QR/RFID santri, input surat izin/sakit, hingga unduh laporan eksekutif.
+            </p>
+          </div>
+
+          <div class="relative z-10 pt-4 flex flex-wrap items-center gap-3">
             <a
               href="/login"
-              class="bg-white text-forest-950 hover:bg-limeaccent-400 text-xs font-extrabold pl-3.5 pr-2 py-1.5 rounded-full flex items-center gap-1.5 transition"
+              class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 text-xs sm:text-sm font-extrabold pl-5 pr-2.5 py-2 rounded-full flex items-center gap-2 transition shadow-md"
             >
-              <span>Masuk Akun</span>
-              <span class="w-5 h-5 rounded-full bg-forest-950 text-white flex items-center justify-center">
-                <span class="material-symbols-rounded text-[13px]">login</span>
+              <span>Login Aplikasi SIUBA</span>
+              <span class="w-6 h-6 rounded-full bg-forest-950 text-white flex items-center justify-center">
+                <span class="material-symbols-rounded text-[14px]">login</span>
               </span>
             </a>
           </div>
-
-          <a
-            href="/login"
-            class="relative z-10 glass-nav rounded-2xl sm:rounded-full px-4 py-2.5 flex items-center justify-between gap-2 text-xs font-semibold hover:bg-white/20 transition mt-6"
-          >
-            <span class="flex items-center gap-2 min-w-0">
-              <span class="material-symbols-rounded text-limeaccent-400 text-[18px] shrink-0">key</span>
-              <span class="truncate">Gunakan Akun Guru, Musyrif, atau Admin</span>
-            </span>
-            <span class="material-symbols-rounded text-[18px] shrink-0">arrow_forward</span>
-          </a>
         </div>
 
-        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex items-center justify-between">
+        <div class="bg-white p-5 rounded-3xl border border-zinc-200/80 shadow-sm flex items-center justify-between">
           <div class="flex items-center gap-3">
             <span class="w-10 h-10 rounded-full bg-forest-900 text-limeaccent-400 flex items-center justify-center font-extrabold text-xs shrink-0">
-              100%
+              LAN
             </span>
             <div>
-              <span class="text-xs font-extrabold uppercase text-forest-950 block">SIAP OPERASIONAL LAN &amp; WIFI</span>
-              <span class="text-xs text-zinc-500">Dapat diakses dari Laptop, Tablet &amp; HP di jaringan lokal</span>
+              <span class="text-xs font-extrabold uppercase text-forest-950 block">MENDUKUNG MODE OFFLINE &amp; WIFI LOKAL</span>
+              <span class="text-xs text-zinc-500">Tetap berfungsi penuh di lingkungan pesantren tanpa kuota internet</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Center Story Card -->
-      <div class="md:col-span-1 lg:col-span-4 bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between space-y-4">
-        <div class="space-y-2">
-          <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800">KEANDALAN SISTEM</span>
-          <p class="text-xs text-zinc-500">
-            Dilengkapi fitur Reset Database, Backup &amp; Restore, serta Audit Keamanan terpusat.
-          </p>
-        </div>
-        <div class="rounded-2xl overflow-hidden h-40">
-          <img
-            src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80"
-            alt="Tim Pengajar"
-            class="w-full h-full object-cover"
-          />
-        </div>
-        <div class="flex items-center justify-between gap-2 pt-2">
-          <a
-            href="/login"
-            class="inline-flex items-center gap-2 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs pl-4 pr-2 py-1.5 rounded-full transition"
-          >
-            <span>Login Sekarang</span>
-            <span class="w-5 h-5 rounded-full bg-forest-950 text-white flex items-center justify-center">
-              <span class="material-symbols-rounded text-[13px]">arrow_forward</span>
-            </span>
-          </a>
-          <span class="text-[11px] text-zinc-400 font-semibold">SIUBA v1.2 MySQL</span>
-        </div>
-      </div>
+      <!-- Right: Accordion FAQ (Pertanyaan Umum) -->
+      <div class="lg:col-span-7 bg-white p-5 sm:p-7 rounded-3xl border border-zinc-200/80 shadow-sm space-y-3">
+        <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800 block mb-2">
+          PERTANYAAN YANG SERING DIAJUKAN (FAQ)
+        </span>
 
-      <!-- Right Stat Highlight -->
-      <div class="md:col-span-1 lg:col-span-3 bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-sm flex flex-col justify-between">
-        <div class="space-y-2">
-          <span class="text-xs font-extrabold uppercase tracking-wider text-forest-800 block">
-            KECEPATAN REKAP DATA
-          </span>
-          <div class="flex items-baseline gap-1.5 pt-2">
-            <span class="fluid-stat-number font-extrabold text-forest-950">10x</span>
-            <span class="text-xs text-zinc-500 font-semibold">lebih cepat</span>
-          </div>
-          <p class="text-xs text-zinc-500 pt-2 leading-relaxed">
-            Dibandingkan pencatatan kertas manual, menghemat waktu ustadz &amp; operator setiap hari.
+        <details class="group border border-zinc-200/80 rounded-2xl p-4 open:bg-zinc-50/70 transition" open>
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-forest-950">
+            <span>1. Bagaimana cara santri melakukan absensi harian di pesantren?</span>
+            <span class="material-symbols-rounded text-forest-700 group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <p class="text-xs text-zinc-600 mt-2.5 leading-relaxed">
+            Setiap santri dibekali <strong>Kartu Pintar Santri (CR80)</strong> yang dilengkapi <strong>QR Code &amp; Chip RFID</strong>. Santri cukup menempelkan kartu pada reader RFID di masjid/kelas atau memindai QR Code ke kamera petugas/ustadz tanpa perlu membawa HP.
           </p>
-        </div>
+        </details>
 
-        <div class="pt-6 mt-6 border-t border-zinc-100 flex items-center justify-between">
-          <span class="text-xs font-bold text-forest-950">Buka Halaman Login</span>
-          <a href="/login" class="w-9 h-9 rounded-full bg-forest-950 text-white flex items-center justify-center hover:bg-limeaccent-400 hover:text-forest-950 transition shrink-0">
-            <span class="material-symbols-rounded text-[18px]">arrow_outward</span>
-          </a>
-        </div>
+        <details class="group border border-zinc-200/80 rounded-2xl p-4 open:bg-zinc-50/70 transition">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-forest-950">
+            <span>2. Apa saja syarat utama pendaftaran santri baru (PPDB)?</span>
+            <span class="material-symbols-rounded text-forest-700 group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <p class="text-xs text-zinc-600 mt-2.5 leading-relaxed">
+            Calon santri mengisi formulir PPDB, menyerahkan fotokopi Rapor 2 semester terakhir, Kartu Keluarga, Akta Kelahiran, serta mengikuti seleksi membaca Al-Qur&rsquo;an, tes akademik dasar, dan wawancara kesiapan berasrama.
+          </p>
+        </details>
+
+        <details class="group border border-zinc-200/80 rounded-2xl p-4 open:bg-zinc-50/70 transition">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-forest-950">
+            <span>3. Apakah ustadz/guru hanya bisa melihat data kelas yang diampunya saja?</span>
+            <span class="material-symbols-rounded text-forest-700 group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <p class="text-xs text-zinc-600 mt-2.5 leading-relaxed">
+            Ya. Sistem SIUBA dilengkapi <strong>Role-Based Access Control (RBAC) &amp; Data Scope</strong>. Akun Guru hanya melihat jadwal &amp; kelas yang diampu, Musyrif hanya melihat kamar asrama binaannya, sedangkan Pimpinan &amp; Kepala Sekolah dapat memantau laporan menyeluruh.
+          </p>
+        </details>
+
+        <details class="group border border-zinc-200/80 rounded-2xl p-4 open:bg-zinc-50/70 transition">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-forest-950">
+            <span>4. Bagaimana jika santri sakit atau izin pulang?</span>
+            <span class="material-symbols-rounded text-forest-700 group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <p class="text-xs text-zinc-600 mt-2.5 leading-relaxed">
+            Musyrif asrama atau bagian Kesantrian akan mencatat status izin/sakit/dispensasi di modul <strong>Izin &amp; Dispensasi SIUBA</strong>, sehingga status santri pada sesi KBM dan shalat otomatis tercatat resmi (bukan Alpha).
+          </p>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 7. FOOTER ==================== -->
+  <!-- ==================== 8. FOOTER ==================== -->
   <footer class="fluid-container pt-4 sm:pt-6 pb-8 space-y-8">
     <!-- Panoramic Strip Image -->
-    <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden min-h-[140px] sm:h-44 shadow-md flex items-center">
+    <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden min-h-[150px] sm:h-44 shadow-md flex items-center">
       <img
         src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1920&q=80"
         alt="Pesantren Panorama"
         class="absolute inset-0 w-full h-full object-cover object-center"
       />
-      <div class="relative z-10 w-full bg-gradient-to-r from-forest-950/90 via-forest-900/65 to-forest-950/90 p-5 sm:px-10 sm:py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-white">
+      <div class="relative z-10 w-full bg-gradient-to-r from-forest-950/92 via-forest-900/70 to-forest-950/92 p-5 sm:px-10 sm:py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-white">
         <div>
-          <span class="text-[11px] sm:text-xs uppercase tracking-widest text-limeaccent-400 font-bold block">Siap Memulai?</span>
-          <h3 class="text-lg sm:text-2xl font-extrabold mt-0.5">Masuk ke Portal Presensi Terpadu SIUBA</h3>
+          <span class="text-[11px] sm:text-xs uppercase tracking-widest text-limeaccent-400 font-bold block">Mari Bergabung Bersama Kami</span>
+          <h3 class="text-lg sm:text-2xl font-extrabold mt-0.5">Daftar PPDB Santri Baru atau Masuk ke Portal SIUBA</h3>
         </div>
-        <a
-          href="/login"
-          class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-full flex items-center justify-center gap-2 shadow-lg transition w-full xs:w-fit shrink-0"
-        >
-          <span>Login Aplikasi</span>
-          <span class="material-symbols-rounded text-[18px]">login</span>
-        </a>
+        <div class="flex flex-wrap items-center gap-3 shrink-0">
+          <button
+            type="button"
+            onclick="document.getElementById('ppdb-modal').classList.remove('hidden')"
+            class="bg-white hover:bg-zinc-100 text-forest-950 font-extrabold text-xs sm:text-sm px-4 py-2.5 rounded-full flex items-center gap-1.5 shadow transition cursor-pointer"
+          >
+            <span class="material-symbols-rounded text-[18px]">how_to_reg</span>
+            <span>Daftar PPDB</span>
+          </button>
+          <a
+            href="/login"
+            class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-full flex items-center gap-2 shadow-lg transition"
+          >
+            <span>Login SIUBA</span>
+            <span class="material-symbols-rounded text-[18px]">login</span>
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- Footer Links -->
     <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-12 gap-6 sm:gap-8 py-4 sm:py-6 text-xs text-zinc-600">
-      <div class="col-span-2 md:col-span-5 space-y-3">
+      <div class="col-span-2 md:col-span-4 space-y-3">
         <div class="flex items-center gap-2 font-extrabold text-base text-forest-950">
           <span class="w-6 h-6 rounded-full bg-forest-900 text-limeaccent-400 flex items-center justify-center shrink-0">
             <span class="material-symbols-rounded text-[15px]">mosque</span>
           </span>
-          <span>SIUBA — Utsman Bin Affan</span>
+          <span>Ponpes Utsman Bin Affan</span>
         </div>
         <p class="text-zinc-500 max-w-sm leading-relaxed">
-          Sistem Informasi &amp; Presensi Santri Terpadu (KBM, Asrama, Ibadah Shalat, Halaqah Tahfidz, Ekstrakurikuler &amp; SDM).
+          Lembaga Pendidikan Islam Berasrama (SMP IT, SMA IT &amp; Takhassus Tahfidzul Qur&rsquo;an) dengan dukungan Sistem Informasi &amp; Presensi Terpadu (SIUBA).
         </p>
         <p class="text-zinc-400 font-semibold pt-1">
-          &copy; 2026 Pesantren Utsman Bin Affan. Hak Cipta Dilindungi.
+          &copy; 2026 Pondok Pesantren Utsman Bin Affan. Hak Cipta Dilindungi.
         </p>
       </div>
 
       <div class="col-span-1 md:col-span-2 space-y-2">
-        <span class="font-extrabold text-forest-950 uppercase block mb-2">Navigasi</span>
-        <a href="#beranda" class="block hover:text-forest-900 py-0.5">Beranda</a>
-        <a href="#layanan" class="block hover:text-forest-900 py-0.5">Fitur Utama</a>
-        <a href="#analitik" class="block hover:text-forest-900 py-0.5">Monitoring</a>
-        <a href="#domain" class="block hover:text-forest-900 py-0.5">Modul KBM &amp; Asrama</a>
+        <span class="font-extrabold text-forest-950 uppercase block mb-2">Tentang Kami</span>
+        <a href="#profil" class="block hover:text-forest-900 py-0.5">Profil &amp; Sejarah</a>
+        <a href="#profil" class="block hover:text-forest-900 py-0.5">Visi &amp; Misi</a>
+        <a href="#program" class="block hover:text-forest-900 py-0.5">Program Tahfidz</a>
+        <a href="#berita" class="block hover:text-forest-900 py-0.5">Berita &amp; Prestasi</a>
       </div>
 
-      <div class="col-span-1 md:col-span-2 space-y-2">
-        <span class="font-extrabold text-forest-950 uppercase block mb-2">Portal Akses</span>
-        <a href="/login" class="block hover:text-forest-900 py-0.5">Login Super Admin</a>
-        <a href="/login" class="block hover:text-forest-900 py-0.5">Login Guru &amp; KBM</a>
-        <a href="/login" class="block hover:text-forest-900 py-0.5">Login Musyrif Asrama</a>
-        <a href="/login" class="block hover:text-forest-900 py-0.5">Login Pimpinan</a>
+      <div class="col-span-1 md:col-span-3 space-y-2">
+        <span class="font-extrabold text-forest-950 uppercase block mb-2">Layanan &amp; PPDB</span>
+        <a href="#ppdb" class="block hover:text-forest-900 py-0.5">Info PPDB 2026/2027</a>
+        <a href="#ppdb" class="block hover:text-forest-900 py-0.5">Jalur Beasiswa Tahfidz</a>
+        <a href="/login" class="block hover:text-forest-900 py-0.5">Portal Guru &amp; Musyrif</a>
+        <a href="/login" class="block hover:text-forest-900 py-0.5">Portal Eksekutif Pimpinan</a>
       </div>
 
       <div class="col-span-2 md:col-span-3 space-y-2">
-        <span class="font-extrabold text-forest-950 uppercase block mb-2">Teknologi</span>
-        <span class="block text-zinc-500">Laravel 12 + MySQL Database</span>
-        <span class="block text-zinc-500">Live QR &amp; RFID Reader Engine</span>
-        <span class="block text-zinc-500">Offline-First PWA Sync</span>
+        <span class="font-extrabold text-forest-950 uppercase block mb-2">Sekretariat PPDB</span>
+        <span class="block text-zinc-500">Gedung Pusat Ponpes Utsman Bin Affan</span>
+        <span class="block text-zinc-500">Buka: Senin – Sabtu (08.00 – 16.00 WIB)</span>
+        <span class="block text-forest-800 font-bold">WhatsApp PPDB: 0812-3456-7890</span>
       </div>
     </div>
   </footer>
@@ -999,16 +1164,112 @@
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
       <div class="flex items-center gap-2">
         <span class="material-symbols-rounded text-[16px]">call</span>
-        <span>Layanan Informasi SIUBA</span>
+        <span>Call Center &amp; PPDB: (021) 890-1234 / 0812-3456-7890</span>
       </div>
       <div class="flex items-center gap-2">
         <span class="material-symbols-rounded text-[16px]">mail</span>
-        <span>admin@utsman.sch.id</span>
+        <span>info@utsman.sch.id &bull; admin@utsman.sch.id</span>
       </div>
       <div class="flex items-center gap-2">
         <span class="material-symbols-rounded text-[16px]">location_on</span>
-        <span>Pesantren Utsman Bin Affan — Indonesia</span>
+        <span>Pondok Pesantren Utsman Bin Affan — Indonesia</span>
       </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL FORMULIR PENDAFTARAN PPDB ==================== -->
+  <div
+    id="ppdb-modal"
+    class="hidden fixed inset-0 z-50 bg-forest-950/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+  >
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-zinc-200 space-y-5 relative my-8">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-limeaccent-600 bg-limeaccent-400/20 px-2.5 py-1 rounded-full">
+            PPDB ONLINE 2026 / 2027
+          </span>
+          <h3 class="text-xl font-extrabold text-forest-950 mt-2">
+            Formulir Pendaftaran Calon Santri
+          </h3>
+          <p class="text-xs text-zinc-500">
+            Isi data awal calon santri, panitia PPDB akan menghubungi Anda untuk jadwal seleksi.
+          </p>
+        </div>
+        <button
+          type="button"
+          onclick="document.getElementById('ppdb-modal').classList.add('hidden')"
+          class="w-8 h-8 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 flex items-center justify-center cursor-pointer shrink-0"
+        >
+          <span class="material-symbols-rounded text-[18px]">close</span>
+        </button>
+      </div>
+
+      <form
+        id="ppdb-form"
+        onsubmit="event.preventDefault(); document.getElementById('ppdb-success').classList.remove('hidden'); this.reset();"
+        class="space-y-3.5 text-xs"
+      >
+        <div>
+          <label class="font-bold text-forest-950 block mb-1">Nama Lengkap Calon Santri *</label>
+          <input type="text" required placeholder="Contoh: Muhammad Fatih Al-Ayyubi" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-forest-950 block mb-1">Pilihan Jenjang *</label>
+            <select required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800 bg-white">
+              <option value="SMP IT">SMP IT (Boarding)</option>
+              <option value="SMA IT">SMA IT (MIPA / Syariah)</option>
+              <option value="Takhassus">Takhassus Tahfidz 30 Juz</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-forest-950 block mb-1">Jalur Pendaftaran *</label>
+            <select required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800 bg-white">
+              <option value="Reguler">Jalur Reguler</option>
+              <option value="Beasiswa Tahfidz">Beasiswa Tahfidz</option>
+              <option value="Prestasi Akademik">Prestasi Akademik</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-forest-950 block mb-1">Nama Orang Tua / Wali *</label>
+            <input type="text" required placeholder="Nama Ayah / Ibu" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800" />
+          </div>
+          <div>
+            <label class="font-bold text-forest-950 block mb-1">Nomor WhatsApp Aktif *</label>
+            <input type="tel" required placeholder="0812xxxxxxxx" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800" />
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-forest-950 block mb-1">Asal Sekolah &amp; Kota</label>
+          <input type="text" placeholder="Contoh: SDIT Al-Hikmah — Jakarta" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800" />
+        </div>
+
+        <div id="ppdb-success" class="hidden p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold">
+          Alhamdulillah, data pendaftaran awal Anda telah tercatat! Panitia PPDB akan segera menghubungi nomor WhatsApp Anda.
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button
+            type="button"
+            onclick="document.getElementById('ppdb-modal').classList.add('hidden')"
+            class="px-4 py-2.5 rounded-full border border-zinc-300 font-bold text-zinc-600 hover:bg-zinc-100 cursor-pointer"
+          >
+            Tutup
+          </button>
+          <button
+            type="submit"
+            class="bg-forest-950 hover:bg-forest-800 text-limeaccent-400 font-extrabold px-6 py-2.5 rounded-full flex items-center gap-2 cursor-pointer"
+          >
+            <span>Kirim Pendaftaran</span>
+            <span class="material-symbols-rounded text-[16px]">send</span>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
