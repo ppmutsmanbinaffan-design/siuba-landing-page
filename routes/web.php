@@ -9,7 +9,17 @@ use Illuminate\Support\Facades\File;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/{any?}', function () {
+Route::get('/', function () {
+    $landingPath = public_path('landing.html');
+    if (File::exists($landingPath)) {
+        return response()->file($landingPath, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+        ]);
+    }
+    return redirect('/login');
+});
+
+Route::get('/{any}', function () {
     $indexPath = public_path('app.html');
     if (!File::exists($indexPath)) {
         $indexPath = base_path('dist/index.html');
