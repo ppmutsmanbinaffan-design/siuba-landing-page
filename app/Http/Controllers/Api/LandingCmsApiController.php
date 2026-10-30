@@ -34,6 +34,32 @@ class LandingCmsApiController extends Controller
             'contact_phone' => '(021) 890-1234 / 0812-3456-7890',
             'contact_email' => 'info@utsman.sch.id • admin@utsman.sch.id',
             'contact_address' => 'Pondok Pesantren Utsman Bin Affan — Indonesia',
+            'hero_slides' => [
+                [
+                    'bg_image' => 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1920&q=80',
+                    'card_image' => 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80',
+                    'card_badge' => 'Akreditasi A • Boarding School',
+                    'card_caption' => 'Lingkungan pendidikan berasrama yang asri, kondusif, dan terpantau secara digital 24 jam.',
+                ],
+                [
+                    'bg_image' => 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1920&q=80',
+                    'card_image' => 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80',
+                    'card_badge' => 'Tahfidz 15–30 Juz Bersanad',
+                    'card_caption' => 'Setoran Ziyadah & Muraja’ah harian ba’da Subuh dan Maghrib dibimbing Hafidz/ah bersanad.',
+                ],
+                [
+                    'bg_image' => 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80',
+                    'card_image' => 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
+                    'card_badge' => 'Sains, IT & Bilingual Area',
+                    'card_caption' => 'Integrasi kurikulum nasional, laboratorium sains & komputer modern, serta Bahasa Arab & Inggris aktif.',
+                ],
+                [
+                    'bg_image' => 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=1920&q=80',
+                    'card_image' => 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80',
+                    'card_badge' => 'SIUBA Smart Card RFID & QR',
+                    'card_caption' => 'Presensi shalat berjamaah, kelas, asrama, dan perizinan santri tercatat real-time di sistem SIUBA.',
+                ],
+            ],
         ];
     }
 

@@ -128,13 +128,35 @@
 
   <!-- ==================== 1. HERO SECTION ==================== -->
   <section class="p-2.5 xs:p-3.5 sm:p-5 lg:p-6 max-w-[1440px] mx-auto">
-    <div class="relative rounded-[22px] sm:rounded-[32px] lg:rounded-[38px] overflow-hidden min-h-[540px] sm:min-h-[620px] lg:min-h-[680px] flex flex-col justify-between p-4 xs:p-6 sm:p-8 lg:p-11 text-white shadow-2xl">
-      <!-- Background Image & Gradient Overlay -->
-      <img
-        src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1920&q=80"
-        alt="Pondok Pesantren Utsman Bin Affan"
-        class="absolute inset-0 w-full h-full object-cover object-center scale-105 transition-transform duration-1000"
-      />
+    <div
+      id="hero-slider-wrapper"
+      onmouseenter="pauseHeroSlide(true)"
+      onmouseleave="pauseHeroSlide(false)"
+      class="relative rounded-[22px] sm:rounded-[32px] lg:rounded-[38px] overflow-hidden min-h-[540px] sm:min-h-[620px] lg:min-h-[680px] flex flex-col justify-between p-4 xs:p-6 sm:p-8 lg:p-11 text-white shadow-2xl"
+    >
+      <!-- Auto-Sliding Background Images & Gradient Overlay -->
+      <div id="hero-bg-slides" class="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1920&q=80"
+          alt="Slide 1 - Masjid & Pusat Halaqah"
+          class="hero-bg-img absolute inset-0 w-full h-full object-cover object-center scale-105 transition-all duration-1000 opacity-100"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1920&q=80"
+          alt="Slide 2 - Tahfidzul Qur'an Bersanad"
+          class="hero-bg-img absolute inset-0 w-full h-full object-cover object-center scale-100 transition-all duration-1000 opacity-0"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80"
+          alt="Slide 3 - Kampus Sains & Teknologi"
+          class="hero-bg-img absolute inset-0 w-full h-full object-cover object-center scale-100 transition-all duration-1000 opacity-0"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=1920&q=80"
+          alt="Slide 4 - Kehidupan Asrama & Olahraga Sunnah"
+          class="hero-bg-img absolute inset-0 w-full h-full object-cover object-center scale-100 transition-all duration-1000 opacity-0"
+        />
+      </div>
       <div class="absolute inset-0 bg-gradient-to-b from-forest-950/80 via-forest-900/60 to-forest-950/92"></div>
 
       <!-- Top Floating Navigation Bar -->
@@ -267,31 +289,122 @@
           </p>
         </div>
 
-        <!-- Right Floating Preview Card -->
+        <!-- Right Floating Preview Card (Auto-Sliding Carousel / Slide Berjalan) -->
         <div class="lg:col-span-5 xl:col-span-4 flex flex-col items-stretch sm:items-start lg:items-end justify-end">
           <div class="glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl w-full sm:max-w-md lg:max-w-sm shadow-2xl">
-            <div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-36 sm:h-40 mb-3">
-              <img
-                src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
-                alt="Kehidupan Santri Utsman Bin Affan"
-                class="w-full h-full object-cover"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-forest-950/85 via-transparent to-transparent"></div>
-              <a
-                href="#profil"
-                class="absolute top-2.5 right-2.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-forest-950 flex items-center justify-center shadow-md hover:bg-limeaccent-400 transition"
-                title="Profil Pesantren"
+            <!-- Sliding Track Viewport -->
+            <div class="relative overflow-hidden rounded-xl sm:rounded-2xl">
+              <div
+                id="hero-card-track"
+                class="flex transition-transform duration-700 ease-in-out"
+                style="transform: translateX(0%);"
               >
-                <span class="material-symbols-rounded text-[16px] sm:text-[18px]">auto_stories</span>
-              </a>
-              <span class="absolute bottom-2.5 left-3 text-[11px] font-bold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">
-                Akreditasi A &bull; Boarding School
-              </span>
+                <!-- Slide 1 -->
+                <div class="w-full shrink-0 space-y-3">
+                  <div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-36 sm:h-40">
+                    <img
+                      src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80"
+                      alt="Slide 1 - Halaqah Tahfidz"
+                      class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-forest-950/85 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-2.5 left-3 text-[11px] font-extrabold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full shadow">
+                      Akreditasi A &bull; Boarding School
+                    </span>
+                  </div>
+                  <p class="text-xs sm:text-sm font-semibold text-white leading-snug px-1 min-h-[38px]">
+                    Lingkungan pendidikan berasrama yang asri, kondusif, dan terpantau secara digital 24 jam.
+                  </p>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="w-full shrink-0 space-y-3">
+                  <div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-36 sm:h-40">
+                    <img
+                      src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80"
+                      alt="Slide 2 - Masjid & Tahfidz"
+                      class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-forest-950/85 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-2.5 left-3 text-[11px] font-extrabold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full shadow">
+                      Tahfidz 15–30 Juz Bersanad
+                    </span>
+                  </div>
+                  <p class="text-xs sm:text-sm font-semibold text-white leading-snug px-1 min-h-[38px]">
+                    Setoran Ziyadah &amp; Muraja&rsquo;ah harian ba&rsquo;da Subuh dan Maghrib dibimbing Hafidz/ah bersanad.
+                  </p>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="w-full shrink-0 space-y-3">
+                  <div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-36 sm:h-40">
+                    <img
+                      src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
+                      alt="Slide 3 - Laboratorium Sains & IT"
+                      class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-forest-950/85 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-2.5 left-3 text-[11px] font-extrabold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full shadow">
+                      Sains, IT &amp; Bilingual Area
+                    </span>
+                  </div>
+                  <p class="text-xs sm:text-sm font-semibold text-white leading-snug px-1 min-h-[38px]">
+                    Integrasi kurikulum nasional, laboratorium sains &amp; komputer modern, serta Bahasa Arab &amp; Inggris aktif.
+                  </p>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="w-full shrink-0 space-y-3">
+                  <div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-36 sm:h-40">
+                    <img
+                      src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80"
+                      alt="Slide 4 - Asrama & Presensi RFID"
+                      class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-forest-950/85 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-2.5 left-3 text-[11px] font-extrabold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full shadow">
+                      SIUBA Smart Card RFID &amp; QR
+                    </span>
+                  </div>
+                  <p class="text-xs sm:text-sm font-semibold text-white leading-snug px-1 min-h-[38px]">
+                    Presensi shalat berjamaah, kelas, asrama, dan perizinan santri tercatat real-time di sistem SIUBA.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Prev / Next Controls on Card Image -->
+              <div class="absolute top-2.5 right-2.5 flex items-center gap-1 z-10">
+                <button
+                  type="button"
+                  onclick="stepHeroSlide(-1)"
+                  class="w-7 h-7 rounded-full bg-forest-950/75 hover:bg-limeaccent-400 text-white hover:text-forest-950 flex items-center justify-center shadow transition cursor-pointer"
+                  title="Slide Sebelumnya"
+                >
+                  <span class="material-symbols-rounded text-[16px]">chevron_left</span>
+                </button>
+                <button
+                  type="button"
+                  onclick="stepHeroSlide(1)"
+                  class="w-7 h-7 rounded-full bg-forest-950/75 hover:bg-limeaccent-400 text-white hover:text-forest-950 flex items-center justify-center shadow transition cursor-pointer"
+                  title="Slide Berikutnya"
+                >
+                  <span class="material-symbols-rounded text-[16px]">chevron_right</span>
+                </button>
+              </div>
             </div>
-            <p class="text-xs sm:text-sm font-semibold text-white leading-snug px-1">
-              Lingkungan pendidikan berasrama yang asri, kondusif, dan terpantau secara digital 24 jam.
-            </p>
-            <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-white/15 text-center text-[11px]">
+
+            <!-- Slide Indicator Dots -->
+            <div id="hero-slide-dots" class="flex items-center justify-between px-1 pt-2.5">
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="goToHeroSlide(0)" class="hero-dot h-1.5 w-6 rounded-full bg-limeaccent-400 transition-all cursor-pointer" aria-label="Slide 1"></button>
+                <button type="button" onclick="goToHeroSlide(1)" class="hero-dot h-1.5 w-2 rounded-full bg-white/35 hover:bg-white/60 transition-all cursor-pointer" aria-label="Slide 2"></button>
+                <button type="button" onclick="goToHeroSlide(2)" class="hero-dot h-1.5 w-2 rounded-full bg-white/35 hover:bg-white/60 transition-all cursor-pointer" aria-label="Slide 3"></button>
+                <button type="button" onclick="goToHeroSlide(3)" class="hero-dot h-1.5 w-2 rounded-full bg-white/35 hover:bg-white/60 transition-all cursor-pointer" aria-label="Slide 4"></button>
+              </div>
+              <span id="hero-slide-counter" class="text-[10px] font-extrabold text-limeaccent-400 tracking-wider">SLIDE 01 / 04</span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 mt-2.5 pt-2.5 border-t border-white/15 text-center text-[11px]">
               <div>
                 <span class="font-extrabold text-limeaccent-400 text-sm block">30 Juz</span>
                 <span class="text-white/70">Target Tahfidz</span>
@@ -1841,6 +1954,110 @@
   </div>
 
   <script>
+    // 0. Auto-Running Hero Slideshow (Background + Floating Card)
+    var heroSlideIndex = 0;
+    var heroSlideTotal = 4;
+    var heroSlidePaused = false;
+    var heroSlideTimer = null;
+
+    function renderHeroSlidesFromCms(slides) {
+      if (!Array.isArray(slides) || slides.length === 0) return;
+      heroSlideTotal = slides.length;
+      var bgContainer = document.getElementById('hero-bg-slides');
+      var cardTrack = document.getElementById('hero-card-track');
+      var dotsContainer = document.getElementById('hero-slide-dots');
+
+      if (bgContainer) {
+        bgContainer.innerHTML = slides.map(function (s, idx) {
+          var activeCls = idx === heroSlideIndex ? 'opacity-100 scale-105' : 'opacity-0 scale-100';
+          return '<img src="' + (s.bg_image || '') + '" alt="Slide ' + (idx + 1) + '" class="hero-bg-img absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 ' + activeCls + '" />';
+        }).join('');
+      }
+
+      if (cardTrack) {
+        cardTrack.innerHTML = slides.map(function (s, idx) {
+          return '<div class="w-full shrink-0 space-y-3">' +
+            '<div class="relative rounded-xl sm:rounded-2xl overflow-hidden h-36 sm:h-40">' +
+              '<img src="' + (s.card_image || s.bg_image || '') + '" alt="Card Slide ' + (idx + 1) + '" class="w-full h-full object-cover" />' +
+              '<div class="absolute inset-0 bg-gradient-to-t from-forest-950/85 via-transparent to-transparent"></div>' +
+              '<span class="absolute bottom-2.5 left-3 text-[11px] font-extrabold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full shadow">' + (s.card_badge || 'Ponpes Utsman Bin Affan') + '</span>' +
+            '</div>' +
+            '<p class="text-xs sm:text-sm font-semibold text-white leading-snug px-1 min-h-[38px]">' + (s.card_caption || '') + '</p>' +
+          '</div>';
+        }).join('');
+      }
+
+      if (dotsContainer) {
+        var dotsHtml = slides.map(function (_, idx) {
+          var cls = idx === heroSlideIndex
+            ? 'hero-dot h-1.5 w-6 rounded-full bg-limeaccent-400 transition-all cursor-pointer'
+            : 'hero-dot h-1.5 w-2 rounded-full bg-white/35 hover:bg-white/60 transition-all cursor-pointer';
+          return '<button type="button" onclick="goToHeroSlide(' + idx + ')" class="' + cls + '" aria-label="Slide ' + (idx + 1) + '"></button>';
+        }).join('');
+        dotsContainer.innerHTML = '<div class="flex items-center gap-1.5">' + dotsHtml + '</div>' +
+          '<span id="hero-slide-counter" class="text-[10px] font-extrabold text-limeaccent-400 tracking-wider">SLIDE 01 / 0' + slides.length + '</span>';
+      }
+
+      goToHeroSlide(0);
+    }
+
+    function goToHeroSlide(idx) {
+      if (heroSlideTotal <= 0) return;
+      heroSlideIndex = (idx + heroSlideTotal) % heroSlideTotal;
+
+      var bgImgs = document.querySelectorAll('.hero-bg-img');
+      for (var i = 0; i < bgImgs.length; i++) {
+        if (i === heroSlideIndex) {
+          bgImgs[i].classList.remove('opacity-0', 'scale-100');
+          bgImgs[i].classList.add('opacity-100', 'scale-105');
+        } else {
+          bgImgs[i].classList.remove('opacity-100', 'scale-105');
+          bgImgs[i].classList.add('opacity-0', 'scale-100');
+        }
+      }
+
+      var track = document.getElementById('hero-card-track');
+      if (track) {
+        track.style.transform = 'translateX(-' + (heroSlideIndex * 100) + '%)';
+      }
+
+      var dots = document.querySelectorAll('.hero-dot');
+      for (var j = 0; j < dots.length; j++) {
+        if (j === heroSlideIndex) {
+          dots[j].className = 'hero-dot h-1.5 w-6 rounded-full bg-limeaccent-400 transition-all cursor-pointer';
+        } else {
+          dots[j].className = 'hero-dot h-1.5 w-2 rounded-full bg-white/35 hover:bg-white/60 transition-all cursor-pointer';
+        }
+      }
+
+      var counter = document.getElementById('hero-slide-counter');
+      if (counter) {
+        var curStr = heroSlideIndex + 1 < 10 ? '0' + (heroSlideIndex + 1) : String(heroSlideIndex + 1);
+        var totStr = heroSlideTotal < 10 ? '0' + heroSlideTotal : String(heroSlideTotal);
+        counter.textContent = 'SLIDE ' + curStr + ' / ' + totStr;
+      }
+    }
+
+    function stepHeroSlide(delta) {
+      goToHeroSlide(heroSlideIndex + delta);
+      resetHeroSlideTimer();
+    }
+
+    function pauseHeroSlide(paused) {
+      heroSlidePaused = !!paused;
+    }
+
+    function resetHeroSlideTimer() {
+      if (heroSlideTimer) clearInterval(heroSlideTimer);
+      heroSlideTimer = setInterval(function () {
+        if (!heroSlidePaused) {
+          goToHeroSlide(heroSlideIndex + 1);
+        }
+      }, 4200);
+    }
+
+    resetHeroSlideTimer();
+
     // Filter Galeri & Video
     function filterGallery(cat) {
       var items = document.querySelectorAll('.gal-item');
@@ -1963,6 +2180,9 @@
         if (!json) return;
 
         var p = json.profile || (json.data && json.data.profile) || {};
+        if (Array.isArray(p.hero_slides) && p.hero_slides.length > 0) {
+          renderHeroSlidesFromCms(p.hero_slides);
+        }
         setTxt('cms-hero-badge', p.pesantren_name || p.hero_badge);
         setTxt('cms-hero-title', p.hero_title);
         setTxt('cms-hero-subtitle', p.hero_subtitle);

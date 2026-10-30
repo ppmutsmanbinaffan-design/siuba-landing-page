@@ -120,6 +120,20 @@
           <textarea id="p_hero_subtitle" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800"></textarea>
         </div>
 
+        <!-- Pengaturan Slide Berjalan (Hero Background & Floating Card) -->
+        <div class="space-y-3 pt-3 border-t border-zinc-100">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <label class="font-extrabold text-forest-900 block">4 Slide Berjalan (Gambar Hero Utama &amp; Card Kanan)</label>
+              <p class="text-[11px] text-zinc-500">Anda dapat mengganti link URL gambar atau memilih file foto langsung dari komputer untuk setiap slide.</p>
+            </div>
+          </div>
+
+          <div id="hero-slides-editor" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Diisi otomatis oleh JavaScript -->
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-zinc-100">
           <div>
             <label class="font-bold text-zinc-800 block mb-1">Visi Pesantren</label>
@@ -295,11 +309,94 @@
       }
     }
 
+    var defaultHeroSlides = [
+      {
+        bg_image: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1920&q=80',
+        card_image: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80',
+        card_badge: 'Akreditasi A • Boarding School',
+        card_caption: 'Lingkungan pendidikan berasrama yang asri, kondusif, dan terpantau secara digital 24 jam.'
+      },
+      {
+        bg_image: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1920&q=80',
+        card_image: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80',
+        card_badge: 'Tahfidz 15–30 Juz Bersanad',
+        card_caption: 'Setoran Ziyadah & Muraja’ah harian ba’da Subuh dan Maghrib dibimbing Hafidz/ah bersanad.'
+      },
+      {
+        bg_image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80',
+        card_image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
+        card_badge: 'Sains, IT & Bilingual Area',
+        card_caption: 'Integrasi kurikulum nasional, laboratorium sains & komputer modern, serta Bahasa Arab & Inggris aktif.'
+      },
+      {
+        bg_image: 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=1920&q=80',
+        card_image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80',
+        card_badge: 'SIUBA Smart Card RFID & QR',
+        card_caption: 'Presensi shalat berjamaah, kelas, asrama, dan perizinan santri tercatat real-time di sistem SIUBA.'
+      }
+    ];
+
+    function renderHeroSlidesEditor(slides) {
+      var list = (Array.isArray(slides) && slides.length > 0) ? slides : defaultHeroSlides;
+      var container = document.getElementById('hero-slides-editor');
+      if (!container) return;
+      container.innerHTML = list.map(function (s, idx) {
+        return '<div class="p-4 rounded-2xl border border-zinc-200 bg-zinc-50/70 space-y-2.5">' +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-xs font-extrabold uppercase text-forest-900 bg-limeaccent-400/40 px-2.5 py-0.5 rounded-full">SLIDE 0' + (idx + 1) + '</span>' +
+            '<label class="text-[11px] font-bold text-forest-800 hover:underline cursor-pointer flex items-center gap-1">' +
+              '<span class="material-symbols-rounded text-[15px]">upload_file</span>' +
+              '<span>Pilih Foto Card dari Komputer</span>' +
+              '<input type="file" accept="image/*" class="hidden" onchange="uploadSlideFile(event, ' + idx + ', \'card\')" />' +
+            '</label>' +
+          '</div>' +
+          '<div>' +
+            '<label class="text-[11px] font-bold text-zinc-600 block mb-0.5">URL Gambar Card Kanan (Slide Preview)</label>' +
+            '<input type="text" id="hs_card_img_' + idx + '" value="' + (s.card_image || '') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 text-xs bg-white" />' +
+          '</div>' +
+          '<div>' +
+            '<div class="flex items-center justify-between mb-0.5">' +
+              '<label class="text-[11px] font-bold text-zinc-600">URL Gambar Background Hero Utama</label>' +
+              '<label class="text-[10px] font-bold text-forest-700 hover:underline cursor-pointer">' +
+                'Pilih File BG' +
+                '<input type="file" accept="image/*" class="hidden" onchange="uploadSlideFile(event, ' + idx + ', \'bg\')" />' +
+              '</label>' +
+            '</div>' +
+            '<input type="text" id="hs_bg_img_' + idx + '" value="' + (s.bg_image || '') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 text-xs bg-white" />' +
+          '</div>' +
+          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">' +
+            '<div>' +
+              '<label class="text-[11px] font-bold text-zinc-600 block mb-0.5">Label Badge Hijau</label>' +
+              '<input type="text" id="hs_badge_' + idx + '" value="' + (s.card_badge || '') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 text-xs bg-white" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="text-[11px] font-bold text-zinc-600 block mb-0.5">Teks Keterangan Card</label>' +
+              '<input type="text" id="hs_caption_' + idx + '" value="' + (s.card_caption || '') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 text-xs bg-white" />' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function uploadSlideFile(ev, idx, targetType) {
+      var file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var inputId = targetType === 'bg' ? ('hs_bg_img_' + idx) : ('hs_card_img_' + idx);
+        var el = document.getElementById(inputId);
+        if (el) el.value = e.target.result;
+        showToast('Gambar Slide 0' + (idx + 1) + ' siap disimpan. Klik Simpan Profil di bawah.');
+      };
+      reader.readAsDataURL(file);
+    }
+
     function populateProfileForm(p) {
       document.getElementById('p_pesantren_name').value = p.pesantren_name || '';
       document.getElementById('p_founded_year').value = p.founded_year || '';
       document.getElementById('p_hero_title').value = p.hero_title || '';
       document.getElementById('p_hero_subtitle').value = p.hero_subtitle || '';
+      renderHeroSlidesEditor(p.hero_slides);
       document.getElementById('p_vision').value = p.vision || '';
       document.getElementById('p_motto').value = p.motto || '';
       document.getElementById('p_mudir_name').value = p.mudir_name || '';
@@ -318,11 +415,28 @@
 
     async function saveProfile(e) {
       e.preventDefault();
+      var heroSlides = [];
+      for (var sIdx = 0; sIdx < 4; sIdx++) {
+        var bgEl = document.getElementById('hs_bg_img_' + sIdx);
+        var cardEl = document.getElementById('hs_card_img_' + sIdx);
+        var badgeEl = document.getElementById('hs_badge_' + sIdx);
+        var capEl = document.getElementById('hs_caption_' + sIdx);
+        if (bgEl && cardEl) {
+          heroSlides.push({
+            bg_image: bgEl.value,
+            card_image: cardEl.value,
+            card_badge: badgeEl ? badgeEl.value : '',
+            card_caption: capEl ? capEl.value : ''
+          });
+        }
+      }
+
       var payload = {
         pesantren_name: document.getElementById('p_pesantren_name').value,
         founded_year: document.getElementById('p_founded_year').value,
         hero_title: document.getElementById('p_hero_title').value,
         hero_subtitle: document.getElementById('p_hero_subtitle').value,
+        hero_slides: heroSlides,
         vision: document.getElementById('p_vision').value,
         motto: document.getElementById('p_motto').value,
         mudir_name: document.getElementById('p_mudir_name').value,
