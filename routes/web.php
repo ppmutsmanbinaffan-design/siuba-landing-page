@@ -49,6 +49,17 @@ $servePpdbAdmin = function () {
 Route::get('/manajemen-ppdb', $servePpdbAdmin);
 Route::get('/ppdb-admin', $servePpdbAdmin);
 
+Route::get('/ppdb', function () {
+    $ppdbPublicPath = public_path('ppdb.html');
+    if (File::exists($ppdbPublicPath)) {
+        return response()->file($ppdbPublicPath, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        ]);
+    }
+    return redirect('/beranda#ppdb');
+});
+
 Route::get('/{any}', function () {
     $indexPath = public_path('app.html');
     if (!File::exists($indexPath)) {

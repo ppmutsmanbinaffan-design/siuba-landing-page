@@ -43,18 +43,42 @@ class LandingCmsApiController extends Controller
             'academic_year' => '2026 / 2027',
             'status_badge' => 'GELOMBANG 1 BUKA',
             'total_quota' => '240 Kursi',
-            'quota_description' => 'Terdiri dari 120 kursi jenjang SMP IT (Putra & Putri) dan 120 kursi jenjang SMA IT / Takhassus (Putra & Putri).',
-            'wave_1' => 'Okt – Des 2026',
-            'wave_2' => 'Jan – Mar 2027',
-            'test_schedule' => 'Setiap Sabtu',
-            'scholarship_note' => 'Tersedia jalur Beasiswa Tahfidz (Hafal min. 5 Juz) & Prestasi Akademik.',
+            'quota_description' => 'Terdiri dari 120 kursi jenjang SMP IT (60 Putra & 60 Putri) dan 120 kursi jenjang SMA IT / Takhassus (60 Putra & 60 Putri).',
+            'wave_1' => '01 Okt – 31 Des 2026',
+            'wave_1_test' => 'Setiap Sabtu (One Day Service)',
+            'wave_1_announce' => '3 Hari Setelah Tes',
+            'wave_1_rereg' => 'Maks. 14 Hari Setelah Lulus',
+            'wave_2' => '01 Jan – 31 Mar 2027',
+            'wave_2_test' => 'Setiap Sabtu (Jan – Mar 2027)',
+            'wave_2_announce' => '3 Hari Setelah Tes',
+            'wave_2_rereg' => '01 – 15 April 2027',
+            'boarding_entry_date' => '12 Juli 2027 (Khutbatul Arsy & MATSABA)',
+            'test_schedule' => 'Setiap Sabtu (Pukul 08.00 – 14.00 WIB)',
+            'scholarship_note' => 'Tersedia jalur Beasiswa Tahfidz (Hafal min. 5–30 Juz), Juara Olimpiade Sains, & Yatim Berprestasi.',
             'smp_title' => 'JENJANG SMP IT (BOARDING)',
-            'smp_desc' => 'Fondasi Tahsin, Tahfidz 10–15 Juz, Bahasa Arab Dasar & Kurikulum Nasional.',
-            'smp_quota' => '120 Santri',
+            'smp_desc' => 'Fondasi Tahsin bersanad, Target Tahfidz 10–15 Juz, Bahasa Arab & Inggris Aktif, serta Kurikulum Nasional Kemenag/Kemendikbud.',
+            'smp_quota' => '120 Santri (60 Pa / 60 Pi)',
             'sma_title' => 'JENJANG SMA IT & TAKHASSUS',
-            'sma_desc' => 'Tahfidz 30 Juz Bersanad, Kajian Kitab Kuning, Sains Olimpiade & Persiapan PTN/Timteng.',
-            'sma_quota' => '120 Santri',
+            'sma_desc' => 'Tahfidz 30 Juz Mutqin Bersanad, Kajian Kitab Turats, Olimpiade MIPA/Sains & Persiapan Masuk PTN / Universitas Timur Tengah.',
+            'sma_quota' => '120 Santri (60 Pa / 60 Pi)',
+            // Rincian Biaya Pendidikan
+            'fee_registration' => 'Rp 350.000',
+            'fee_dsp' => 'Rp 14.500.000',
+            'fee_spp' => 'Rp 1.650.000 / bulan',
+            'fee_uniform_books' => 'Rp 3.200.000',
+            'fee_includes' => 'Makan 3x sehari bergizi, Asrama ber-AC/nyaman, Laundry pakaian, Layanan Poskestren, SPP Sekolah & Halaqah Tahfidz, serta Kartu Pintar RFID SIUBA.',
+            // Beasiswa
+            'scholarship_tahfidz' => 'Hafal 5–10 Juz: Potongan DSP 25% • Hafal 15 Juz: Potongan DSP 50% • Hafal 30 Juz Mutqin: Bebas DSP 100% + Beasiswa SPP.',
+            'scholarship_academic' => 'Juara 1–3 OSN/KSM/MTQ Tingkat Provinsi/Nasional: Potongan Dana Pengembangan 50% s.d. 100%.',
+            'scholarship_orphan' => 'Kuota khusus 15 kursi Beasiswa Penuh bagi santri Yatim/Dhuafa yang lulus seleksi Tahfidz & Akademik.',
+            // Syarat & Materi Tes
+            'requirements_list' => "1. Mengisi formulir pendaftaran PPDB Online atau Offline di Sekretariat.\n2. Fotokopi Akta Kelahiran & Kartu Keluarga (masing-masing 2 lembar).\n3. Fotokopi Rapor 2 semester terakhir yang telah dilegalisir.\n4. Surat Keterangan Aktif Sekolah & Nomor Induk Siswa Nasional (NISN).\n5. Pas Foto berwarna ukuran 3x4 (4 lembar, putri berjilbab putih/gelap).\n6. Surat Keterangan Sehat dari Dokter/Puskesmas & bebas penyakit menular.",
+            'selection_materials' => "1. Tes Membaca & Menghafal Al-Qur'an (Tajwid, kelancaran bacaan, dan tes kecepatan menghafal 1 halaman baru).\n2. Tes Akademik Dasar (Matematika, IPA, Bahasa Indonesia, dan Pengetahuan Agama Islam Dasar).\n3. Tes Psikotes Kesiapan Berasrama & Kemandirian Calon Santri.\n4. Wawancara Komitmen Orang Tua / Wali Santri bersama Dewan Masyayikh.",
+            // Kontak & Rekening Resmi
             'whatsapp_contact' => '0812-3456-7890',
+            'admin_contact_name' => 'Ustadz H. Ahmad Fauzi, S.Pd.I (Ketua Panitia PPDB)',
+            'bank_account' => 'Bank Syariah Indonesia (BSI) — No. Rek: 7123-456-789 a.n. Yayasan Ponpes Utsman Bin Affan',
+            'secretariat_hours' => 'Senin – Sabtu, Pukul 08.00 – 16.00 WIB (Gedung Pusat Lt. 1)',
         ];
     }
 
@@ -97,9 +121,79 @@ class LandingCmsApiController extends Controller
         }
     }
 
+    public static function seedDefaultPpdbRegistrationsIfEmpty(): void
+    {
+        if (DB::table('ppdb_registrations')->count() === 0) {
+            $now = now();
+            DB::table('ppdb_registrations')->insert([
+                [
+                    'reg_number' => 'PPDB-2026-0001',
+                    'student_name' => 'Muhammad Fatih Al-Ayyubi',
+                    'nisn' => '0124589301',
+                    'gender' => 'Putra',
+                    'birth_info' => 'Jakarta, 14 Mei 2014',
+                    'level' => 'SMP IT',
+                    'track' => 'Beasiswa Tahfidz',
+                    'juz_memorized' => '8 Juz',
+                    'parent_name' => 'H. Ridwan Kamilullah',
+                    'whatsapp' => '081288990011',
+                    'origin_school' => 'SDIT Al-Hikmah Jakarta Selatan',
+                    'address' => 'Jl. Kebagusan Raya No. 45, Pasar Minggu, Jakarta Selatan',
+                    'status' => 'Diterima',
+                    'test_score_quran' => '95 (Jayyid Jiddan)',
+                    'test_score_academic' => '88',
+                    'notes' => 'Bacaan sangat tartil, hafalan 8 juz mutqin. Direkomendasikan beasiswa potongan DSP 25%.',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ],
+                [
+                    'reg_number' => 'PPDB-2026-0002',
+                    'student_name' => 'Aisyah Humaira Zahra',
+                    'nisn' => '0098341209',
+                    'gender' => 'Putri',
+                    'birth_info' => 'Bandung, 22 Agustus 2011',
+                    'level' => 'SMA IT',
+                    'track' => 'Prestasi Akademik',
+                    'juz_memorized' => '5 Juz',
+                    'parent_name' => 'Dr. Irfan Hakim, M.T.',
+                    'whatsapp' => '081322334455',
+                    'origin_school' => 'SMPIT Nurul Fikri Depok',
+                    'address' => 'Perum Griya Asri Blok C2 No. 10, Cimanggis, Depok',
+                    'status' => 'Tes Seleksi',
+                    'test_score_quran' => '89',
+                    'test_score_academic' => '94',
+                    'notes' => 'Juara 1 OSN Matematika Tingkat Kota. Dijadwalkan wawancara wali hari Sabtu.',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ],
+                [
+                    'reg_number' => 'PPDB-2026-0003',
+                    'student_name' => 'Zaidan Abdurrahman',
+                    'nisn' => '0113490872',
+                    'gender' => 'Putra',
+                    'birth_info' => 'Bekasi, 03 Januari 2011',
+                    'level' => 'Takhassus',
+                    'track' => 'Reguler',
+                    'juz_memorized' => '15 Juz',
+                    'parent_name' => 'Ustadz Lukmanul Hakim',
+                    'whatsapp' => '085711223344',
+                    'origin_school' => 'MTs Negeri 1 Bekasi',
+                    'address' => 'Jl. KH. Noer Ali No. 18, Bekasi Barat',
+                    'status' => 'Baru',
+                    'test_score_quran' => '-',
+                    'test_score_academic' => '-',
+                    'notes' => 'Pendaftar baru dari formulir online, menunggu konfirmasi jadwal tes.',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ],
+            ]);
+        }
+    }
+
     public function getPublicData(): JsonResponse
     {
         self::seedDefaultNewsIfEmpty();
+        self::seedDefaultPpdbRegistrationsIfEmpty();
 
         $profileRow = DB::table('landing_settings')->where('key', 'profile')->first();
         $ppdbRow = DB::table('landing_settings')->where('key', 'ppdb')->first();
@@ -122,6 +216,42 @@ class LandingCmsApiController extends Controller
             'ppdb' => $ppdb,
             'news' => $news,
             'registrations' => $registrations,
+        ]);
+    }
+
+    public function checkPpdbStatus(Request $request): JsonResponse
+    {
+        self::seedDefaultPpdbRegistrationsIfEmpty();
+        $q = trim((string) $request->query('q', ''));
+        if ($q === '') {
+            return response()->json(['success' => false, 'message' => 'Masukkan Nomor Registrasi, NISN, atau Nomor WhatsApp.'], 422);
+        }
+
+        $cleanPhone = preg_replace('/[^0-9]/', '', $q);
+
+        $item = DB::table('ppdb_registrations')
+            ->where('reg_number', 'like', '%' . $q . '%')
+            ->orWhere('nisn', $q)
+            ->orWhere('whatsapp', 'like', '%' . $q . '%')
+            ->orWhere(function ($query) use ($cleanPhone) {
+                if (strlen($cleanPhone) >= 6) {
+                    $query->where('whatsapp', 'like', '%' . substr($cleanPhone, -8) . '%');
+                }
+            })
+            ->orWhere('student_name', 'like', '%' . $q . '%')
+            ->orderByDesc('id')
+            ->first();
+
+        if (!$item) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data pendaftar tidak ditemukan. Pastikan Nomor Registrasi / WhatsApp / Nama sudah benar.',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'registration' => $item,
         ]);
     }
 
@@ -156,7 +286,7 @@ class LandingCmsApiController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Informasi PPDB berhasil diperbarui.',
+            'message' => 'Pengaturan Informasi PPDB berhasil diperbarui.',
             'ppdb' => $merged,
         ]);
     }
@@ -219,35 +349,52 @@ class LandingCmsApiController extends Controller
         $whatsapp = $request->input('whatsapp') ?? $request->input('no_whatsapp') ?? '-';
         $originSchool = $request->input('origin_school') ?? $request->input('asal_sekolah') ?? '-';
 
+        $nextNum = DB::table('ppdb_registrations')->max('id') + 1;
+        $regNumber = sprintf('PPDB-2026-%04d', $nextNum);
+
         $id = DB::table('ppdb_registrations')->insertGetId([
+            'reg_number' => $regNumber,
             'student_name' => (string) $studentName,
+            'nisn' => (string) $request->input('nisn', ''),
+            'gender' => (string) $request->input('gender', 'Putra'),
+            'birth_info' => (string) $request->input('birth_info', ''),
             'level' => (string) $level,
             'track' => (string) $track,
+            'juz_memorized' => (string) $request->input('juz_memorized', '0 Juz'),
             'parent_name' => (string) $parentName,
             'whatsapp' => (string) $whatsapp,
             'origin_school' => (string) ($originSchool ?: '-'),
+            'address' => (string) $request->input('address', ''),
             'status' => (string) $request->input('status', 'Baru'),
+            'test_score_quran' => (string) $request->input('test_score_quran', '-'),
+            'test_score_academic' => (string) $request->input('test_score_academic', '-'),
+            'notes' => (string) $request->input('notes', ''),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Pendaftaran PPDB berhasil disimpan.',
+            'message' => 'Pendaftaran PPDB berhasil disimpan dengan Nomor Registrasi: ' . $regNumber,
             'registration' => DB::table('ppdb_registrations')->find($id),
         ]);
     }
 
     public function updatePpdbRegistrationStatus(Request $request, int $id): JsonResponse
     {
-        DB::table('ppdb_registrations')->where('id', $id)->update([
-            'status' => (string) $request->input('status', 'Diverifikasi'),
-            'updated_at' => now(),
-        ]);
+        $updateData = ['updated_at' => now()];
+        foreach (['status', 'test_score_quran', 'test_score_academic', 'notes', 'level', 'track', 'juz_memorized', 'gender', 'nisn', 'birth_info', 'address'] as $field) {
+            if ($request->has($field)) {
+                $updateData[$field] = (string) $request->input($field);
+            }
+        }
+
+        DB::table('ppdb_registrations')->where('id', $id)->update($updateData);
 
         return response()->json([
             'success' => true,
-            'message' => 'Status pendaftar PPDB diperbarui.',
+            'message' => 'Data & status seleksi calon santri berhasil diperbarui.',
+            'registration' => DB::table('ppdb_registrations')->find($id),
         ]);
     }
 

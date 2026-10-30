@@ -168,7 +168,9 @@ Route::prefix('v1')->group(function () {
         Route::put('/news/{id}', [LandingCmsApiController::class, 'updateNews']);
         Route::delete('/news/{id}', [LandingCmsApiController::class, 'deleteNews']);
         Route::post('/ppdb/register', [LandingCmsApiController::class, 'submitPpdbRegistration']);
-        Route::put('/ppdb/registrations/{id}', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
+        Route::get('/ppdb/check', [LandingCmsApiController::class, 'checkPpdbStatus']);
+        Route::match(['put', 'patch'], '/ppdb/registrations/{id}', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
+        Route::match(['put', 'patch'], '/ppdb/registrations/{id}/status', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
         Route::delete('/ppdb/registrations/{id}', [LandingCmsApiController::class, 'deletePpdbRegistration']);
     });
 });
