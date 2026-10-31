@@ -685,18 +685,123 @@
           </div>
         </section>
 
-        <!-- ==================== SUB-MENU 05: GALERI FOTO & VIDEO PROFIL ==================== -->
+        <!-- ==================== SUB-MENU 06: GALERI FOTO & VIDEO PROFIL ==================== -->
         <section id="tab-gallery" class="hidden space-y-6">
+          <!-- Form Tambah Foto / Video Baru (Otomatis Tampil Terbaru / Paling Atas) -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-limeaccent-400/70 shadow-sm space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-100 pb-4">
+              <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-forest-700">TAMBAH DOKUMENTASI BARU &bull; OTOMATIS TAMPIL TERBARU</span>
+                <h2 class="text-lg font-extrabold text-forest-950">Tambah Foto Kegiatan / Video Baru ke Galeri</h2>
+                <p class="text-xs text-zinc-500">Foto atau video yang baru Anda tambahkan di sini akan otomatis diletakkan pada urutan pertama (<strong>TERBARU</strong>) di Landing Page.</p>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-limeaccent-400 text-forest-950 text-xs font-extrabold flex items-center gap-1.5 shadow-2xs">
+                <span class="material-symbols-rounded text-[16px]">add_photo_alternate</span>
+                <span>Tampil Paling Baru</span>
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
+              <div>
+                <label class="font-bold text-forest-950 block mb-1">Jenis Media *</label>
+                <select id="new-gal-type" onchange="toggleNewGalVideoRow()" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 bg-white font-bold text-forest-950">
+                  <option value="photo">Foto Dokumentasi</option>
+                  <option value="video">Video Kegiatan / Profil</option>
+                </select>
+              </div>
+              <div>
+                <label class="font-bold text-forest-950 block mb-1">Kategori Filter di Landing Page *</label>
+                <select id="new-gal-category" onchange="syncNewGalBadge()" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 bg-white font-bold text-forest-950">
+                  <option value="kegiatan">Foto Kegiatan</option>
+                  <option value="aktivitas">Aktivitas Santri</option>
+                  <option value="lingkungan">Lingkungan Pesantren</option>
+                  <option value="video">Video Profil</option>
+                </select>
+              </div>
+              <div>
+                <label class="font-bold text-forest-950 block mb-1">Label Badge Kartu</label>
+                <input id="new-gal-badge" type="text" value="Foto Kegiatan" placeholder="Foto Kegiatan / Video" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 bg-white font-bold" />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="font-bold text-forest-950 block mb-1">Judul Foto / Video Terbaru *</label>
+                <input id="new-gal-title" type="text" placeholder="Contoh: Kunjungan Edukasi & Rihlah Ilmiah Santri 2026" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 bg-white font-bold" />
+              </div>
+              <div>
+                <label class="font-bold text-forest-950 block mb-1">Keterangan Singkat (Caption)</label>
+                <input id="new-gal-desc" type="text" placeholder="Keterangan singkat 1 kalimat..." class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 bg-white" />
+              </div>
+
+              <div class="sm:col-span-3">
+                <label class="font-bold text-forest-950 block mb-1.5">Pilih File Gambar / Foto (atau Tempel URL Gambar) *</label>
+                <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center bg-zinc-50 p-3 rounded-2xl border border-zinc-200/80">
+                  <img id="preview-new-gal-image" src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=600&q=80" alt="Preview" class="w-28 h-20 rounded-xl object-cover border border-zinc-300 bg-zinc-200 shrink-0" />
+                  <div class="flex-1 w-full space-y-2">
+                    <div class="flex gap-2">
+                      <input id="new-gal-image" type="text" placeholder="https://... atau klik tombol Pilih File Foto di kanan ->" oninput="if(this.value) document.getElementById('preview-new-gal-image').src = this.value" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white" />
+                      <label class="px-4 py-2 rounded-xl bg-forest-950 hover:bg-forest-800 text-limeaccent-400 font-extrabold cursor-pointer shrink-0 flex items-center gap-1.5 shadow-xs transition">
+                        <span class="material-symbols-rounded text-[16px]">upload_file</span>
+                        <span>Pilih File Foto</span>
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageFile(this, 'new-gal-image', 'preview-new-gal-image')" />
+                      </label>
+                    </div>
+                    <p class="text-[11px] text-zinc-500">Mendukung format JPG, PNG, WebP langsung dari perangkat Anda maupun link gambar.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Opsi Tambahan Khusus Jika Jenis Media = Video -->
+              <div id="new-gal-video-row" class="hidden sm:col-span-3 p-4 rounded-2xl bg-emerald-50/70 border border-emerald-900/15 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="font-extrabold text-forest-950 uppercase flex items-center gap-1.5">
+                    <span class="material-symbols-rounded text-[18px] text-forest-700">smart_display</span>
+                    <span>Pengaturan Sumber Video (YouTube / File MP4)</span>
+                  </span>
+                  <label class="inline-flex items-center gap-2 font-bold text-forest-900 cursor-pointer">
+                    <input id="new-gal-set-featured" type="checkbox" class="rounded border-zinc-300 text-forest-900" />
+                    <span>Jadikan juga sebagai Video Utama (Kartu Besar 6 Kolom)</span>
+                  </label>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div class="sm:col-span-2">
+                    <label class="font-bold text-zinc-700 block mb-1">Link Video YouTube / URL MP4 / Upload Video</label>
+                    <div class="flex gap-1.5">
+                      <input id="new-gal-video_url" type="text" placeholder="Contoh: https://www.youtube.com/watch?v=... atau file MP4" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                      <label class="px-3 py-2 rounded-xl bg-forest-950 text-limeaccent-400 font-bold cursor-pointer shrink-0 flex items-center gap-1">
+                        <span class="material-symbols-rounded text-[15px]">video_file</span>
+                        <span>File MP4</span>
+                        <input type="file" accept="video/*" class="hidden" onchange="uploadSingleImageFile(this, 'new-gal-video_url', null)" />
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Label Durasi Video</label>
+                    <input id="new-gal-duration" type="text" value="HD • 03:45 Menit" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-1 flex justify-end">
+              <button
+                type="button"
+                onclick="addNewGalleryItem()"
+                class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full flex items-center gap-2 shadow-md transition cursor-pointer"
+              >
+                <span class="material-symbols-rounded text-[18px]">add_circle</span>
+                <span>Tambahkan ke Galeri &amp; Tampilkan Paling Baru</span>
+              </button>
+            </div>
+          </div>
+
           <div class="bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/80 shadow-xs space-y-5">
             <div class="flex items-center justify-between border-b border-zinc-100 pb-4">
               <div>
-                <span class="text-[11px] font-extrabold uppercase tracking-wider text-forest-700">SUB-MENU 05 &bull; BAGIAN 05</span>
-                <h2 class="text-lg font-extrabold text-forest-950">Galeri &amp; Video Profil Pesantren</h2>
-                <p class="text-xs text-zinc-500">Kelola Kartu Utama Video Profil dan 5 Kartu Dokumentasi Kegiatan, Aktivitas Santri &amp; Lingkungan.</p>
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-forest-700">SUB-MENU 06 &bull; DAFTAR GALERI AKTIF</span>
+                <h3 class="text-lg font-extrabold text-forest-950">Kartu Utama Video Profil &amp; Daftar Dokumentasi Galeri</h3>
+                <p class="text-xs text-zinc-500">Urutan #1 adalah dokumentasi terbaru yang tampil paling awal di halaman depan.</p>
               </div>
-              <span class="w-10 h-10 rounded-2xl bg-forest-950 text-limeaccent-400 flex items-center justify-center shrink-0">
-                <span class="material-symbols-rounded">perm_media</span>
-              </span>
+              <span id="gal-total-badge" class="px-3 py-1 rounded-full bg-forest-950 text-limeaccent-400 text-xs font-extrabold">5 Item</span>
             </div>
 
             <!-- Video Profil Utama -->
@@ -723,6 +828,17 @@
                   <input id="gv-desc" type="text" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
                 </div>
                 <div class="sm:col-span-2">
+                  <label class="font-bold text-zinc-700 block mb-1">Link Video YouTube / URL MP4 / Upload File Video</label>
+                  <div class="flex gap-2">
+                    <input id="gv-video_url" type="text" placeholder="https://www.youtube.com/watch?v=... atau link MP4" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                    <label class="px-3.5 py-2 rounded-xl bg-forest-950 text-limeaccent-400 font-bold cursor-pointer shrink-0 flex items-center gap-1">
+                      <span class="material-symbols-rounded text-[15px]">video_file</span>
+                      <span>Upload MP4</span>
+                      <input type="file" accept="video/*" class="hidden" onchange="uploadSingleImageFile(this, 'gv-video_url', null)" />
+                    </label>
+                  </div>
+                </div>
+                <div class="sm:col-span-2">
                   <label class="font-bold text-zinc-700 block mb-1">Foto Sampul / Thumbnail Video Profil</label>
                   <div class="flex flex-col sm:flex-row gap-2.5 items-start sm:items-center">
                     <img id="preview-gv-image" src="" alt="Preview Video" class="w-28 h-16 rounded-xl object-cover border border-zinc-200 bg-zinc-100 shrink-0" />
@@ -736,16 +852,16 @@
               </div>
             </div>
 
-            <!-- 5 Kartu Galeri Foto -->
+            <!-- Daftar Kartu Galeri Foto & Video -->
             <div class="space-y-3">
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-forest-800">5 Kartu Dokumentasi Galeri Foto</h3>
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-forest-800">Daftar Kartu Dokumentasi Foto &amp; Video (Urutan Terbaru di Atas)</h3>
               <div id="cms-gallery-editor" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"></div>
             </div>
 
             <div class="pt-2 flex justify-end">
               <button type="button" onclick="saveAllCmsProfile()" class="bg-forest-950 hover:bg-forest-800 text-limeaccent-400 font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full flex items-center gap-2 shadow-md transition cursor-pointer">
                 <span class="material-symbols-rounded text-[18px]">save</span>
-                <span>Simpan Galeri &amp; Video Profil</span>
+                <span>Simpan Seluruh Galeri &amp; Video</span>
               </button>
             </div>
           </div>
@@ -1088,14 +1204,153 @@
       }).join('');
     }
 
-    // 6. Render 5 Gallery Items Editor
+    // 6. Render Gallery Items Editor (Supports Unlimited Photos & Videos, Add/Delete/Move to Top)
+    function toggleNewGalVideoRow() {
+      var typeVal = getVal('new-gal-type');
+      var row = document.getElementById('new-gal-video-row');
+      if (row) {
+        row.classList.toggle('hidden', typeVal !== 'video');
+      }
+      if (typeVal === 'video') {
+        setVal('new-gal-category', 'video');
+        setVal('new-gal-badge', 'Video Kegiatan');
+      }
+    }
+
+    function syncNewGalBadge() {
+      var cat = getVal('new-gal-category');
+      var map = {
+        kegiatan: 'Foto Kegiatan',
+        aktivitas: 'Aktivitas Santri',
+        lingkungan: 'Lingkungan Pesantren',
+        video: 'Video Kegiatan'
+      };
+      if (map[cat]) {
+        setVal('new-gal-badge', map[cat]);
+      }
+      if (cat === 'video') {
+        setVal('new-gal-type', 'video');
+        toggleNewGalVideoRow();
+      }
+    }
+
+    function syncGalleryItemsFromDom() {
+      currentGalleryItems = currentGalleryItems.map(function (oldItem, idx) {
+        return {
+          type: getVal('gal-type-' + idx) || oldItem.type || 'photo',
+          category: getVal('gal-cat-' + idx) || oldItem.category || 'kegiatan',
+          badge: getVal('gal-badge-' + idx) || oldItem.badge || 'Foto Kegiatan',
+          title: getVal('gal-title-' + idx) || oldItem.title || '',
+          desc: getVal('gal-desc-' + idx) || oldItem.desc || '',
+          image: getVal('gal-img-' + idx) || oldItem.image || '',
+          video_url: getVal('gal-vid-' + idx) !== '' ? getVal('gal-vid-' + idx) : (oldItem.video_url || ''),
+          duration: getVal('gal-dur-' + idx) !== '' ? getVal('gal-dur-' + idx) : (oldItem.duration || '')
+        };
+      });
+    }
+
+    async function addNewGalleryItem() {
+      syncGalleryItemsFromDom();
+      var typeVal = getVal('new-gal-type') || 'photo';
+      var catVal = getVal('new-gal-category') || (typeVal === 'video' ? 'video' : 'kegiatan');
+      var badgeVal = getVal('new-gal-badge') || (typeVal === 'video' ? 'Video Kegiatan' : 'Foto Kegiatan');
+      var titleVal = getVal('new-gal-title').trim();
+      var descVal = getVal('new-gal-desc').trim();
+      var imgVal = getVal('new-gal-image').trim() || document.getElementById('preview-new-gal-image').src;
+      var vidUrl = getVal('new-gal-video_url').trim();
+      var durVal = getVal('new-gal-duration').trim() || 'HD • 03:45 Menit';
+
+      if (!titleVal) {
+        alert('Mohon isi Judul Foto / Video terlebih dahulu.');
+        document.getElementById('new-gal-title').focus();
+        return;
+      }
+
+      var newItem = {
+        type: typeVal,
+        category: catVal,
+        badge: badgeVal,
+        title: titleVal,
+        desc: descVal || 'Dokumentasi terbaru Pondok Pesantren Modern Utsman Bin Affan.',
+        image: imgVal,
+        video_url: typeVal === 'video' ? vidUrl : '',
+        duration: typeVal === 'video' ? durVal : ''
+      };
+
+      // Prepend at index 0 so it appears as the newest item on the Landing Page
+      currentGalleryItems.unshift(newItem);
+
+      // If user checked "Jadikan juga sebagai Video Utama", update the featured video card too
+      var setFeaturedEl = document.getElementById('new-gal-set-featured');
+      if (typeVal === 'video' && setFeaturedEl && setFeaturedEl.checked) {
+        setVal('gv-badge', badgeVal.toUpperCase());
+        setVal('gv-duration', durVal);
+        setVal('gv-title', titleVal);
+        setVal('gv-desc', newItem.desc);
+        setVal('gv-image', imgVal);
+        setVal('gv-video_url', vidUrl);
+        if (document.getElementById('preview-gv-image')) {
+          document.getElementById('preview-gv-image').src = imgVal;
+        }
+      }
+
+      renderGalleryEditor(currentGalleryItems);
+
+      // Clear new item form
+      setVal('new-gal-title', '');
+      setVal('new-gal-desc', '');
+      setVal('new-gal-image', '');
+      setVal('new-gal-video_url', '');
+      if (setFeaturedEl) setFeaturedEl.checked = false;
+
+      await saveAllCmsProfile();
+      showToast('Foto/Video terbaru "' + titleVal + '" berhasil ditambahkan & langsung tampil di urutan paling atas Landing Page!');
+    }
+
+    async function moveGalleryItemToTop(idx) {
+      syncGalleryItemsFromDom();
+      if (idx <= 0 || idx >= currentGalleryItems.length) return;
+      var picked = currentGalleryItems.splice(idx, 1)[0];
+      currentGalleryItems.unshift(picked);
+      renderGalleryEditor(currentGalleryItems);
+      await saveAllCmsProfile();
+      showToast('Item "' + (picked.title || 'Galeri') + '" dijadikan urutan #1 (Terbaru) di Landing Page!');
+    }
+
+    async function removeGalleryItem(idx) {
+      syncGalleryItemsFromDom();
+      if (!confirm('Hapus foto/video ini dari galeri Landing Page?')) return;
+      currentGalleryItems.splice(idx, 1);
+      renderGalleryEditor(currentGalleryItems);
+      await saveAllCmsProfile();
+      showToast('Item galeri berhasil dihapus.');
+    }
+
     function renderGalleryEditor(items) {
       currentGalleryItems = (Array.isArray(items) && items.length > 0) ? items : [];
+      var badgeTotal = document.getElementById('gal-total-badge');
+      if (badgeTotal) badgeTotal.textContent = currentGalleryItems.length + ' Item';
       var el = document.getElementById('cms-gallery-editor');
       if (!el) return;
       el.innerHTML = currentGalleryItems.map(function (item, idx) {
         var cat = item.category || 'kegiatan';
-        return '<div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 space-y-2.5">' +
+        var itemType = item.type || (cat === 'video' || item.video_url ? 'video' : 'photo');
+        var newestBadge = idx === 0
+          ? '<span class="px-2.5 py-0.5 rounded-full bg-limeaccent-400 text-forest-950 text-[10px] font-extrabold">TERBARU #1</span>'
+          : '<span class="px-2 py-0.5 rounded-full bg-zinc-200 text-zinc-700 text-[10px] font-bold">Urutan #' + (idx + 1) + '</span>';
+
+        return '<div class="p-4 rounded-2xl bg-zinc-50 border ' + (idx === 0 ? 'border-emerald-700/40 ring-1 ring-limeaccent-400/50' : 'border-zinc-200/80') + ' space-y-2.5">' +
+          '<div class="flex items-center justify-between border-b border-zinc-200/70 pb-2">' +
+            '<div class="flex items-center gap-2">' +
+              newestBadge +
+              '<span class="text-[11px] font-extrabold uppercase text-forest-900">' + (itemType === 'video' ? '🎬 VIDEO' : '📷 FOTO') + '</span>' +
+            '</div>' +
+            '<div class="flex items-center gap-1.5">' +
+              (idx > 0 ? '<button type="button" onclick="moveGalleryItemToTop(' + idx + ')" class="px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:bg-limeaccent-400/30 text-[10px] font-extrabold text-forest-900 cursor-pointer" title="Jadikan Urutan Terbaru #1">&#8593; Jadikan Terbaru</button>' : '') +
+              '<button type="button" onclick="removeGalleryItem(' + idx + ')" class="px-2.5 py-1 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 text-[10px] font-extrabold text-red-700 cursor-pointer">Hapus</button>' +
+            '</div>' +
+          '</div>' +
+          '<input id="gal-type-' + idx + '" type="hidden" value="' + itemType + '" />' +
           '<div class="flex items-center gap-3">' +
             '<img id="preview-gal-' + idx + '" src="' + (item.image || '') + '" alt="" class="w-20 h-14 rounded-xl object-cover border border-zinc-300 bg-zinc-200 shrink-0" />' +
             '<div class="flex-1 grid grid-cols-2 gap-2">' +
@@ -1105,6 +1360,7 @@
                   '<option value="kegiatan" ' + (cat === 'kegiatan' ? 'selected' : '') + '>Foto Kegiatan</option>' +
                   '<option value="aktivitas" ' + (cat === 'aktivitas' ? 'selected' : '') + '>Aktivitas Santri</option>' +
                   '<option value="lingkungan" ' + (cat === 'lingkungan' ? 'selected' : '') + '>Lingkungan</option>' +
+                  '<option value="video" ' + (cat === 'video' ? 'selected' : '') + '>Video Profil</option>' +
                 '</select>' +
               '</div>' +
               '<div>' +
@@ -1122,13 +1378,23 @@
             '<input id="gal-desc-' + idx + '" type="text" value="' + (item.desc || '').replace(/"/g, '&quot;') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 bg-white" />' +
           '</div>' +
           '<div>' +
-            '<label class="font-bold text-zinc-700 block mb-1">Foto Galeri (URL / Upload File)</label>' +
+            '<label class="font-bold text-zinc-700 block mb-1">Foto / Thumbnail (URL / Upload File)</label>' +
             '<div class="flex gap-1.5">' +
               '<input id="gal-img-' + idx + '" type="text" value="' + (item.image || '').replace(/"/g, '&quot;') + '" oninput="document.getElementById(\'preview-gal-' + idx + '\').src = this.value" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 bg-white" />' +
               '<label class="px-2.5 py-1.5 rounded-xl bg-forest-950 text-limeaccent-400 font-bold cursor-pointer shrink-0 flex items-center">' +
                 '<span>Upload</span>' +
                 '<input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageFile(this, \'gal-img-' + idx + '\', \'preview-gal-' + idx + '\')" />' +
               '</label>' +
+            '</div>' +
+          '</div>' +
+          '<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">' +
+            '<div class="sm:col-span-2">' +
+              '<label class="font-bold text-zinc-700 block mb-1">Link Video YouTube / MP4 (Opsional jika Video)</label>' +
+              '<input id="gal-vid-' + idx + '" type="text" placeholder="https://www.youtube.com/watch?v=..." value="' + (item.video_url || '').replace(/"/g, '&quot;') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 bg-white" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="font-bold text-zinc-700 block mb-1">Durasi Video</label>' +
+              '<input id="gal-dur-' + idx + '" type="text" placeholder="HD • 03:45" value="' + (item.duration || '').replace(/"/g, '&quot;') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 bg-white" />' +
             '</div>' +
           '</div>' +
         '</div>';
