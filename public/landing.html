@@ -2474,10 +2474,23 @@
         setTxt('cms-ppdb-status', d.status_badge || d.status_gelombang);
         setTxt('cms-ppdb-kuota', d.total_quota || d.total_kuota);
         setTxt('cms-ppdb-kuota-desc', d.quota_description || d.deskripsi_kuota);
-        setTxt('cms-ppdb-g1-label', d.gelombang_1_label);
-        setTxt('cms-ppdb-g1-date', d.wave_1 || d.gelombang_1_waktu);
-        setTxt('cms-ppdb-g2-label', d.gelombang_2_label);
-        setTxt('cms-ppdb-g2-date', d.wave_2 || d.gelombang_2_waktu);
+
+        if (d.wave_items && Array.isArray(d.wave_items) && d.wave_items.length > 0) {
+          if (d.wave_items[0]) {
+            setTxt('cms-ppdb-g1-label', d.wave_items[0].name || 'Gelombang I');
+            setTxt('cms-ppdb-g1-date', d.wave_items[0].date_range || d.wave_items[0].open_date || d.wave_1);
+          }
+          if (d.wave_items[1]) {
+            setTxt('cms-ppdb-g2-label', d.wave_items[1].name || 'Gelombang II');
+            setTxt('cms-ppdb-g2-date', d.wave_items[1].date_range || d.wave_items[1].open_date || d.wave_2);
+          }
+        } else {
+          setTxt('cms-ppdb-g1-label', d.gelombang_1_label);
+          setTxt('cms-ppdb-g1-date', d.wave_1 || d.gelombang_1_waktu);
+          setTxt('cms-ppdb-g2-label', d.gelombang_2_label);
+          setTxt('cms-ppdb-g2-date', d.wave_2 || d.gelombang_2_waktu);
+        }
+
         setTxt('cms-ppdb-tes-label', d.jadwal_tes_label);
         setTxt('cms-ppdb-tes-date', d.test_schedule || d.jadwal_tes_waktu);
         setTxt('cms-ppdb-beasiswa', d.scholarship_note || d.info_beasiswa);

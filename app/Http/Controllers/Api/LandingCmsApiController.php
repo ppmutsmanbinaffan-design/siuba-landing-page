@@ -261,6 +261,31 @@ class LandingCmsApiController extends Controller
             'wave_2_test' => 'Setiap Sabtu (Jan – Mar 2027)',
             'wave_2_announce' => '3 Hari Setelah Tes',
             'wave_2_rereg' => '01 – 15 April 2027',
+            // Gelombang Pendaftaran Dinamis
+            'wave_items' => [
+                [
+                    'name' => 'Gelombang I — Prestasi, Beasiswa & Reguler',
+                    'status' => 'Buka',
+                    'open_date' => '01 Oktober 2026',
+                    'close_date' => '31 Desember 2026',
+                    'date_range' => '01 Okt – 31 Des 2026',
+                    'exam_date' => 'Setiap Sabtu (Pukul 08.00 – 14.00 WIB)',
+                    'announce_date' => '3 Hari Setelah Tes',
+                    'rereg_date' => 'Maks. 14 Hari Setelah Lulus',
+                    'note' => 'One Day Service: Tes Al-Qur\'an, Akademik & Wawancara langsung dalam 1 hari.',
+                ],
+                [
+                    'name' => 'Gelombang II — Reguler (Jika Kuota Tersedia)',
+                    'status' => 'Segera Dibuka',
+                    'open_date' => '01 Januari 2027',
+                    'close_date' => '31 Maret 2027',
+                    'date_range' => '01 Jan – 31 Mar 2027',
+                    'exam_date' => 'Setiap Sabtu (Jan – Mar 2027)',
+                    'announce_date' => '3 Hari Setelah Tes',
+                    'rereg_date' => '01 – 15 April 2027',
+                    'note' => 'Dibuka jika kuota Gelombang I belum terpenuhi.',
+                ],
+            ],
             'boarding_entry_date' => '12 Juli 2027 (Khutbatul Arsy & MATSABA)',
             'test_schedule' => 'Setiap Sabtu (Pukul 08.00 – 14.00 WIB)',
             'scholarship_note' => 'Tersedia jalur Beasiswa Tahfidz (Hafal min. 5–30 Juz), Juara Olimpiade Sains, & Yatim Berprestasi.',
@@ -463,6 +488,9 @@ class LandingCmsApiController extends Controller
         $profile = $profileRow ? array_merge(self::defaultProfile(), json_decode($profileRow->value, true) ?? []) : self::defaultProfile();
         $ppdb = $ppdbRow ? array_merge(self::defaultPpdb(), json_decode($ppdbRow->value, true) ?? []) : self::defaultPpdb();
 
+        if (empty($ppdb['wave_items'])) {
+            $ppdb['wave_items'] = self::defaultPpdb()['wave_items'];
+        }
         if (empty($ppdb['fee_items'])) {
             $ppdb['fee_items'] = self::defaultPpdb()['fee_items'];
         }
@@ -549,6 +577,9 @@ class LandingCmsApiController extends Controller
         $data = $request->all();
         $merged = array_merge($existing, $data);
 
+        if ($request->has('wave_items')) {
+            $merged['wave_items'] = $request->input('wave_items');
+        }
         if ($request->has('fee_items')) {
             $merged['fee_items'] = $request->input('fee_items');
         }

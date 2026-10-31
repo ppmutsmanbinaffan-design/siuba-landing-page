@@ -163,7 +163,7 @@
       <h2 class="text-2xl sm:text-3xl font-extrabold text-forest-950 mt-1">Rincian Jadwal Gelombang &amp; Tahapan Seleksi</h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div id="p-wave-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Gelombang 1 -->
       <div class="bg-white rounded-3xl p-6 sm:p-7 border-2 border-forest-800 shadow-sm space-y-4 relative overflow-hidden">
         <span class="bg-limeaccent-400 text-forest-950 text-xs font-extrabold px-3.5 py-1 rounded-full inline-block">
@@ -704,6 +704,52 @@
         setText('card-wave-2-test', d.wave_2_test);
         setText('card-wave-2-announce', d.wave_2_announce);
         setText('card-wave-2-rereg', d.wave_2_rereg);
+
+        // Dynamic Wave Items Rendering
+        if (d.wave_items && Array.isArray(d.wave_items) && d.wave_items.length > 0) {
+          var waveGrid = document.getElementById('p-wave-grid');
+          if (waveGrid) {
+            waveGrid.className = 'grid grid-cols-1 ' + (d.wave_items.length >= 3 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2') + ' gap-6';
+            waveGrid.innerHTML = d.wave_items.map(function(item, idx) {
+              var isOpen = item.status === 'Buka';
+              var isUpcoming = item.status === 'Segera Dibuka';
+              var borderClass = isOpen ? 'border-2 border-forest-800 shadow-sm' : 'border border-zinc-200/90 shadow-2xs';
+              var badgeClass = isOpen ? 'bg-limeaccent-400 text-forest-950' : (isUpcoming ? 'bg-forest-900 text-limeaccent-400' : 'bg-zinc-200 text-zinc-700');
+              var statusLabel = isOpen ? 'PENDAFTARAN DIBUKA' : (isUpcoming ? 'SEGERA DIBUKA' : 'DITUTUP');
+              var rangeStr = item.date_range || (item.open_date && item.close_date ? (item.open_date + ' – ' + item.close_date) : (item.open_date || 'Jadwal Segera Diumumkan'));
+
+              return '<div class="bg-white rounded-3xl p-6 sm:p-7 ' + borderClass + ' space-y-4 relative overflow-hidden flex flex-col justify-between">' +
+                '<div class="space-y-3.5">' +
+                  '<div class="flex flex-wrap items-center justify-between gap-2">' +
+                    '<span class="' + badgeClass + ' text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wide">' +
+                      statusLabel +
+                    '</span>' +
+                    (item.open_date ? '<span class="text-[11px] text-zinc-500 font-semibold flex items-center gap-1"><span class="material-symbols-rounded text-[14px]">event</span> ' + (item.open_date) + (item.close_date ? ' s.d ' + item.close_date : '') + '</span>' : '') +
+                  '</div>' +
+                  '<div>' +
+                    '<h4 class="text-xs font-extrabold text-forest-800 uppercase tracking-wide">' + (item.name || ('Gelombang ' + (idx + 1))) + '</h4>' +
+                    '<h3 class="text-xl sm:text-2xl font-extrabold text-forest-950 mt-1">' + rangeStr + '</h3>' +
+                  '</div>' +
+                  '<div class="space-y-2.5 text-xs sm:text-sm pt-3 border-t border-zinc-100">' +
+                    '<div class="flex items-center justify-between py-1.5 border-b border-zinc-100">' +
+                      '<span class="text-zinc-500 flex items-center gap-1.5"><span class="material-symbols-rounded text-forest-700 text-[18px]">quiz</span> Ujian Seleksi</span>' +
+                      '<span class="font-extrabold text-forest-950 text-right">' + (item.exam_date || 'Setiap Sabtu') + '</span>' +
+                    '</div>' +
+                    '<div class="flex items-center justify-between py-1.5 border-b border-zinc-100">' +
+                      '<span class="text-zinc-500 flex items-center gap-1.5"><span class="material-symbols-rounded text-forest-700 text-[18px]">campaign</span> Pengumuman</span>' +
+                      '<span class="font-extrabold text-forest-950 text-right">' + (item.announce_date || '3 Hari Setelah Tes') + '</span>' +
+                    '</div>' +
+                    '<div class="flex items-center justify-between py-1.5">' +
+                      '<span class="text-zinc-500 flex items-center gap-1.5"><span class="material-symbols-rounded text-forest-700 text-[18px]">assignment_turned_in</span> Daftar Ulang</span>' +
+                      '<span class="font-extrabold text-forest-950 text-right">' + (item.rereg_date || 'Sesuai Ketentuan') + '</span>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+                (item.note ? '<div class="text-[11px] text-zinc-500 italic pt-2 border-t border-zinc-100">' + item.note + '</div>' : '') +
+              '</div>';
+            }).join('');
+          }
+        }
 
         setText('p-smp-title', d.smp_title);
         setText('p-smp-desc', d.smp_desc);
