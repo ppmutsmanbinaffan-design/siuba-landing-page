@@ -1320,7 +1320,7 @@
         <div class="relative z-10 my-auto flex justify-center">
           <button
             type="button"
-            onclick="document.getElementById('video-profile-modal').classList.remove('hidden')"
+            onclick="openVideoModal()"
             class="w-16 h-16 rounded-full bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 flex items-center justify-center shadow-2xl hover:scale-110 transition cursor-pointer"
             title="Putar Video Profil Pesantren"
           >
@@ -1912,36 +1912,45 @@
     </div>
   </div>
 
-  <!-- Modal Video Profil Pesantren -->
+  <!-- Modal Video Profil Pesantren (YouTube & Direct MP4 Responsive Player) -->
   <div
     id="video-profile-modal"
-    class="hidden fixed inset-0 z-50 bg-forest-950/85 backdrop-blur-sm flex items-center justify-center p-4"
+    class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
+    onclick="if (event.target === this) closeVideoModal()"
   >
-    <div class="bg-forest-950 text-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-white/15">
-      <div class="p-4 sm:px-6 flex items-center justify-between border-b border-white/10">
-        <div class="flex items-center gap-2 text-xs sm:text-sm font-extrabold text-limeaccent-400">
-          <span class="material-symbols-rounded text-[18px]">smart_display</span>
-          <span>Video Profil Resmi Pondok Pesantren Utsman Bin Affan</span>
+    <div class="bg-forest-950 text-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl border border-white/20 flex flex-col max-h-[94vh]">
+      <div class="p-3.5 sm:px-6 flex items-center justify-between border-b border-white/10 bg-forest-900/80">
+        <div class="flex items-center gap-2 text-xs sm:text-sm font-extrabold text-limeaccent-400 truncate pr-2">
+          <span class="material-symbols-rounded text-[20px] text-red-500">smart_display</span>
+          <span id="video-modal-title" class="truncate">Video Profil Resmi Pondok Pesantren</span>
         </div>
         <button
           type="button"
-          onclick="document.getElementById('video-profile-modal').classList.add('hidden')"
-          class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center cursor-pointer"
+          onclick="closeVideoModal()"
+          class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center cursor-pointer shrink-0 transition"
+          title="Tutup Video"
         >
-          <span class="material-symbols-rounded text-[18px]">close</span>
+          <span class="material-symbols-rounded text-[20px]">close</span>
         </button>
       </div>
-      <div class="p-6 sm:p-8 space-y-4 text-center bg-forest-900/60">
-        <div class="relative rounded-2xl overflow-hidden h-56 sm:h-72 flex items-center justify-center">
-          <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80" alt="Video Profil" class="absolute inset-0 w-full h-full object-cover opacity-50" />
-          <div class="relative z-10 max-w-md mx-auto space-y-3 p-4">
-            <span class="material-symbols-rounded text-limeaccent-400 text-[48px]">verified</span>
-            <h4 class="text-lg sm:text-xl font-extrabold">Mengenal Kehidupan Santri 24 Jam di Ponpes Utsman Bin Affan</h4>
-            <p class="text-xs text-white/80 leading-relaxed">
-              Mulai dari Qiyamul Lail, Shalat Subuh berjamaah, Halaqah Tahfidz Pagi, Pembelajaran Sains &amp; Bahasa, Ekstrakurikuler Panahan, hingga Muraja&rsquo;ah Malam.
-            </p>
-          </div>
+
+      <div class="p-2 sm:p-4 bg-black/95">
+        <div id="video-modal-container" class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-inner flex items-center justify-center">
+          <!-- Iframe YouTube / Video Player diinjeksi via JavaScript -->
         </div>
+      </div>
+
+      <div class="p-4 sm:px-6 bg-forest-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs border-t border-white/10">
+        <p id="video-modal-desc" class="text-white/80 line-clamp-2 leading-relaxed flex-1"></p>
+        <a
+          id="video-modal-yt-btn"
+          href="#"
+          target="_blank"
+          class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs shadow-md transition"
+        >
+          <i class="fa-brands fa-youtube text-sm"></i>
+          <span>Tonton di YouTube</span>
+        </a>
       </div>
     </div>
   </div>
@@ -2050,6 +2059,64 @@
     }
 
     resetHeroSlideTimer();
+
+    // Helper YouTube ID Extractor & Video Modal Player
+    window.__CMS_GALLERY_VIDEO__ = null;
+
+    function extractYouTubeId(url) {
+      if (!url) return null;
+      var str = String(url).trim();
+      var m = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+      return m ? m[1] : null;
+    }
+
+    function openVideoModal(videoUrl, title, desc) {
+      var modal = document.getElementById('video-profile-modal');
+      var container = document.getElementById('video-modal-container');
+      var titleEl = document.getElementById('video-modal-title');
+      var descEl = document.getElementById('video-modal-desc');
+      var ytBtn = document.getElementById('video-modal-yt-btn');
+
+      if (!modal || !container) return;
+
+      var gv = window.__CMS_GALLERY_VIDEO__ || {};
+      var rawUrl = videoUrl || gv.video_url || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+      var vTitle = title || gv.title || 'Profil Pondok Pesantren Modern Utsman Bin Affan';
+      var vDesc = desc || gv.desc || 'Menyaksikan suasana halaqah tahfidz, pembelajaran sains modern, dan kehidupan berasrama 24 jam.';
+
+      if (titleEl) titleEl.textContent = vTitle;
+      if (descEl) descEl.textContent = vDesc;
+
+      var ytId = extractYouTubeId(rawUrl);
+      if (ytId) {
+        container.innerHTML = '<iframe class="w-full h-full rounded-xl" src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0&modestbranding=1" title="' + vTitle.replace(/"/g, '&quot;') + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+        if (ytBtn) {
+          ytBtn.href = 'https://www.youtube.com/watch?v=' + ytId;
+          ytBtn.classList.remove('hidden');
+        }
+      } else if (rawUrl && (rawUrl.indexOf('.mp4') !== -1 || rawUrl.indexOf('.webm') !== -1)) {
+        container.innerHTML = '<video controls autoplay class="w-full h-full rounded-xl bg-black object-contain"><source src="' + rawUrl + '" type="video/mp4">Browser Anda tidak mendukung tag video.</video>';
+        if (ytBtn) ytBtn.classList.add('hidden');
+      } else {
+        container.innerHTML = '<iframe class="w-full h-full rounded-xl" src="' + rawUrl + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+        if (ytBtn) ytBtn.classList.add('hidden');
+      }
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideoModal() {
+      var modal = document.getElementById('video-profile-modal');
+      var container = document.getElementById('video-modal-container');
+      if (container) container.innerHTML = '';
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeVideoModal();
+    });
 
     // Filter Galeri & Video
     function filterGallery(cat) {
@@ -2301,40 +2368,76 @@
 
         // Galeri & Video Profil
         var gv = p.gallery_video || {};
+        window.__CMS_GALLERY_VIDEO__ = gv;
+
         if (Array.isArray(p.gallery_items) && p.gallery_items.length > 0) {
           var galGrid = document.getElementById('cms-gallery-grid');
           if (galGrid) {
+            var gvYtId = extractYouTubeId(gv.video_url);
+            var gvImg = gv.image;
+            if (gvYtId && (!gvImg || gvImg.indexOf('unsplash') !== -1)) {
+              gvImg = 'https://img.youtube.com/vi/' + gvYtId + '/hqdefault.jpg';
+            }
+            gvImg = gvImg || 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80';
+
             var videoHtml = '<div data-gal-cat="video" class="gal-item lg:col-span-6 relative rounded-3xl overflow-hidden min-h-[280px] sm:min-h-[340px] shadow-lg group flex flex-col justify-between p-6 text-white">' +
-              '<img src="' + (gv.image || 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80') + '" alt="Video Profil" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700" />' +
+              '<img src="' + gvImg + '" alt="Video Profil" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700" />' +
               '<div class="absolute inset-0 bg-gradient-to-t from-forest-950/95 via-forest-950/45 to-forest-950/30"></div>' +
               '<div class="relative z-10 flex items-center justify-between">' +
-                '<span class="bg-limeaccent-400 text-forest-950 text-xs font-extrabold px-3 py-1 rounded-full flex items-center gap-1">' +
-                  '<span class="material-symbols-rounded text-[16px]">videocam</span>' +
+                '<span class="bg-limeaccent-400 text-forest-950 text-xs font-extrabold px-3 py-1 rounded-full flex items-center gap-1.5">' +
+                  '<span class="material-symbols-rounded text-[16px]">smart_display</span>' +
                   '<span>' + (gv.badge || 'VIDEO PROFIL RESMI') + '</span>' +
                 '</span>' +
-                '<span class="text-xs font-bold bg-white/15 px-3 py-1 rounded-full">' + (gv.duration || 'HD • 04:15 Menit') + '</span>' +
+                '<span class="text-xs font-bold bg-white/15 px-3 py-1 rounded-full flex items-center gap-1">' +
+                  (gvYtId ? '<i class="fa-brands fa-youtube text-red-400"></i>' : '') +
+                  '<span>' + (gv.duration || (gvYtId ? 'YouTube HD' : 'HD • 04:15 Menit')) + '</span>' +
+                '</span>' +
               '</div>' +
               '<div class="relative z-10 my-auto flex justify-center">' +
-                '<button type="button" onclick="document.getElementById(\'video-profile-modal\').classList.remove(\'hidden\')" class="w-16 h-16 rounded-full bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 flex items-center justify-center shadow-2xl hover:scale-110 transition cursor-pointer" title="Putar Video Profil Pesantren">' +
+                '<button type="button" onclick="openVideoModal(\'' + (gv.video_url || '').replace(/'/g, "\\'") + '\', \'' + (gv.title || '').replace(/'/g, "\\'") + '\', \'' + (gv.desc || '').replace(/'/g, "\\'") + '\')" class="w-16 h-16 rounded-full bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 flex items-center justify-center shadow-2xl hover:scale-115 transition duration-300 cursor-pointer" title="Putar Video Profil Pesantren">' +
                   '<span class="material-symbols-rounded text-[34px]">play_arrow</span>' +
                 '</button>' +
               '</div>' +
               '<div class="relative z-10 space-y-1">' +
                 '<h4 class="text-lg sm:text-xl font-extrabold">' + (gv.title || 'Profil Pondok Pesantren Modern Utsman Bin Affan') + '</h4>' +
-                '<p class="text-xs text-white/80">' + (gv.desc || '') + '</p>' +
+                '<p class="text-xs text-white/80 line-clamp-2">' + (gv.desc || '') + '</p>' +
               '</div>' +
             '</div>';
 
             var itemsHtml = p.gallery_items.map(function (item, idx) {
+              var isVideo = item.type === 'video' || item.category === 'video' || (item.video_url && item.video_url.length > 5);
               var colSpan = idx < 2 ? 'lg:col-span-3 min-h-[260px]' : 'lg:col-span-4 min-h-[230px]';
               var badgeCls = idx % 2 === 1 ? 'bg-white text-forest-950' : 'bg-limeaccent-400 text-forest-950';
-              return '<div data-gal-cat="' + (item.category || 'kegiatan') + '" class="gal-item ' + colSpan + ' relative rounded-3xl overflow-hidden shadow-sm group flex flex-col justify-end p-5 text-white">' +
-                '<img src="' + (item.image || '') + '" alt="' + (item.title || '') + '" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" />' +
-                '<div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-transparent to-transparent"></div>' +
+
+              var itemYtId = extractYouTubeId(item.video_url);
+              var displayImg = item.image;
+              if (itemYtId && (!displayImg || displayImg.indexOf('unsplash') !== -1)) {
+                displayImg = 'https://img.youtube.com/vi/' + itemYtId + '/hqdefault.jpg';
+              }
+
+              var playOverlay = isVideo
+                ? '<div class="absolute inset-0 flex items-center justify-center z-10">' +
+                    '<div class="w-12 h-12 rounded-full bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 flex items-center justify-center shadow-xl group-hover:scale-115 transition duration-300 cursor-pointer">' +
+                      '<span class="material-symbols-rounded text-[26px]">play_arrow</span>' +
+                    '</div>' +
+                  '</div>'
+                : '';
+
+              var clickAttr = isVideo
+                ? 'onclick="openVideoModal(\'' + (item.video_url || '').replace(/'/g, "\\'") + '\', \'' + (item.title || '').replace(/'/g, "\\'") + '\', \'' + (item.desc || '').replace(/'/g, "\\'") + '\')" class="gal-item ' + colSpan + ' relative rounded-3xl overflow-hidden shadow-sm group flex flex-col justify-end p-5 text-white cursor-pointer"'
+                : 'class="gal-item ' + colSpan + ' relative rounded-3xl overflow-hidden shadow-sm group flex flex-col justify-end p-5 text-white"';
+
+              return '<div data-gal-cat="' + (item.category || 'kegiatan') + '" ' + clickAttr + '>' +
+                '<img src="' + (displayImg || '') + '" alt="' + (item.title || '') + '" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" />' +
+                '<div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent"></div>' +
+                playOverlay +
                 '<div class="relative z-10 space-y-1">' +
-                  '<span class="text-[10px] font-extrabold uppercase ' + badgeCls + ' px-2.5 py-0.5 rounded-full">' + (item.badge || '') + '</span>' +
+                  '<span class="text-[10px] font-extrabold uppercase ' + badgeCls + ' px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">' +
+                    (isVideo ? '<span class="material-symbols-rounded text-[13px]">play_circle</span>' : '') +
+                    '<span>' + (item.badge || (isVideo ? 'Video' : 'Foto')) + '</span>' +
+                  '</span>' +
                   '<h4 class="text-sm font-extrabold pt-1">' + (item.title || '') + '</h4>' +
-                  '<p class="text-[11px] text-white/75">' + (item.desc || '') + '</p>' +
+                  '<p class="text-[11px] text-white/75 line-clamp-2">' + (item.desc || '') + '</p>' +
                 '</div>' +
               '</div>';
             }).join('');

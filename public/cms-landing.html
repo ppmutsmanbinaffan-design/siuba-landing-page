@@ -780,8 +780,8 @@
               <div id="new-gal-video-row" class="hidden sm:col-span-3 p-4 rounded-2xl bg-emerald-50/70 border border-emerald-900/15 space-y-3">
                 <div class="flex items-center justify-between">
                   <span class="font-extrabold text-forest-950 uppercase flex items-center gap-1.5">
-                    <span class="material-symbols-rounded text-[18px] text-forest-700">smart_display</span>
-                    <span>Pengaturan Sumber Video (YouTube / File MP4)</span>
+                    <span class="material-symbols-rounded text-[18px] text-red-600">smart_display</span>
+                    <span>Sinkronisasi Video YouTube (Tanpa Perlu Upload File)</span>
                   </span>
                   <label class="inline-flex items-center gap-2 font-bold text-forest-900 cursor-pointer">
                     <input id="new-gal-set-featured" type="checkbox" class="rounded border-zinc-300 text-forest-900" />
@@ -790,19 +790,22 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div class="sm:col-span-2">
-                    <label class="font-bold text-zinc-700 block mb-1">Link Video YouTube / URL MP4 / Upload Video</label>
+                    <label class="font-bold text-zinc-700 block mb-1">Link Video YouTube / URL MP4 *</label>
                     <div class="flex gap-1.5">
-                      <input id="new-gal-video_url" type="text" placeholder="Contoh: https://www.youtube.com/watch?v=... atau file MP4" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
-                      <label class="px-3 py-2 rounded-xl bg-forest-950 text-limeaccent-400 font-bold cursor-pointer shrink-0 flex items-center gap-1">
-                        <span class="material-symbols-rounded text-[15px]">video_file</span>
-                        <span>File MP4</span>
-                        <input type="file" accept="video/*" class="hidden" onchange="uploadSingleImageFile(this, 'new-gal-video_url', null)" />
-                      </label>
+                      <input id="new-gal-video_url" type="text" oninput="onYouTubeUrlInput(this, 'new-gal-image', 'preview-new-gal-image', 'new-gal-yt-badge')" placeholder="Contoh: https://www.youtube.com/watch?v=... atau https://youtu.be/..." class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                      <button type="button" onclick="testPlayYouTube(getVal('new-gal-video_url'))" class="px-3 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold cursor-pointer shrink-0 flex items-center gap-1 transition" title="Coba Putar Video">
+                        <span class="material-symbols-rounded text-[16px]">play_circle</span>
+                        <span>Tes</span>
+                      </button>
                     </div>
+                    <div id="new-gal-yt-badge" class="mt-1.5 hidden"></div>
+                    <p class="text-[11px] text-zinc-500 mt-1">
+                      💡 <strong>Sinkron Otomatis YouTube:</strong> Cukup tempel link YouTube Anda di sini. Foto thumbnail dan pemutar video akan otomatis tersinkron tanpa perlu mengunggah file apa pun ke server!
+                    </p>
                   </div>
                   <div>
                     <label class="font-bold text-zinc-700 block mb-1">Label Durasi Video</label>
-                    <input id="new-gal-duration" type="text" value="HD • 03:45 Menit" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                    <input id="new-gal-duration" type="text" value="YouTube HD" placeholder="HD • 04:15 Menit" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
                   </div>
                 </div>
               </div>
@@ -833,7 +836,10 @@
             <!-- Video Profil Utama -->
             <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 space-y-3 text-xs">
               <div class="flex items-center justify-between">
-                <span class="font-extrabold text-forest-950 uppercase">Kartu Besar: Video Profil Resmi (6 Kolom Kiri)</span>
+                <span class="font-extrabold text-forest-950 uppercase flex items-center gap-1.5">
+                  <i class="fa-brands fa-youtube text-red-600 text-base"></i>
+                  <span>Kartu Besar: Video Profil Resmi (6 Kolom Kiri)</span>
+                </span>
                 <span class="px-2.5 py-0.5 rounded-full bg-limeaccent-400 text-forest-950 text-[10px] font-extrabold">Video Utama</span>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -854,18 +860,21 @@
                   <input id="gv-desc" type="text" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="font-bold text-zinc-700 block mb-1">Link Video YouTube / URL MP4 / Upload File Video</label>
+                  <label class="font-bold text-zinc-700 block mb-1">Link Video YouTube * (Cukup Tempel Link)</label>
                   <div class="flex gap-2">
-                    <input id="gv-video_url" type="text" placeholder="https://www.youtube.com/watch?v=... atau link MP4" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
-                    <label class="px-3.5 py-2 rounded-xl bg-forest-950 text-limeaccent-400 font-bold cursor-pointer shrink-0 flex items-center gap-1">
-                      <span class="material-symbols-rounded text-[15px]">video_file</span>
-                      <span>Upload MP4</span>
-                      <input type="file" accept="video/*" class="hidden" onchange="uploadSingleImageFile(this, 'gv-video_url', null)" />
-                    </label>
+                    <input id="gv-video_url" type="text" oninput="onYouTubeUrlInput(this, 'gv-image', 'preview-gv-image', 'gv-yt-badge')" placeholder="https://www.youtube.com/watch?v=... atau https://youtu.be/..." class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white font-mono" />
+                    <button type="button" onclick="testPlayYouTube(getVal('gv-video_url'))" class="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold cursor-pointer shrink-0 flex items-center gap-1.5 transition" title="Coba Putar Video">
+                      <span class="material-symbols-rounded text-[16px]">play_circle</span>
+                      <span>Tes Putar</span>
+                    </button>
                   </div>
+                  <div id="gv-yt-badge" class="mt-1.5 hidden"></div>
+                  <p class="text-[11px] text-zinc-500 mt-1">
+                    Cukup tempelkan link video YouTube profil pesantren Anda di sini. Thumbnail dan pemutar akan otomatis tersinkron.
+                  </p>
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="font-bold text-zinc-700 block mb-1">Foto Sampul / Thumbnail Video Profil</label>
+                  <label class="font-bold text-zinc-700 block mb-1">Foto Sampul / Thumbnail Video Profil (Otomatis dari YouTube jika link YouTube)</label>
                   <div class="flex flex-col sm:flex-row gap-2.5 items-start sm:items-center">
                     <img id="preview-gv-image" src="" alt="Preview Video" class="w-28 h-16 rounded-xl object-cover border border-zinc-200 bg-zinc-100 shrink-0" />
                     <input id="gv-image" type="text" oninput="document.getElementById('preview-gv-image').src = this.value" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
@@ -1230,6 +1239,56 @@
       }).join('');
     }
 
+    // YouTube URL Extractor & Live Thumbnail Auto-Sync
+    function extractYouTubeId(url) {
+      if (!url) return null;
+      var str = String(url).trim();
+      var m = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+      return m ? m[1] : null;
+    }
+
+    function onYouTubeUrlInput(inputEl, targetImgInputId, targetPreviewImgId, badgeFeedbackId) {
+      var val = (inputEl.value || '').trim();
+      var ytId = extractYouTubeId(val);
+      var badge = document.getElementById(badgeFeedbackId);
+
+      if (ytId) {
+        var ytThumb = 'https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg';
+        if (targetPreviewImgId && document.getElementById(targetPreviewImgId)) {
+          document.getElementById(targetPreviewImgId).src = ytThumb;
+        }
+        if (targetImgInputId && document.getElementById(targetImgInputId)) {
+          var curImg = document.getElementById(targetImgInputId).value.trim();
+          if (!curImg || curImg.indexOf('unsplash') !== -1 || curImg.indexOf('img.youtube.com') !== -1) {
+            document.getElementById(targetImgInputId).value = ytThumb;
+          }
+        }
+        if (badge) {
+          badge.innerHTML = '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-800 font-extrabold text-[11px] border border-red-200">' +
+            '<i class="fa-brands fa-youtube text-red-600 text-sm"></i>' +
+            '<span>Tersinkron dengan YouTube (ID: <code>' + ytId + '</code>) • Thumbnail otomatis terpasang!</span>' +
+          '</span>';
+          badge.classList.remove('hidden');
+        }
+      } else {
+        if (badge) badge.classList.add('hidden');
+      }
+    }
+
+    function testPlayYouTube(url) {
+      var target = (url || '').trim();
+      if (!target) {
+        alert('Silakan tempelkan link video YouTube terlebih dahulu.');
+        return;
+      }
+      var ytId = extractYouTubeId(target);
+      if (ytId) {
+        window.open('https://www.youtube.com/watch?v=' + ytId, '_blank');
+      } else {
+        window.open(target, '_blank');
+      }
+    }
+
     // 6. Render Gallery Items Editor (Supports Unlimited Photos & Videos, Add/Delete/Move to Top)
     function toggleNewGalVideoRow() {
       var typeVal = getVal('new-gal-type');
@@ -1292,6 +1351,11 @@
         return;
       }
 
+      var ytId = extractYouTubeId(vidUrl);
+      if (typeVal === 'video' && ytId && (!imgVal || imgVal.indexOf('unsplash') !== -1)) {
+        imgVal = 'https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg';
+      }
+
       var newItem = {
         type: typeVal,
         category: catVal,
@@ -1300,7 +1364,7 @@
         desc: descVal || 'Dokumentasi terbaru Pondok Pesantren Modern Utsman Bin Affan.',
         image: imgVal,
         video_url: typeVal === 'video' ? vidUrl : '',
-        duration: typeVal === 'video' ? durVal : ''
+        duration: typeVal === 'video' ? (durVal || (ytId ? 'YouTube HD' : 'HD • 03:45 Menit')) : ''
       };
 
       // Prepend at index 0 so it appears as the newest item on the Landing Page
@@ -1415,12 +1479,18 @@
           '</div>' +
           '<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">' +
             '<div class="sm:col-span-2">' +
-              '<label class="font-bold text-zinc-700 block mb-1">Link Video YouTube / MP4 (Opsional jika Video)</label>' +
-              '<input id="gal-vid-' + idx + '" type="text" placeholder="https://www.youtube.com/watch?v=..." value="' + (item.video_url || '').replace(/"/g, '&quot;') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 bg-white" />' +
+              '<label class="font-bold text-zinc-700 block mb-1">Link Video YouTube / MP4 (Cukup Tempel Link)</label>' +
+              '<div class="flex gap-1.5">' +
+                '<input id="gal-vid-' + idx + '" type="text" oninput="onYouTubeUrlInput(this, \'gal-img-' + idx + '\', \'preview-gal-' + idx + '\', \'gal-yt-badge-' + idx + '\')" placeholder="https://www.youtube.com/watch?v=..." value="' + (item.video_url || '').replace(/"/g, '&quot;') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 bg-white" />' +
+                '<button type="button" onclick="testPlayYouTube(document.getElementById(\'gal-vid-' + idx + '\').value)" class="px-2.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-[11px] cursor-pointer shrink-0 transition" title="Tes Putar Video">&#9654; Tes</button>' +
+              '</div>' +
+              '<div id="gal-yt-badge-' + idx + '" class="mt-1 ' + (extractYouTubeId(item.video_url) ? '' : 'hidden') + '">' +
+                (extractYouTubeId(item.video_url) ? '<span class="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full"><i class="fa-brands fa-youtube"></i> YouTube ID: <code>' + extractYouTubeId(item.video_url) + '</code></span>' : '') +
+              '</div>' +
             '</div>' +
             '<div>' +
               '<label class="font-bold text-zinc-700 block mb-1">Durasi Video</label>' +
-              '<input id="gal-dur-' + idx + '" type="text" placeholder="HD • 03:45" value="' + (item.duration || '').replace(/"/g, '&quot;') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 bg-white" />' +
+              '<input id="gal-dur-' + idx + '" type="text" placeholder="YouTube HD" value="' + (item.duration || (extractYouTubeId(item.video_url) ? 'YouTube HD' : 'HD • 03:45')).replace(/"/g, '&quot;') + '" class="w-full px-3 py-1.5 rounded-xl border border-zinc-300 bg-white" />' +
             '</div>' +
           '</div>' +
         '</div>';
@@ -1510,9 +1580,18 @@
         setVal('gv-duration', gv.duration);
         setVal('gv-title', gv.title);
         setVal('gv-desc', gv.desc);
+        setVal('gv-video_url', gv.video_url || '');
         setVal('gv-image', gv.image);
         if (document.getElementById('preview-gv-image')) {
-          document.getElementById('preview-gv-image').src = gv.image || '';
+          var previewGvSrc = gv.image || (extractYouTubeId(gv.video_url) ? 'https://img.youtube.com/vi/' + extractYouTubeId(gv.video_url) + '/hqdefault.jpg' : '');
+          document.getElementById('preview-gv-image').src = previewGvSrc;
+        }
+        if (extractYouTubeId(gv.video_url)) {
+          var gvBadge = document.getElementById('gv-yt-badge');
+          if (gvBadge) {
+            gvBadge.innerHTML = '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-800 font-extrabold text-[11px] border border-red-200"><i class="fa-brands fa-youtube text-red-600 text-sm"></i><span>Tersinkron dengan YouTube (ID: <code>' + extractYouTubeId(gv.video_url) + '</code>) • Thumbnail otomatis terpasang!</span></span>';
+            gvBadge.classList.remove('hidden');
+          }
         }
 
         setVal('p-contact_phone', p.contact_phone);
@@ -1647,7 +1726,8 @@
           duration: getVal('gv-duration'),
           title: getVal('gv-title'),
           desc: getVal('gv-desc'),
-          image: getVal('gv-image')
+          image: getVal('gv-image'),
+          video_url: getVal('gv-video_url')
         },
         contact_phone: getVal('p-contact_phone'),
         contact_email: getVal('p-contact_email'),

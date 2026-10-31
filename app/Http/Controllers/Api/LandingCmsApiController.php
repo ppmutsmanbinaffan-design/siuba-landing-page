@@ -149,10 +149,11 @@ class LandingCmsApiController extends Controller
             ],
             'gallery_video' => [
                 'badge' => 'VIDEO PROFIL RESMI',
-                'duration' => 'HD • 04:15 Menit',
+                'duration' => 'YouTube HD • 04:15 Menit',
                 'title' => 'Profil Pondok Pesantren Modern Utsman Bin Affan',
                 'desc' => 'Menyaksikan lebih dekat suasana halaqah tahfidz, pembelajaran sains modern, dan kehidupan berasrama 24 jam.',
                 'image' => 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
+                'video_url' => 'https://www.youtube.com/watch?v=9No-FiEInLA',
             ],
             'gallery_items' => [
                 [
