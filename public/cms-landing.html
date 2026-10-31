@@ -108,7 +108,7 @@
             <span class="text-[10px] font-extrabold uppercase tracking-wider text-forest-700 block">NAVIGASI KONTEN</span>
             <h2 class="text-sm font-extrabold text-forest-950">Sub-Menu CMS Website</h2>
           </div>
-          <span class="px-2 py-0.5 rounded-full bg-limeaccent-400/25 text-forest-900 text-[10px] font-extrabold">7 Bagian</span>
+          <span class="px-2 py-0.5 rounded-full bg-limeaccent-400/25 text-forest-900 text-[10px] font-extrabold">8 Bagian</span>
         </div>
 
         <nav class="flex lg:flex-col gap-1.5 overflow-x-auto pb-1 lg:pb-0 text-xs font-bold">
@@ -153,13 +153,26 @@
 
           <button
             type="button"
+            onclick="switchTab('tab-ppdb')"
+            id="btn-tab-ppdb"
+            class="cms-tab-btn w-full text-left px-3.5 py-2.5 rounded-2xl bg-zinc-50 hover:bg-zinc-100 text-zinc-700 flex items-center justify-between gap-2 transition cursor-pointer shrink-0"
+          >
+            <span class="flex items-center gap-2.5 truncate">
+              <span class="material-symbols-rounded text-[18px]">how_to_reg</span>
+              <span class="truncate">04. Info PPDB &amp; 2 Jenjang</span>
+            </span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-limeaccent-400/30 text-forest-900 font-extrabold">3 Card</span>
+          </button>
+
+          <button
+            type="button"
             onclick="switchTab('tab-facilities')"
             id="btn-tab-facilities"
             class="cms-tab-btn w-full text-left px-3.5 py-2.5 rounded-2xl bg-zinc-50 hover:bg-zinc-100 text-zinc-700 flex items-center justify-between gap-2 transition cursor-pointer shrink-0"
           >
             <span class="flex items-center gap-2.5 truncate">
               <span class="material-symbols-rounded text-[18px]">apartment</span>
-              <span class="truncate">04. Fasilitas Pesantren</span>
+              <span class="truncate">05. Fasilitas Pesantren</span>
             </span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-200/70 text-zinc-600">6 Sarana</span>
           </button>
@@ -172,7 +185,7 @@
           >
             <span class="flex items-center gap-2.5 truncate">
               <span class="material-symbols-rounded text-[18px]">perm_media</span>
-              <span class="truncate">05. Galeri &amp; Video Profil</span>
+              <span class="truncate">06. Galeri &amp; Video Profil</span>
             </span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-200/70 text-zinc-600">Foto/Video</span>
           </button>
@@ -185,7 +198,7 @@
           >
             <span class="flex items-center gap-2.5 truncate">
               <span class="material-symbols-rounded text-[18px]">newspaper</span>
-              <span class="truncate">06. Berita &amp; Agenda</span>
+              <span class="truncate">07. Berita &amp; Agenda</span>
             </span>
             <span id="news-count-badge" class="text-[10px] px-1.5 py-0.5 rounded bg-limeaccent-400 text-forest-950 font-extrabold">0</span>
           </button>
@@ -198,7 +211,7 @@
           >
             <span class="flex items-center gap-2.5 truncate">
               <span class="material-symbols-rounded text-[18px]">help</span>
-              <span class="truncate">07. FAQ &amp; Kontak Resmi</span>
+              <span class="truncate">08. FAQ &amp; Kontak Resmi</span>
             </span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-200/70 text-zinc-600">5 FAQ</span>
           </button>
@@ -473,7 +486,176 @@
           </div>
         </section>
 
-        <!-- ==================== SUB-MENU 04: FASILITAS PESANTREN (6 SARANA) ==================== -->
+        <!-- ==================== SUB-MENU 04: INFO PPDB & 2 KARTU JENJANG (SMP IT & SMA IT) ==================== -->
+        <section id="tab-ppdb" class="hidden space-y-6">
+          <!-- Card 1: Kuota Penerimaan & Jadwal Gelombang -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/80 shadow-xs space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-100 pb-4">
+              <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-forest-700">SUB-MENU 04 &bull; BAGIAN 03 BERANDA</span>
+                <h2 class="text-lg font-extrabold text-forest-950">Penerimaan Santri Baru (Card Kuota Penerimaan &amp; 2 Card Jenjang)</h2>
+                <p class="text-xs text-zinc-500">Edit ketiga kartu pada bagian Penerimaan Santri Baru (Kuota 240 Kursi, Card Jenjang SMP IT &amp; Card Jenjang SMA IT beserta foto background).</p>
+              </div>
+              <a href="/manajemen-ppdb" class="inline-flex items-center gap-1.5 bg-limeaccent-400/25 hover:bg-limeaccent-400/40 text-forest-950 text-xs font-extrabold px-3.5 py-2 rounded-full transition">
+                <span class="material-symbols-rounded text-[16px]">payments</span>
+                <span>Kelola Rincian Biaya &amp; Seleksi PPDB</span>
+              </a>
+            </div>
+
+            <div class="p-4 sm:p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 space-y-4 text-xs">
+              <div class="flex items-center justify-between border-b border-zinc-200/70 pb-2.5">
+                <span class="font-extrabold text-forest-950 uppercase text-sm">1. Card Kiri: Kuota Penerimaan &amp; Jadwal Gelombang PPDB</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-forest-950 text-limeaccent-400 text-[10px] font-extrabold">Card 01</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div>
+                  <label class="font-bold text-forest-950 block mb-1">Tahun Ajaran PPDB</label>
+                  <input id="ppdb-academic_year" type="text" placeholder="2026 / 2027" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white font-bold" />
+                </div>
+                <div>
+                  <label class="font-bold text-forest-950 block mb-1">Badge Status Gelombang</label>
+                  <input id="ppdb-status_badge" type="text" placeholder="GELOMBANG 1 BUKA" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white font-bold" />
+                </div>
+                <div>
+                  <label class="font-bold text-forest-950 block mb-1">Total Kuota Penerimaan</label>
+                  <input id="ppdb-total_quota" type="text" placeholder="240 Kursi" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white font-extrabold" />
+                </div>
+                <div class="sm:col-span-3">
+                  <label class="font-bold text-forest-950 block mb-1">Deskripsi Rincian Kuota</label>
+                  <textarea id="ppdb-quota_description" rows="2" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white"></textarea>
+                </div>
+                <div>
+                  <label class="font-bold text-forest-950 block mb-1">Waktu Gelombang I</label>
+                  <input id="ppdb-wave_1" type="text" placeholder="01 Okt – 31 Des 2026" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white" />
+                </div>
+                <div>
+                  <label class="font-bold text-forest-950 block mb-1">Waktu Gelombang II</label>
+                  <input id="ppdb-wave_2" type="text" placeholder="01 Jan – 31 Mar 2027" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white" />
+                </div>
+                <div>
+                  <label class="font-bold text-forest-950 block mb-1">Jadwal Tes &amp; Wawancara</label>
+                  <input id="ppdb-test_schedule" type="text" placeholder="Setiap Sabtu (Pukul 08.00 – 14.00 WIB)" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white" />
+                </div>
+                <div class="sm:col-span-3">
+                  <label class="font-bold text-forest-950 block mb-1">Catatan Beasiswa (Teks di Bawah Tombol)</label>
+                  <input id="ppdb-scholarship_note" type="text" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 & Card 3: Jenjang SMP IT & Jenjang SMA IT -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 text-xs">
+              <!-- Card 2: SMP IT -->
+              <div class="p-4 sm:p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 space-y-3.5">
+                <div class="flex items-center justify-between border-b border-zinc-200/70 pb-2.5">
+                  <span class="font-extrabold text-forest-950 uppercase text-sm">2. Card Tengah: Jenjang SMP IT</span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-limeaccent-400 text-forest-950 text-[10px] font-extrabold">Card 02</span>
+                </div>
+                <div class="relative h-36 rounded-2xl overflow-hidden bg-zinc-200 border border-zinc-300">
+                  <img id="preview-ppdb-smp_image" src="" alt="Preview SMP IT" class="w-full h-full object-cover" />
+                  <span class="absolute bottom-2 left-2.5 bg-black/70 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">Foto Background Card SMP IT</span>
+                </div>
+                <div>
+                  <label class="font-bold text-zinc-700 block mb-1">Foto Background Card SMP IT (URL / Upload File)</label>
+                  <div class="flex gap-1.5">
+                    <input id="ppdb-smp_image" type="text" oninput="document.getElementById('preview-ppdb-smp_image').src = this.value" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                    <label class="px-3 py-2 rounded-xl bg-forest-950 text-limeaccent-400 font-bold cursor-pointer shrink-0 flex items-center">
+                      <span>Upload</span>
+                      <input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageFile(this, 'ppdb-smp_image', 'preview-ppdb-smp_image')" />
+                    </label>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Label Badge Kanan Atas</label>
+                    <input id="ppdb-smp_badge" type="text" placeholder="Lulusan SD / MI" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Judul Card SMP IT</label>
+                    <input id="ppdb-smp_title" type="text" placeholder="JENJANG SMP IT (BOARDING)" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  </div>
+                </div>
+                <div>
+                  <label class="font-bold text-zinc-700 block mb-1">Deskripsi Kurikulum SMP IT</label>
+                  <textarea id="ppdb-smp_desc" rows="2" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white"></textarea>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Masa Studi</label>
+                    <input id="ppdb-smp_duration" type="text" placeholder="3 Tahun" class="w-full px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Kuota SMP</label>
+                    <input id="ppdb-smp_quota" type="text" placeholder="120 Santri" class="w-full px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Info Asrama</label>
+                    <input id="ppdb-smp_boarding" type="text" placeholder="Terpisah Pa/Pi" class="w-full px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3: SMA IT & Takhassus -->
+              <div class="p-4 sm:p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 space-y-3.5">
+                <div class="flex items-center justify-between border-b border-zinc-200/70 pb-2.5">
+                  <span class="font-extrabold text-forest-950 uppercase text-sm">3. Card Kanan: Jenjang SMA IT &amp; Takhassus</span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-limeaccent-400 text-forest-950 text-[10px] font-extrabold">Card 03</span>
+                </div>
+                <div class="relative h-36 rounded-2xl overflow-hidden bg-zinc-200 border border-zinc-300">
+                  <img id="preview-ppdb-sma_image" src="" alt="Preview SMA IT" class="w-full h-full object-cover" />
+                  <span class="absolute bottom-2 left-2.5 bg-black/70 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">Foto Background Card SMA IT</span>
+                </div>
+                <div>
+                  <label class="font-bold text-zinc-700 block mb-1">Foto Background Card SMA IT (URL / Upload File)</label>
+                  <div class="flex gap-1.5">
+                    <input id="ppdb-sma_image" type="text" oninput="document.getElementById('preview-ppdb-sma_image').src = this.value" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                    <label class="px-3 py-2 rounded-xl bg-forest-950 text-limeaccent-400 font-bold cursor-pointer shrink-0 flex items-center">
+                      <span>Upload</span>
+                      <input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageFile(this, 'ppdb-sma_image', 'preview-ppdb-sma_image')" />
+                    </label>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Label Badge Kanan Atas</label>
+                    <input id="ppdb-sma_badge" type="text" placeholder="Lulusan SMP / MTs" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Judul Card SMA IT</label>
+                    <input id="ppdb-sma_title" type="text" placeholder="JENJANG SMA IT & TAKHASSUS" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  </div>
+                </div>
+                <div>
+                  <label class="font-bold text-zinc-700 block mb-1">Deskripsi Kurikulum SMA IT</label>
+                  <textarea id="ppdb-sma_desc" rows="2" class="w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white"></textarea>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Masa Studi</label>
+                    <input id="ppdb-sma_duration" type="text" placeholder="3 Tahun" class="w-full px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Kuota SMA</label>
+                    <input id="ppdb-sma_quota" type="text" placeholder="120 Santri" class="w-full px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-zinc-700 block mb-1">Info Program</label>
+                    <input id="ppdb-sma_program" type="text" placeholder="MIPA & Syariah" class="w-full px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-2 flex justify-end">
+              <button type="button" onclick="saveCmsPpdbSection()" class="bg-forest-950 hover:bg-forest-800 text-limeaccent-400 font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full flex items-center gap-2 shadow-md transition cursor-pointer">
+                <span class="material-symbols-rounded text-[18px]">save</span>
+                <span>Simpan 3 Card PPDB &amp; Jenjang</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SUB-MENU 05: FASILITAS PESANTREN (6 SARANA) ==================== -->
         <section id="tab-facilities" class="hidden space-y-6">
           <div class="bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/80 shadow-xs space-y-5">
             <div class="flex items-center justify-between border-b border-zinc-100 pb-4">
@@ -690,7 +872,7 @@
   </main>
 
   <script>
-    var ALL_TABS = ['tab-hero', 'tab-profile', 'tab-programs', 'tab-facilities', 'tab-gallery', 'tab-news', 'tab-faq'];
+    var ALL_TABS = ['tab-hero', 'tab-profile', 'tab-programs', 'tab-ppdb', 'tab-facilities', 'tab-gallery', 'tab-news', 'tab-faq'];
     var currentNews = [];
     var currentHeroSlides = [];
     var currentPillars = [];
@@ -1053,11 +1235,81 @@
         renderGalleryEditor(p.gallery_items || []);
         renderFaqsEditor(p.faqs || []);
 
+        var d = json.ppdb || (json.data && json.data.ppdb) || {};
+        setVal('ppdb-academic_year', d.academic_year);
+        setVal('ppdb-status_badge', d.status_badge);
+        setVal('ppdb-total_quota', d.total_quota);
+        setVal('ppdb-quota_description', d.quota_description);
+        setVal('ppdb-wave_1', d.wave_1);
+        setVal('ppdb-wave_2', d.wave_2);
+        setVal('ppdb-test_schedule', d.test_schedule);
+        setVal('ppdb-scholarship_note', d.scholarship_note);
+
+        setVal('ppdb-smp_image', d.smp_image);
+        if (document.getElementById('preview-ppdb-smp_image')) {
+          document.getElementById('preview-ppdb-smp_image').src = d.smp_image || '';
+        }
+        setVal('ppdb-smp_badge', d.smp_badge);
+        setVal('ppdb-smp_title', d.smp_title);
+        setVal('ppdb-smp_desc', d.smp_desc);
+        setVal('ppdb-smp_duration', d.smp_duration);
+        setVal('ppdb-smp_quota', d.smp_quota);
+        setVal('ppdb-smp_boarding', d.smp_boarding);
+
+        setVal('ppdb-sma_image', d.sma_image);
+        if (document.getElementById('preview-ppdb-sma_image')) {
+          document.getElementById('preview-ppdb-sma_image').src = d.sma_image || '';
+        }
+        setVal('ppdb-sma_badge', d.sma_badge);
+        setVal('ppdb-sma_title', d.sma_title);
+        setVal('ppdb-sma_desc', d.sma_desc);
+        setVal('ppdb-sma_duration', d.sma_duration);
+        setVal('ppdb-sma_quota', d.sma_quota);
+        setVal('ppdb-sma_program', d.sma_program);
+
         currentNews = json.news || (json.data && json.data.news) || [];
         renderNewsList();
       } catch (e) {
         console.error(e);
       }
+    }
+
+    async function saveCmsPpdbSection(silent) {
+      var ppdbPayload = {
+        academic_year: getVal('ppdb-academic_year'),
+        status_badge: getVal('ppdb-status_badge'),
+        total_quota: getVal('ppdb-total_quota'),
+        quota_description: getVal('ppdb-quota_description'),
+        wave_1: getVal('ppdb-wave_1'),
+        wave_2: getVal('ppdb-wave_2'),
+        test_schedule: getVal('ppdb-test_schedule'),
+        scholarship_note: getVal('ppdb-scholarship_note'),
+        smp_image: getVal('ppdb-smp_image'),
+        smp_badge: getVal('ppdb-smp_badge'),
+        smp_title: getVal('ppdb-smp_title'),
+        smp_desc: getVal('ppdb-smp_desc'),
+        smp_duration: getVal('ppdb-smp_duration'),
+        smp_quota: getVal('ppdb-smp_quota'),
+        smp_boarding: getVal('ppdb-smp_boarding'),
+        sma_image: getVal('ppdb-sma_image'),
+        sma_badge: getVal('ppdb-sma_badge'),
+        sma_title: getVal('ppdb-sma_title'),
+        sma_desc: getVal('ppdb-sma_desc'),
+        sma_duration: getVal('ppdb-sma_duration'),
+        sma_quota: getVal('ppdb-sma_quota'),
+        sma_program: getVal('ppdb-sma_program')
+      };
+
+      var res = await fetch('/api/v1/cms/ppdb', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(ppdbPayload)
+      });
+      var json = await res.json();
+      if (!silent && json.success) {
+        showToast('Card Kuota Penerimaan & 2 Card Jenjang (SMP IT / SMA IT) berhasil disimpan!');
+      }
+      return json;
     }
 
     async function saveAllCmsProfile() {
@@ -1164,6 +1416,7 @@
         body: JSON.stringify(payload)
       });
       var json = await res.json();
+      await saveCmsPpdbSection(true);
       if (json.success) {
         showToast(json.message || 'Seluruh perubahan konten Landing Page berhasil disimpan!');
       }
