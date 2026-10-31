@@ -764,6 +764,7 @@
     }
 
     function defaultFeeItems(ppdb) {
+      ppdb = ppdb || {};
       return [
         {
           name: 'Biaya Formulir & Seleksi',
@@ -793,6 +794,7 @@
     }
 
     function defaultScholarshipItems(ppdb) {
+      ppdb = ppdb || {};
       return [
         {
           title: 'Beasiswa Tahfidz Al-Qur\'an',
@@ -1014,10 +1016,6 @@
       });
       var data = await res.json();
       if (data.success) {
-        showToast(data.message);
-        loadPpdbData();
-      }
-    }
         showToast(data.message);
         loadPpdbData();
       }
