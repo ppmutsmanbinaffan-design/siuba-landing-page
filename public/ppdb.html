@@ -418,100 +418,120 @@
   <!-- ==================== 4. BIAYA PENDIDIKAN & INFORMASI PEMBAYARAN (SECTION 04) ==================== -->
   <section id="biaya" class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-5 sm:space-y-6">
     <!-- Header (Menu Card) -->
-    <div class="section-menu-card p-3.5 sm:p-4 lg:px-5 lg:py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-5">
-      <div class="shrink-0">
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1">
+    <div class="section-menu-card p-4 sm:p-5 lg:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
+      <div class="shrink-0 lg:max-w-xs">
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-forest-900/10 border border-forest-900/15 text-forest-900 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
           <span class="w-1.5 h-1.5 rounded-full bg-forest-800"></span>
-          <span>MENU BIAYA &bull; BAGIAN 04</span>
+          <span>BAGIAN 04 &bull; INVESTASI PENDIDIKAN</span>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <h2 class="fluid-section-title font-extrabold tracking-tight text-forest-950">
+        <div class="flex items-center gap-2">
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-forest-950">
             BIAYA PENDIDIKAN
           </h2>
           <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-forest-900 text-limeaccent-400 text-[11px] font-extrabold">
             04
           </span>
         </div>
-        <div class="flex items-center gap-1.5 mt-0.5">
-          <span class="text-xs font-extrabold text-limeaccent-600">//</span>
-          <h3 class="fluid-section-title font-bold tracking-tight text-forest-800">
-            INVESTASI &amp; INFORMASI PEMBAYARAN
-          </h3>
-        </div>
-      </div>
-      <div class="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-3.5 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-5">
-        <p class="text-xs text-zinc-600 leading-relaxed max-w-2xl">
-          Rincian biaya pendidikan transparan mencakup Biaya Pendaftaran, Biaya Masuk (DSP), Biaya Bulanan (Syahriyah), Rincian Biaya Lainnya, serta Informasi Rekening Pembayaran Resmi.
+        <p class="text-xs font-bold text-forest-700 tracking-tight mt-0.5">
+          Transparan, Terjangkau &amp; Fleksibel
         </p>
-        <span id="p-scholarship-note-badge" class="bg-white border border-emerald-900/15 text-forest-900 text-[11px] font-extrabold px-3 py-1.5 rounded-full shrink-0 w-fit">
-          Tersedia Beasiswa Prestasi
-        </span>
+      </div>
+
+      <div class="flex-1 flex flex-col justify-center gap-2 pt-3 lg:pt-0 border-t lg:border-t-0 lg:border-l border-emerald-900/15 lg:pl-6 min-w-0">
+        <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+          Rincian biaya pendidikan santri baru transparan mencakup Biaya Pendaftaran, Biaya Masuk (DSP), Biaya Bulanan (Syahriyah All-In), serta Rincian Seragam &amp; Kitab.
+        </p>
+        <div class="pt-0.5">
+          <span id="p-scholarship-note-badge" class="inline-flex items-center gap-1.5 bg-white border border-emerald-800/20 text-forest-900 text-xs font-bold px-3 py-1 rounded-full shadow-2xs leading-normal">
+            <i class="fa-solid fa-gift text-limeaccent-600 text-xs"></i>
+            <span>Tersedia Beasiswa Prestasi &amp; Tahfidz</span>
+          </span>
+        </div>
       </div>
     </div>
 
     <!-- 4 Kartu Rincian Biaya Pendidikan (Dinamis / Default) -->
-    <div id="p-fee-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div id="p-fee-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
       <!-- 1. Biaya Pendaftaran -->
-      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4">
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4 h-full">
         <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-0.5 rounded-full">01. BIAYA PENDAFTARAN</span>
-            <span class="material-symbols-rounded text-forest-800 text-[20px]">receipt_long</span>
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-[10px] sm:text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-1 rounded-xl leading-snug">01. BIAYA PENDAFTARAN</span>
+            <span class="w-8 h-8 rounded-xl bg-forest-900/5 text-forest-800 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-receipt text-sm"></i>
+            </span>
           </div>
-          <div id="p-fee-reg" class="text-2xl sm:text-3xl font-extrabold text-forest-950 pt-1">Rp 350.000</div>
+          <div id="p-fee-reg" class="text-xl sm:text-2xl font-black text-forest-950 pt-1 tracking-tight">Rp 350.000</div>
           <p class="text-xs text-zinc-600 leading-relaxed">
             Dibayarkan satu kali saat registrasi formulir PPDB (Sudah termasuk biaya Tes Seleksi Al-Qur&rsquo;an, Akademik, &amp; Psikotes Kesiapan Asrama).
           </p>
         </div>
-        <span class="text-[11px] font-bold text-zinc-400 pt-3 border-t border-zinc-100 block">Sekali Saat Pendaftaran</span>
+        <div class="pt-3 border-t border-zinc-100 text-[11px] font-bold text-zinc-400 mt-auto flex items-center justify-between">
+          <span>Sekali Saat Pendaftaran</span>
+          <i class="fa-solid fa-check text-[10px] text-forest-700"></i>
+        </div>
       </div>
 
       <!-- 2. Biaya Masuk (Dana Pengembangan / Pangkal) -->
-      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4">
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4 h-full">
         <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-0.5 rounded-full">02. BIAYA MASUK (DSP)</span>
-            <span class="material-symbols-rounded text-forest-800 text-[20px]">domain</span>
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-[10px] sm:text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-1 rounded-xl leading-snug">02. BIAYA MASUK (DSP)</span>
+            <span class="w-8 h-8 rounded-xl bg-forest-900/5 text-forest-800 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-building-columns text-sm"></i>
+            </span>
           </div>
-          <div id="p-fee-dsp" class="text-2xl sm:text-3xl font-extrabold text-forest-950 pt-1">Rp 14.500.000</div>
+          <div id="p-fee-dsp" class="text-xl sm:text-2xl font-black text-forest-950 pt-1 tracking-tight">Rp 14.500.000</div>
           <p class="text-xs text-zinc-600 leading-relaxed">
             Dana Pengembangan Sarana Asrama &amp; Pendidikan (dibayarkan saat daftar ulang setelah dinyatakan lulus, dapat diangsur sesuai ketentuan).
           </p>
         </div>
-        <span class="text-[11px] font-bold text-emerald-700 pt-3 border-t border-zinc-100 block">Tersedia Potongan Beasiswa 25%–100%</span>
+        <div class="pt-3 border-t border-zinc-100 text-[11px] font-bold text-emerald-700 mt-auto flex items-center justify-between">
+          <span>Tersedia Beasiswa 25%–100%</span>
+          <i class="fa-solid fa-check text-[10px] text-emerald-600"></i>
+        </div>
       </div>
 
       <!-- 3. Biaya Bulanan (SPP / Syahriyah) -->
-      <div class="bg-forest-950 text-white p-6 rounded-3xl shadow-lg flex flex-col justify-between space-y-4">
+      <div class="bg-forest-950 text-white p-6 rounded-3xl shadow-lg flex flex-col justify-between space-y-4 h-full">
         <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-extrabold uppercase text-forest-950 bg-limeaccent-400 px-2.5 py-0.5 rounded-full">03. BIAYA BULANAN (SPP)</span>
-            <span class="material-symbols-rounded text-limeaccent-400 text-[20px]">calendar_today</span>
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-[10px] sm:text-[11px] font-extrabold uppercase text-forest-950 bg-limeaccent-400 px-2.5 py-1 rounded-xl leading-snug">03. BIAYA BULANAN (SPP)</span>
+            <span class="w-8 h-8 rounded-xl bg-white/10 text-limeaccent-400 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-calendar-days text-sm"></i>
+            </span>
           </div>
-          <div id="p-fee-spp" class="text-2xl sm:text-3xl font-extrabold text-white pt-1">Rp 1.650.000 / bulan</div>
+          <div id="p-fee-spp" class="text-xl sm:text-2xl font-black text-white pt-1 tracking-tight flex flex-wrap items-baseline gap-1">
+            <span>Rp 1.650.000</span> <span class="text-xs font-semibold text-limeaccent-400">/ bulan</span>
+          </div>
           <p id="p-fee-includes" class="text-xs text-white/80 leading-relaxed">
             Makan 3x sehari bergizi, Asrama ber-AC/nyaman, Laundry pakaian, Layanan Poskestren, SPP Sekolah &amp; Halaqah Tahfidz, serta Kartu Pintar RFID SIUBA.
           </p>
         </div>
-        <span class="text-[11px] font-bold text-limeaccent-400 pt-3 border-t border-white/15 block">Sudah Mencakup Makan &amp; Laundry</span>
+        <div class="pt-3 border-t border-white/15 text-[11px] font-bold text-limeaccent-400 mt-auto flex items-center justify-between">
+          <span>Sudah Mencakup Makan &amp; Laundry</span>
+          <i class="fa-solid fa-check text-[10px] text-limeaccent-400"></i>
+        </div>
       </div>
 
       <!-- 4. Rincian Biaya Lainnya -->
-      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4">
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4 h-full">
         <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-0.5 rounded-full">04. RINCIAN BIAYA LAINNYA</span>
-            <span class="material-symbols-rounded text-forest-800 text-[20px]">checkroom</span>
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-[10px] sm:text-[11px] font-extrabold uppercase text-forest-700 bg-limeaccent-400/25 px-2.5 py-1 rounded-xl leading-snug">04. RINCIAN BIAYA LAINNYA</span>
+            <span class="w-8 h-8 rounded-xl bg-forest-900/5 text-forest-800 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-shirt text-sm"></i>
+            </span>
           </div>
-          <div id="p-fee-uniform" class="text-2xl sm:text-3xl font-extrabold text-forest-950 pt-1">Rp 3.200.000</div>
-          <ul class="text-xs text-zinc-600 space-y-1 pt-1">
-            <li>&bull; 5 Stel Seragam Sekolah &amp; Kepesantrenan</li>
-            <li>&bull; Paket Buku Pelajaran &amp; Kitab Diniyah Tahun I</li>
-            <li>&bull; Kasur, Bantal, Sprei &amp; Lemari Pribadi Asrama</li>
-            <li>&bull; Kartu Pintar Santri RFID &amp; QR SIUBA</li>
-          </ul>
+          <div id="p-fee-uniform" class="text-xl sm:text-2xl font-black text-forest-950 pt-1 tracking-tight">Rp 3.200.000</div>
+          <p class="text-xs text-zinc-600 leading-relaxed">
+            Paket lengkap 5 stel seragam sekolah &amp; kepesantrenan, buku kurikulum &amp; kitab kuning tahun I, kasur, lemari asrama, serta Kartu Pintar Santri SIUBA.
+          </p>
         </div>
-        <span class="text-[11px] font-bold text-zinc-400 pt-3 border-t border-zinc-100 block">Perlengkapan Awal Santri Baru</span>
+        <div class="pt-3 border-t border-zinc-100 text-[11px] font-bold text-zinc-400 mt-auto flex items-center justify-between">
+          <span>Perlengkapan Awal Santri Baru</span>
+          <i class="fa-solid fa-check text-[10px] text-forest-700"></i>
+        </div>
       </div>
     </div>
 
@@ -545,8 +565,8 @@
     </div>
 
     <!-- Kartu Program Beasiswa (Dinamis / Default) -->
-    <div id="p-scholarship-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between">
+    <div id="p-scholarship-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between h-full">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
             <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-forest-900/10 text-forest-900">Beasiswa Tahfidz</span>
@@ -555,10 +575,10 @@
           <h4 class="text-forest-950 font-extrabold text-sm sm:text-base leading-snug">Beasiswa Tahfidz Al-Qur&rsquo;an</h4>
           <p id="p-sch-tahfidz" class="text-xs text-zinc-600 leading-relaxed whitespace-pre-line"></p>
         </div>
-        <span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>Jalur Resmi PPDB</span></span>
+        <span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1.5 mt-auto"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>Jalur Resmi PPDB</span></span>
       </div>
 
-      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between">
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between h-full">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
             <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-forest-900/10 text-forest-900">Beasiswa Prestasi</span>
@@ -567,10 +587,10 @@
           <h4 class="text-forest-950 font-extrabold text-sm sm:text-base leading-snug">Beasiswa Prestasi Akademik &amp; Sains</h4>
           <p id="p-sch-academic" class="text-xs text-zinc-600 leading-relaxed whitespace-pre-line"></p>
         </div>
-        <span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>Jalur Resmi PPDB</span></span>
+        <span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1.5 mt-auto"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>Jalur Resmi PPDB</span></span>
       </div>
 
-      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between">
+      <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between h-full">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
             <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-forest-900/10 text-forest-900">Beasiswa Sosial</span>
@@ -579,7 +599,7 @@
           <h4 class="text-forest-950 font-extrabold text-sm sm:text-base leading-snug">Beasiswa Yatim &amp; Dhuafa Berprestasi</h4>
           <p id="p-sch-orphan" class="text-xs text-zinc-600 leading-relaxed whitespace-pre-line"></p>
         </div>
-        <span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>Jalur Resmi PPDB</span></span>
+        <span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1.5 mt-auto"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>Jalur Resmi PPDB</span></span>
       </div>
     </div>
   </section>
@@ -938,7 +958,7 @@
           if (feeGrid) {
             feeGrid.innerHTML = d.fee_items.map(function(item, idx) {
               var isHighlight = (item.name || '').toLowerCase().indexOf('spp') !== -1 || (item.name || '').toLowerCase().indexOf('syahriyah') !== -1;
-              var cardBg = isHighlight ? 'bg-forest-950 text-white shadow-lg' : 'bg-white text-zinc-800 border border-zinc-200/80 shadow-xs';
+              var cardBg = isHighlight ? 'bg-forest-950 text-white shadow-lg ring-4 ring-forest-800/10' : 'bg-white text-zinc-800 border border-zinc-200/80 shadow-xs hover:border-zinc-300';
               var numStr = ('0' + (idx + 1)).slice(-2);
               var badgeBg = isHighlight ? 'bg-limeaccent-400 text-forest-950' : 'bg-limeaccent-400/25 text-forest-700';
               var titleColor = isHighlight ? 'text-white' : 'text-forest-950';
@@ -946,16 +966,28 @@
               var borderFooter = isHighlight ? 'border-white/15 text-limeaccent-400' : 'border-zinc-100 text-zinc-400';
               var iconFa = isHighlight ? 'fa-solid fa-calendar-days text-limeaccent-400' : (idx === 0 ? 'fa-solid fa-receipt text-forest-800' : (idx === 1 ? 'fa-solid fa-building-columns text-forest-800' : 'fa-solid fa-shirt text-forest-800'));
 
-              return '<div class="' + cardBg + ' p-6 rounded-3xl flex flex-col justify-between space-y-4">' +
+              var amt = item.amount || '-';
+              var amountHtml = amt;
+              if (amt.indexOf('/') !== -1) {
+                var parts = amt.split('/');
+                amountHtml = '<span>' + parts[0].trim() + '</span> <span class="text-xs font-semibold ' + (isHighlight ? 'text-limeaccent-400' : 'text-zinc-500') + '">/ ' + parts.slice(1).join('/').trim() + '</span>';
+              }
+
+              return '<div class="' + cardBg + ' p-6 rounded-3xl flex flex-col justify-between space-y-4 h-full transition duration-200">' +
                 '<div class="space-y-2">' +
-                  '<div class="flex items-center justify-between">' +
-                    '<span class="text-[11px] font-extrabold uppercase ' + badgeBg + ' px-2.5 py-0.5 rounded-full">' + numStr + '. ' + (item.name || 'Biaya') + '</span>' +
-                    '<i class="' + iconFa + ' text-lg"></i>' +
+                  '<div class="flex items-start justify-between gap-2">' +
+                    '<span class="text-[10px] sm:text-[11px] font-extrabold uppercase ' + badgeBg + ' px-2.5 py-1 rounded-xl leading-snug tracking-wide">' + numStr + '. ' + (item.name || 'Biaya') + '</span>' +
+                    '<span class="w-8 h-8 rounded-xl ' + (isHighlight ? 'bg-white/10 text-limeaccent-400' : 'bg-forest-900/5 text-forest-800') + ' flex items-center justify-center shrink-0">' +
+                      '<i class="' + iconFa + ' text-sm"></i>' +
+                    '</span>' +
                   '</div>' +
-                  '<div class="text-2xl sm:text-3xl font-extrabold ' + titleColor + ' pt-1">' + (item.amount || '-') + '</div>' +
-                  (item.desc ? '<p class="text-xs ' + descColor + ' leading-relaxed">' + item.desc + '</p>' : '') +
+                  '<div class="text-xl sm:text-2xl font-black ' + titleColor + ' pt-1 tracking-tight flex flex-wrap items-baseline gap-1">' + amountHtml + '</div>' +
+                  (item.desc ? '<p class="text-xs ' + descColor + ' leading-relaxed mt-2">' + item.desc + '</p>' : '') +
                 '</div>' +
-                '<span class="text-[11px] font-bold ' + borderFooter + ' pt-3 border-t block">' + (item.badge || 'Biaya Pendidikan Santri') + '</span>' +
+                '<div class="pt-3 border-t ' + borderFooter + ' mt-auto flex items-center justify-between text-[11px] font-bold">' +
+                  '<span>' + (item.badge || 'Biaya Pendidikan Santri') + '</span>' +
+                  '<i class="fa-solid fa-check text-[10px] ' + (isHighlight ? 'text-limeaccent-400' : 'text-forest-700') + '"></i>' +
+                '</div>' +
               '</div>';
             }).join('');
           }
@@ -972,7 +1004,7 @@
             schGrid.innerHTML = d.scholarship_items.map(function(item, idx) {
               var faIcons = ['fa-solid fa-award', 'fa-solid fa-trophy', 'fa-solid fa-hand-holding-heart', 'fa-solid fa-medal', 'fa-solid fa-graduation-cap'];
               var iconName = faIcons[idx % faIcons.length];
-              return '<div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between">' +
+              return '<div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between h-full hover:border-zinc-300 transition duration-200">' +
                 '<div class="space-y-2">' +
                   '<div class="flex items-center justify-between">' +
                     '<span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-forest-900/10 text-forest-900">' + (item.badge || 'Program Beasiswa') + '</span>' +
@@ -981,7 +1013,7 @@
                   '<h4 class="text-forest-950 font-extrabold text-sm sm:text-base leading-snug">' + (item.title || 'Beasiswa') + '</h4>' +
                   '<p class="text-xs text-zinc-600 leading-relaxed whitespace-pre-line">' + (item.desc || '-') + '</p>' +
                 '</div>' +
-                '<span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>Jalur Resmi PPDB</span></span>' +
+                '<span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1.5 mt-auto"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>Jalur Resmi PPDB</span></span>' +
               '</div>';
             }).join('');
           }
