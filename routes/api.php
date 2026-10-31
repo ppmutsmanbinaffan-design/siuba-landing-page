@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AttendanceApiController;
 use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\DataImportApiController;
 use App\Http\Controllers\Api\DomainManagementApiController;
+use App\Http\Controllers\Api\IotDeviceApiController;
 use App\Http\Controllers\Api\LandingCmsApiController;
 use App\Http\Controllers\Api\MaintenanceApiController;
 use App\Http\Controllers\Api\OfflineSyncApiController;
@@ -172,5 +173,12 @@ Route::prefix('v1')->group(function () {
         Route::match(['put', 'patch'], '/ppdb/registrations/{id}', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
         Route::match(['put', 'patch'], '/ppdb/registrations/{id}/status', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
         Route::delete('/ppdb/registrations/{id}', [LandingCmsApiController::class, 'deletePpdbRegistration']);
+    });
+
+    // IoT Hardware Bridge (ESP32 RFID Reader & Smart Card Terminal)
+    Route::prefix('iot')->group(function () {
+        Route::post('/rfid-tap', [IotDeviceApiController::class, 'handleRfidTap']);
+        Route::match(['get', 'post'], '/ping', [IotDeviceApiController::class, 'ping']);
+        Route::get('/active-sessions', [IotDeviceApiController::class, 'getActiveSessions']);
     });
 });
