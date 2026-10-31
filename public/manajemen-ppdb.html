@@ -393,53 +393,77 @@
       </div>
 
       <form onsubmit="savePpdbSettings(event)" class="space-y-6 text-xs sm:text-sm">
-        <!-- Rincian Biaya -->
-        <div class="space-y-3">
-          <span class="font-extrabold text-forest-900 uppercase text-xs block">A. Rincian Biaya Pendidikan Santri Baru</span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Rincian Biaya Fleksibel -->
+        <div class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-zinc-100">
             <div>
-              <label class="font-bold text-zinc-700 block mb-1">Biaya Formulir &amp; Seleksi</label>
-              <input type="text" id="ppdb_fee_registration" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 font-bold" />
+              <span class="font-extrabold text-forest-900 uppercase text-xs block">A. Rincian Komponen Biaya Pendidikan Santri Baru</span>
+              <p class="text-xs text-zinc-500 mt-0.5">Tambah, sesuaikan nama pos biaya, nominal, waktu pembayaran, dan rincian fasilitas secara bebas.</p>
             </div>
-            <div>
-              <label class="font-bold text-zinc-700 block mb-1">Dana Pengembangan / Wakaf Asrama (DSP)</label>
-              <input type="text" id="ppdb_fee_dsp" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 font-bold" />
-            </div>
-            <div>
-              <label class="font-bold text-zinc-700 block mb-1">Paket Seragam (5 Stel), Kitab &amp; Kasur</label>
-              <input type="text" id="ppdb_fee_uniform_books" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 font-bold" />
-            </div>
-            <div>
-              <label class="font-bold text-zinc-700 block mb-1">Syahriyah / SPP Bulanan (All-In)</label>
-              <input type="text" id="ppdb_fee_spp" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 font-bold text-forest-800" />
-            </div>
+            <button
+              type="button"
+              onclick="addFeeItem()"
+              class="bg-forest-900 hover:bg-forest-800 text-limeaccent-400 font-bold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition cursor-pointer self-start sm:self-auto shrink-0 shadow-xs"
+            >
+              <span class="material-symbols-rounded text-[18px]">add_circle</span>
+              <span>+ Tambah Komponen Biaya</span>
+            </button>
           </div>
-          <div>
-            <label class="font-bold text-zinc-700 block mb-1">Fasilitas yang Sudah Termasuk dalam Syahriyah/SPP Bulanan</label>
-            <textarea id="ppdb_fee_includes" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300"></textarea>
+
+          <!-- Dynamic Fee Items List -->
+          <div id="fee-items-container" class="space-y-3"></div>
+
+          <div class="flex justify-start">
+            <button
+              type="button"
+              onclick="addFeeItem()"
+              class="border border-dashed border-forest-900/40 hover:border-forest-900 hover:bg-forest-50 text-forest-900 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer"
+            >
+              <span class="material-symbols-rounded text-[18px]">add</span>
+              <span>Tambah Komponen Biaya Baru</span>
+            </button>
+          </div>
+
+          <div class="pt-2">
+            <label class="font-bold text-zinc-700 block mb-1">Fasilitas Tambahan yang Sudah Termasuk dalam SPP Bulanan (Ringkasan Global)</label>
+            <textarea id="ppdb_fee_includes" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 placeholder-zinc-400" placeholder="Makan 3x sehari bergizi, asrama ber-AC, laundry pakaian, dll."></textarea>
           </div>
         </div>
 
-        <!-- Program Beasiswa -->
-        <div class="space-y-3 pt-4 border-t border-zinc-100">
-          <span class="font-extrabold text-forest-900 uppercase text-xs block">B. Program Beasiswa PPDB</span>
-          <div>
-            <label class="font-bold text-zinc-700 block mb-1">Ringkasan Highlight Beasiswa (Tampil di Kartu Utama)</label>
-            <input type="text" id="ppdb_scholarship_note" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
+        <!-- Program Beasiswa Fleksibel -->
+        <div class="space-y-4 pt-6 border-t border-zinc-100">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-zinc-100">
+            <div>
+              <span class="font-extrabold text-forest-900 uppercase text-xs block">B. Program &amp; Ketentuan Beasiswa PPDB</span>
+              <p class="text-xs text-zinc-500 mt-0.5">Tentukan sendiri jenis beasiswa, kriteria santri, dan rincian potongan biaya/fasilitas yang diberikan.</p>
+            </div>
+            <button
+              type="button"
+              onclick="addScholarshipItem()"
+              class="bg-forest-900 hover:bg-forest-800 text-limeaccent-400 font-bold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition cursor-pointer self-start sm:self-auto shrink-0 shadow-xs"
+            >
+              <span class="material-symbols-rounded text-[18px]">add_circle</span>
+              <span>+ Tambah Jenis Beasiswa</span>
+            </button>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label class="font-bold text-zinc-700 block mb-1">1. Beasiswa Tahfidz Al-Qur&rsquo;an</label>
-              <textarea id="ppdb_scholarship_tahfidz" rows="3" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300"></textarea>
-            </div>
-            <div>
-              <label class="font-bold text-zinc-700 block mb-1">2. Beasiswa Prestasi Akademik &amp; Sains</label>
-              <textarea id="ppdb_scholarship_academic" rows="3" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300"></textarea>
-            </div>
-            <div>
-              <label class="font-bold text-zinc-700 block mb-1">3. Beasiswa Yatim &amp; Dhuafa Berprestasi</label>
-              <textarea id="ppdb_scholarship_orphan" rows="3" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300"></textarea>
-            </div>
+
+          <div>
+            <label class="font-bold text-zinc-700 block mb-1">Ringkasan Highlight Beasiswa (Tampil di Kartu Banner Utama)</label>
+            <input type="text" id="ppdb_scholarship_note" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" placeholder="Contoh: Tersedia jalur Beasiswa Tahfidz (Hafal min. 5–30 Juz), Juara Olimpiade Sains, &amp; Yatim Berprestasi." />
+          </div>
+
+          <!-- Dynamic Scholarship Items List -->
+          <div id="scholarship-items-container" class="space-y-3"></div>
+
+          <div class="flex justify-start">
+            <button
+              type="button"
+              onclick="addScholarshipItem()"
+              class="border border-dashed border-forest-900/40 hover:border-forest-900 hover:bg-forest-50 text-forest-900 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer"
+            >
+              <span class="material-symbols-rounded text-[18px]">add</span>
+              <span>Tambah Jenis Beasiswa Baru</span>
+            </button>
           </div>
         </div>
 
@@ -730,17 +754,209 @@
       'test_schedule', 'boarding_entry_date',
       'smp_title', 'smp_desc', 'smp_quota',
       'sma_title', 'sma_desc', 'sma_quota',
-      'fee_registration', 'fee_dsp', 'fee_uniform_books', 'fee_spp', 'fee_includes',
-      'scholarship_note', 'scholarship_tahfidz', 'scholarship_academic', 'scholarship_orphan',
+      'fee_includes', 'scholarship_note',
       'requirements_list', 'selection_materials',
       'whatsapp_contact', 'admin_contact_name', 'bank_account', 'secretariat_hours'
     ];
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function defaultFeeItems(ppdb) {
+      return [
+        {
+          name: 'Biaya Formulir & Seleksi',
+          amount: ppdb.fee_registration || 'Rp 350.000',
+          badge: 'Sekali Saat Pendaftaran',
+          desc: 'Sudah termasuk biaya Tes Seleksi Al-Qur\'an, Akademik, & Psikotes Kesiapan Asrama.'
+        },
+        {
+          name: 'Dana Pengembangan / Wakaf Asrama (DSP)',
+          amount: ppdb.fee_dsp || 'Rp 14.500.000',
+          badge: 'Tersedia Beasiswa 25%–100%',
+          desc: 'Dana Pengembangan Sarana Asrama & Pendidikan (dibayarkan saat daftar ulang setelah lulus).'
+        },
+        {
+          name: 'Syahriyah / SPP Bulanan (All-In)',
+          amount: ppdb.fee_spp || 'Rp 1.650.000 / bulan',
+          badge: 'Sudah Termasuk Makan & Laundry',
+          desc: ppdb.fee_includes || 'Makan 3x sehari bergizi, Asrama ber-AC/nyaman, Laundry pakaian, Layanan Poskestren, SPP Sekolah & Halaqah Tahfidz, serta Kartu Pintar RFID SIUBA.'
+        },
+        {
+          name: 'Paket Seragam (5 Stel), Kitab & Kasur',
+          amount: ppdb.fee_uniform_books || 'Rp 3.200.000',
+          badge: 'Perlengkapan Awal Santri',
+          desc: '5 Stel Seragam, Paket Kitab Diniyah Tahun I, Kasur/Bantal/Sprei, Lemari Asrama, & Kartu RFID SIUBA.'
+        }
+      ];
+    }
+
+    function defaultScholarshipItems(ppdb) {
+      return [
+        {
+          title: 'Beasiswa Tahfidz Al-Qur\'an',
+          badge: 'Jalur Tahfidz',
+          desc: ppdb.scholarship_tahfidz || 'Hafal 5–10 Juz: Potongan DSP 25% • Hafal 15 Juz: Potongan DSP 50% • Hafal 30 Juz Mutqin: Bebas DSP 100% + Beasiswa SPP Bulanan.'
+        },
+        {
+          title: 'Beasiswa Prestasi Akademik & Sains',
+          badge: 'Jalur Prestasi',
+          desc: ppdb.scholarship_academic || 'Juara 1–3 OSN/KSM/MTQ Tingkat Provinsi/Nasional: Potongan Dana Pengembangan 50% s.d. 100%.'
+        },
+        {
+          title: 'Beasiswa Yatim & Dhuafa Berprestasi',
+          badge: 'Jalur Sosial & Afirmasi',
+          desc: ppdb.scholarship_orphan || 'Kuota khusus 15 kursi Beasiswa Penuh bagi santri Yatim/Dhuafa yang lulus seleksi Tahfidz & Akademik.'
+        }
+      ];
+    }
+
+    function renderFeeItems(items) {
+      var container = document.getElementById('fee-items-container');
+      if (!container) return;
+      container.innerHTML = '';
+      var list = (items && Array.isArray(items) && items.length > 0) ? items : defaultFeeItems(ppdbSettings);
+      list.forEach(function(item) {
+        addFeeItem(item.name, item.amount, item.badge, item.desc);
+      });
+    }
+
+    function addFeeItem(name, amount, badge, desc) {
+      var container = document.getElementById('fee-items-container');
+      if (!container) return;
+      var count = container.querySelectorAll('.fee-item-row').length + 1;
+      var row = document.createElement('div');
+      row.className = 'fee-item-row bg-zinc-50/80 p-4 rounded-2xl border border-zinc-200/80 space-y-3 relative transition hover:border-forest-800/40';
+      row.innerHTML =
+        '<div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">' +
+          '<div class="flex items-center gap-2">' +
+            '<span class="w-6 h-6 rounded-lg bg-forest-900 text-limeaccent-400 font-extrabold text-xs flex items-center justify-center fee-item-number">' + count + '</span>' +
+            '<span class="text-xs font-bold text-forest-950 fee-item-header-title">' + (name || 'Komponen Biaya #' + count) + '</span>' +
+          '</div>' +
+          '<button type="button" onclick="removeFeeItem(this)" class="text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition cursor-pointer">' +
+            '<span class="material-symbols-rounded text-[16px]">delete</span>' +
+            '<span>Hapus</span>' +
+          '</button>' +
+        '</div>' +
+        '<div class="grid grid-cols-1 sm:grid-cols-12 gap-3">' +
+          '<div class="sm:col-span-5">' +
+            '<label class="font-bold text-zinc-700 block mb-1 text-xs">Nama Pos Biaya</label>' +
+            '<input type="text" oninput="updateFeeHeader(this)" class="fee-name w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white text-xs font-bold text-zinc-800" placeholder="Contoh: Dana Pengembangan (DSP)" value="' + escapeHtml(name || '') + '" />' +
+          '</div>' +
+          '<div class="sm:col-span-4">' +
+            '<label class="font-bold text-zinc-700 block mb-1 text-xs">Nominal / Tarif</label>' +
+            '<input type="text" class="fee-amount w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white text-xs font-extrabold text-forest-900" placeholder="Contoh: Rp 14.500.000" value="' + escapeHtml(amount || '') + '" />' +
+          '</div>' +
+          '<div class="sm:col-span-3">' +
+            '<label class="font-bold text-zinc-700 block mb-1 text-xs">Waktu Bayar / Badge</label>' +
+            '<input type="text" class="fee-badge w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white text-xs font-semibold" placeholder="Contoh: Sekali saat daftar ulang" value="' + escapeHtml(badge || '') + '" />' +
+          '</div>' +
+          '<div class="sm:col-span-12">' +
+            '<label class="font-bold text-zinc-700 block mb-1 text-xs">Keterangan / Rincian Fasilitas (Opsional)</label>' +
+            '<input type="text" class="fee-desc w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white text-xs" placeholder="Contoh: Termasuk 5 stel seragam, kasur, lemari, buku pelajaran tahun I." value="' + escapeHtml(desc || '') + '" />' +
+          '</div>' +
+        '</div>';
+      container.appendChild(row);
+      renumberFeeItems();
+    }
+
+    function updateFeeHeader(input) {
+      var row = input.closest('.fee-item-row');
+      var titleEl = row ? row.querySelector('.fee-item-header-title') : null;
+      if (titleEl) titleEl.textContent = input.value || 'Komponen Biaya';
+    }
+
+    function removeFeeItem(btn) {
+      var row = btn.closest('.fee-item-row');
+      if (row) {
+        row.remove();
+        renumberFeeItems();
+      }
+    }
+
+    function renumberFeeItems() {
+      var rows = document.querySelectorAll('#fee-items-container .fee-item-row');
+      rows.forEach(function(row, idx) {
+        var num = row.querySelector('.fee-item-number');
+        if (num) num.textContent = idx + 1;
+      });
+    }
+
+    function renderScholarshipItems(items) {
+      var container = document.getElementById('scholarship-items-container');
+      if (!container) return;
+      container.innerHTML = '';
+      var list = (items && Array.isArray(items) && items.length > 0) ? items : defaultScholarshipItems(ppdbSettings);
+      list.forEach(function(item) {
+        addScholarshipItem(item.title, item.badge, item.desc);
+      });
+    }
+
+    function addScholarshipItem(title, badge, desc) {
+      var container = document.getElementById('scholarship-items-container');
+      if (!container) return;
+      var count = container.querySelectorAll('.scholarship-item-row').length + 1;
+      var row = document.createElement('div');
+      row.className = 'scholarship-item-row bg-zinc-50/80 p-4 rounded-2xl border border-zinc-200/80 space-y-3 relative transition hover:border-forest-800/40';
+      row.innerHTML =
+        '<div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">' +
+          '<div class="flex items-center gap-2">' +
+            '<span class="w-6 h-6 rounded-lg bg-forest-900 text-limeaccent-400 font-extrabold text-xs flex items-center justify-center sch-item-number">' + count + '</span>' +
+            '<span class="text-xs font-bold text-forest-950 sch-item-header-title">' + (title || 'Program Beasiswa #' + count) + '</span>' +
+          '</div>' +
+          '<button type="button" onclick="removeScholarshipItem(this)" class="text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition cursor-pointer">' +
+            '<span class="material-symbols-rounded text-[16px]">delete</span>' +
+            '<span>Hapus</span>' +
+          '</button>' +
+        '</div>' +
+        '<div class="grid grid-cols-1 sm:grid-cols-12 gap-3">' +
+          '<div class="sm:col-span-7">' +
+            '<label class="font-bold text-zinc-700 block mb-1 text-xs">Nama / Jenis Beasiswa</label>' +
+            '<input type="text" oninput="updateSchHeader(this)" class="sch-title w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white text-xs font-bold text-zinc-800" placeholder="Contoh: Beasiswa Tahfidz 30 Juz" value="' + escapeHtml(title || '') + '" />' +
+          '</div>' +
+          '<div class="sm:col-span-5">' +
+            '<label class="font-bold text-zinc-700 block mb-1 text-xs">Kategori / Label Jalur</label>' +
+            '<input type="text" class="sch-badge w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white text-xs font-semibold" placeholder="Contoh: Jalur Tahfidz / Jalur Prestasi" value="' + escapeHtml(badge || '') + '" />' +
+          '</div>' +
+          '<div class="sm:col-span-12">' +
+            '<label class="font-bold text-zinc-700 block mb-1 text-xs">Ketentuan, Syarat Pencapaian &amp; Bentuk Potongan Biaya</label>' +
+            '<textarea rows="2" class="sch-desc w-full px-3 py-2 rounded-xl border border-zinc-300 bg-white text-xs leading-relaxed" placeholder="Contoh: Hafal 5–10 Juz: Potongan DSP 25% • Hafal 15 Juz: Potongan DSP 50% • Hafal 30 Juz Mutqin: Bebas DSP 100% + Beasiswa SPP.">' + escapeHtml(desc || '') + '</textarea>' +
+          '</div>' +
+        '</div>';
+      container.appendChild(row);
+      renumberScholarshipItems();
+    }
+
+    function updateSchHeader(input) {
+      var row = input.closest('.scholarship-item-row');
+      var titleEl = row ? row.querySelector('.sch-item-header-title') : null;
+      if (titleEl) titleEl.textContent = input.value || 'Program Beasiswa';
+    }
+
+    function removeScholarshipItem(btn) {
+      var row = btn.closest('.scholarship-item-row');
+      if (row) {
+        row.remove();
+        renumberScholarshipItems();
+      }
+    }
+
+    function renumberScholarshipItems() {
+      var rows = document.querySelectorAll('#scholarship-items-container .scholarship-item-row');
+      rows.forEach(function(row, idx) {
+        var num = row.querySelector('.sch-item-number');
+        if (num) num.textContent = idx + 1;
+      });
+    }
 
     function populatePpdbForm(ppdb) {
       settingFields.forEach(function (key) {
         var el = document.getElementById('ppdb_' + key);
         if (el) el.value = ppdb[key] || '';
       });
+      renderFeeItems(ppdb.fee_items);
+      renderScholarshipItems(ppdb.scholarship_items);
     }
 
     async function savePpdbSettings(e) {
@@ -751,6 +967,46 @@
         if (el) payload[key] = el.value;
       });
 
+      // Collect dynamic fee items
+      var feeItems = [];
+      document.querySelectorAll('#fee-items-container .fee-item-row').forEach(function(row) {
+        var name = (row.querySelector('.fee-name').value || '').trim();
+        var amount = (row.querySelector('.fee-amount').value || '').trim();
+        var badge = (row.querySelector('.fee-badge').value || '').trim();
+        var desc = (row.querySelector('.fee-desc').value || '').trim();
+        if (name || amount) {
+          feeItems.push({ name: name, amount: amount, badge: badge, desc: desc });
+        }
+      });
+      payload['fee_items'] = feeItems;
+
+      // Legacy fallback mapping
+      if (feeItems.length > 0) {
+        payload['fee_registration'] = feeItems[0] ? feeItems[0].amount : '';
+        payload['fee_dsp'] = feeItems[1] ? feeItems[1].amount : '';
+        payload['fee_uniform_books'] = feeItems[2] ? feeItems[2].amount : '';
+        payload['fee_spp'] = feeItems[3] ? feeItems[3].amount : '';
+      }
+
+      // Collect dynamic scholarship items
+      var schItems = [];
+      document.querySelectorAll('#scholarship-items-container .scholarship-item-row').forEach(function(row) {
+        var title = (row.querySelector('.sch-title').value || '').trim();
+        var badge = (row.querySelector('.sch-badge').value || '').trim();
+        var desc = (row.querySelector('.sch-desc').value || '').trim();
+        if (title || desc) {
+          schItems.push({ title: title, badge: badge, desc: desc });
+        }
+      });
+      payload['scholarship_items'] = schItems;
+
+      // Legacy fallback mapping
+      if (schItems.length > 0) {
+        payload['scholarship_tahfidz'] = schItems[0] ? schItems[0].desc : '';
+        payload['scholarship_academic'] = schItems[1] ? schItems[1].desc : '';
+        payload['scholarship_orphan'] = schItems[2] ? schItems[2].desc : '';
+      }
+
       var res = await fetch('/api/v1/cms/ppdb', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -758,6 +1014,10 @@
       });
       var data = await res.json();
       if (data.success) {
+        showToast(data.message);
+        loadPpdbData();
+      }
+    }
         showToast(data.message);
         loadPpdbData();
       }

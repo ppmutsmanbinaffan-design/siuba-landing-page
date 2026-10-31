@@ -353,8 +353,8 @@
       </div>
     </div>
 
-    <!-- 4 Kartu Rincian Biaya Pendidikan -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <!-- 4 Kartu Rincian Biaya Pendidikan (Dinamis / Default) -->
+    <div id="p-fee-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       <!-- 1. Biaya Pendaftaran -->
       <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs flex flex-col justify-between space-y-4">
         <div class="space-y-2">
@@ -448,8 +448,8 @@
       </div>
     </div>
 
-    <!-- 3 Kartu Program Beasiswa -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Kartu Program Beasiswa (Dinamis / Default) -->
+    <div id="p-scholarship-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-2">
         <div class="flex items-center gap-2 text-forest-900 font-extrabold text-sm">
           <span class="material-symbols-rounded text-limeaccent-600">workspace_premium</span>
@@ -721,9 +721,60 @@
         setText('p-fee-spp', d.fee_spp);
         setText('p-fee-includes', d.fee_includes);
 
+        // Dynamic Fee Items Rendering
+        if (d.fee_items && Array.isArray(d.fee_items) && d.fee_items.length > 0) {
+          var feeGrid = document.getElementById('p-fee-grid');
+          if (feeGrid) {
+            feeGrid.innerHTML = d.fee_items.map(function(item, idx) {
+              var isHighlight = (item.name || '').toLowerCase().indexOf('spp') !== -1 || (item.name || '').toLowerCase().indexOf('syahriyah') !== -1;
+              var cardBg = isHighlight ? 'bg-forest-950 text-white shadow-lg' : 'bg-white text-zinc-800 border border-zinc-200/80 shadow-xs';
+              var numStr = ('0' + (idx + 1)).slice(-2);
+              var badgeBg = isHighlight ? 'bg-limeaccent-400 text-forest-950' : 'bg-limeaccent-400/25 text-forest-700';
+              var titleColor = isHighlight ? 'text-white' : 'text-forest-950';
+              var descColor = isHighlight ? 'text-white/80' : 'text-zinc-600';
+              var borderFooter = isHighlight ? 'border-white/15 text-limeaccent-400' : 'border-zinc-100 text-zinc-400';
+              var iconName = isHighlight ? 'calendar_today' : (idx === 0 ? 'receipt_long' : (idx === 1 ? 'domain' : 'payments'));
+
+              return '<div class="' + cardBg + ' p-6 rounded-3xl flex flex-col justify-between space-y-4">' +
+                '<div class="space-y-2">' +
+                  '<div class="flex items-center justify-between">' +
+                    '<span class="text-[11px] font-extrabold uppercase ' + badgeBg + ' px-2.5 py-0.5 rounded-full">' + numStr + '. ' + (item.name || 'Biaya') + '</span>' +
+                    '<span class="material-symbols-rounded ' + (isHighlight ? 'text-limeaccent-400' : 'text-forest-800') + ' text-[20px]">' + iconName + '</span>' +
+                  '</div>' +
+                  '<div class="text-2xl sm:text-3xl font-extrabold ' + titleColor + ' pt-1">' + (item.amount || '-') + '</div>' +
+                  (item.desc ? '<p class="text-xs ' + descColor + ' leading-relaxed">' + item.desc + '</p>' : '') +
+                '</div>' +
+                '<span class="text-[11px] font-bold ' + borderFooter + ' pt-3 border-t block">' + (item.badge || 'Biaya Pendidikan Santri') + '</span>' +
+              '</div>';
+            }).join('');
+          }
+        }
+
         setText('p-sch-tahfidz', d.scholarship_tahfidz);
         setText('p-sch-academic', d.scholarship_academic);
         setText('p-sch-orphan', d.scholarship_orphan);
+
+        // Dynamic Scholarship Items Rendering
+        if (d.scholarship_items && Array.isArray(d.scholarship_items) && d.scholarship_items.length > 0) {
+          var schGrid = document.getElementById('p-scholarship-grid');
+          if (schGrid) {
+            schGrid.innerHTML = d.scholarship_items.map(function(item, idx) {
+              var icons = ['workspace_premium', 'emoji_events', 'volunteer_activism', 'military_tech', 'school'];
+              var iconName = icons[idx % icons.length];
+              return '<div class="bg-white p-6 rounded-3xl border border-zinc-200/80 shadow-xs space-y-3 flex flex-col justify-between">' +
+                '<div class="space-y-2">' +
+                  '<div class="flex items-center justify-between">' +
+                    '<span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-forest-900/10 text-forest-900">' + (item.badge || 'Program Beasiswa') + '</span>' +
+                    '<span class="material-symbols-rounded text-limeaccent-600 text-[20px]">' + iconName + '</span>' +
+                  '</div>' +
+                  '<h4 class="text-forest-950 font-extrabold text-sm sm:text-base leading-snug">' + (item.title || 'Beasiswa') + '</h4>' +
+                  '<p class="text-xs text-zinc-600 leading-relaxed whitespace-pre-line">' + (item.desc || '-') + '</p>' +
+                '</div>' +
+                '<span class="text-[11px] font-bold text-forest-800 pt-3 border-t border-zinc-100 flex items-center gap-1"><span class="material-symbols-rounded text-[15px] text-limeaccent-500">verified</span> Jalur Resmi PPDB</span>' +
+              '</div>';
+            }).join('');
+          }
+        }
 
         setText('p-bank-account', d.bank_account);
         setText('p-admin-name', d.admin_contact_name);

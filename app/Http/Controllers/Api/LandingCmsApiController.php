@@ -284,10 +284,55 @@ class LandingCmsApiController extends Controller
             'fee_spp' => 'Rp 1.650.000 / bulan',
             'fee_uniform_books' => 'Rp 3.200.000',
             'fee_includes' => 'Makan 3x sehari bergizi, Asrama ber-AC/nyaman, Laundry pakaian, Layanan Poskestren, SPP Sekolah & Halaqah Tahfidz, serta Kartu Pintar RFID SIUBA.',
+            // Rincian Komponen Biaya Fleksibel (Dapat ditambah/disesuaikan)
+            'fee_items' => [
+                [
+                    'name' => 'Biaya Formulir & Seleksi',
+                    'amount' => 'Rp 350.000',
+                    'badge' => 'Sekali Saat Pendaftaran',
+                    'desc' => 'Sudah termasuk biaya Tes Seleksi Al-Qur\'an, Akademik, & Psikotes Kesiapan Asrama.',
+                ],
+                [
+                    'name' => 'Dana Pengembangan / Wakaf Asrama (DSP)',
+                    'amount' => 'Rp 14.500.000',
+                    'badge' => 'Tersedia Beasiswa 25%–100%',
+                    'desc' => 'Dana Pengembangan Sarana Asrama & Pendidikan (dibayarkan saat daftar ulang setelah lulus).',
+                ],
+                [
+                    'name' => 'Syahriyah / SPP Bulanan (All-In)',
+                    'amount' => 'Rp 1.650.000 / bulan',
+                    'badge' => 'Sudah Termasuk Makan & Laundry',
+                    'desc' => 'Makan 3x sehari bergizi, Asrama ber-AC/nyaman, Laundry pakaian, Layanan Poskestren, SPP Sekolah & Halaqah Tahfidz, serta Kartu Pintar RFID SIUBA.',
+                ],
+                [
+                    'name' => 'Paket Seragam (5 Stel), Kitab & Kasur',
+                    'amount' => 'Rp 3.200.000',
+                    'badge' => 'Perlengkapan Awal Santri',
+                    'desc' => '5 Stel Seragam, Paket Kitab Diniyah Tahun I, Kasur/Bantal/Sprei, Lemari Asrama, & Kartu RFID SIUBA.',
+                ],
+            ],
             // Beasiswa
             'scholarship_tahfidz' => 'Hafal 5–10 Juz: Potongan DSP 25% • Hafal 15 Juz: Potongan DSP 50% • Hafal 30 Juz Mutqin: Bebas DSP 100% + Beasiswa SPP.',
             'scholarship_academic' => 'Juara 1–3 OSN/KSM/MTQ Tingkat Provinsi/Nasional: Potongan Dana Pengembangan 50% s.d. 100%.',
             'scholarship_orphan' => 'Kuota khusus 15 kursi Beasiswa Penuh bagi santri Yatim/Dhuafa yang lulus seleksi Tahfidz & Akademik.',
+            // Jenis & Ketentuan Beasiswa Fleksibel (Dapat ditambah/disesuaikan)
+            'scholarship_items' => [
+                [
+                    'title' => 'Beasiswa Tahfidz Al-Qur\'an',
+                    'badge' => 'Jalur Tahfidz',
+                    'desc' => 'Hafal 5–10 Juz: Potongan DSP 25% • Hafal 15 Juz: Potongan DSP 50% • Hafal 30 Juz Mutqin: Bebas DSP 100% + Beasiswa SPP Bulanan.',
+                ],
+                [
+                    'title' => 'Beasiswa Prestasi Akademik & Sains',
+                    'badge' => 'Jalur Prestasi',
+                    'desc' => 'Juara 1–3 OSN/KSM/MTQ Tingkat Provinsi/Nasional: Potongan Dana Pengembangan 50% s.d. 100%.',
+                ],
+                [
+                    'title' => 'Beasiswa Yatim & Dhuafa Berprestasi',
+                    'badge' => 'Jalur Sosial & Afirmasi',
+                    'desc' => 'Kuota khusus 15 kursi Beasiswa Penuh bagi santri Yatim/Dhuafa yang lulus seleksi Tahfidz & Akademik.',
+                ],
+            ],
             // Syarat & Materi Tes
             'requirements_list' => "1. Mengisi formulir pendaftaran PPDB Online atau Offline di Sekretariat.\n2. Fotokopi Akta Kelahiran & Kartu Keluarga (masing-masing 2 lembar).\n3. Fotokopi Rapor 2 semester terakhir yang telah dilegalisir.\n4. Surat Keterangan Aktif Sekolah & Nomor Induk Siswa Nasional (NISN).\n5. Pas Foto berwarna ukuran 3x4 (4 lembar, putri berjilbab putih/gelap).\n6. Surat Keterangan Sehat dari Dokter/Puskesmas & bebas penyakit menular.",
             'selection_materials' => "1. Tes Membaca & Menghafal Al-Qur'an (Tajwid, kelancaran bacaan, dan tes kecepatan menghafal 1 halaman baru).\n2. Tes Akademik Dasar (Matematika, IPA, Bahasa Indonesia, dan Pengetahuan Agama Islam Dasar).\n3. Tes Psikotes Kesiapan Berasrama & Kemandirian Calon Santri.\n4. Wawancara Komitmen Orang Tua / Wali Santri bersama Dewan Masyayikh.",
@@ -418,6 +463,13 @@ class LandingCmsApiController extends Controller
         $profile = $profileRow ? array_merge(self::defaultProfile(), json_decode($profileRow->value, true) ?? []) : self::defaultProfile();
         $ppdb = $ppdbRow ? array_merge(self::defaultPpdb(), json_decode($ppdbRow->value, true) ?? []) : self::defaultPpdb();
 
+        if (empty($ppdb['fee_items'])) {
+            $ppdb['fee_items'] = self::defaultPpdb()['fee_items'];
+        }
+        if (empty($ppdb['scholarship_items'])) {
+            $ppdb['scholarship_items'] = self::defaultPpdb()['scholarship_items'];
+        }
+
         $news = DB::table('landing_news')
             ->where('is_published', true)
             ->orderByDesc('id')
@@ -494,7 +546,15 @@ class LandingCmsApiController extends Controller
     {
         $existingRow = DB::table('landing_settings')->where('key', 'ppdb')->first();
         $existing = $existingRow ? (json_decode($existingRow->value, true) ?? []) : self::defaultPpdb();
-        $merged = array_merge($existing, $request->all());
+        $data = $request->all();
+        $merged = array_merge($existing, $data);
+
+        if ($request->has('fee_items')) {
+            $merged['fee_items'] = $request->input('fee_items');
+        }
+        if ($request->has('scholarship_items')) {
+            $merged['scholarship_items'] = $request->input('scholarship_items');
+        }
 
         DB::table('landing_settings')->updateOrInsert(
             ['key' => 'ppdb'],
