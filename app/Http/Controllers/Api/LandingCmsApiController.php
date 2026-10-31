@@ -659,8 +659,14 @@ class LandingCmsApiController extends Controller
         $gender = (string) $request->input('gender', 'Putra');
         $nisn = (string) $request->input('nisn', '');
         $birthInfo = (string) $request->input('birth_info', '');
+        $wave = (string) $request->input('wave', '');
         $juz = (string) $request->input('juz_memorized', '0 Juz');
         $address = (string) $request->input('address', '');
+
+        $notes = (string) $request->input('notes', '');
+        if ($wave !== '' && !str_contains($notes, 'Gelombang:')) {
+            $notes = trim(($notes !== '' ? $notes . ' | ' : '') . 'Gelombang: ' . $wave);
+        }
 
         $nextNum = DB::table('ppdb_registrations')->max('id') + 1;
         $regNumber = sprintf('PPDB-2026-%04d', $nextNum);
@@ -681,7 +687,7 @@ class LandingCmsApiController extends Controller
             'status' => (string) $request->input('status', 'Baru'),
             'test_score_quran' => (string) $request->input('test_score_quran', '-'),
             'test_score_academic' => (string) $request->input('test_score_academic', '-'),
-            'notes' => (string) $request->input('notes', ''),
+            'notes' => $notes,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -710,6 +716,7 @@ class LandingCmsApiController extends Controller
             . "🔖 *No. Registrasi:* " . $regNumber . "\n"
             . "👤 *Nama Calon Santri:* " . $studentName . " (" . $gender . ")\n"
             . "🆔 *NISN:* " . ($nisn ?: '-') . "\n"
+            . "🌊 *Gelombang:* " . ($wave ?: 'Gelombang I') . "\n"
             . "🏷 *Jenjang Pendidikan:* " . $level . "\n"
             . "🎯 *Jalur Pendaftaran:* " . $track . "\n"
             . "📖 *Capaian Hafalan:* " . $juz . "\n"

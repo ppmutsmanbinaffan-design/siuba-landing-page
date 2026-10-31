@@ -133,13 +133,15 @@
             </div>
 
             <div class="space-y-2 text-xs">
-              <div class="flex justify-between py-1.5 border-b border-white/10">
-                <span class="text-white/70">Gelombang I (Prestasi &amp; Reguler)</span>
-                <span id="p-wave-1" class="font-extrabold text-limeaccent-400">01 Okt – 31 Des 2026</span>
-              </div>
-              <div class="flex justify-between py-1.5 border-b border-white/10">
-                <span class="text-white/70">Gelombang II</span>
-                <span id="p-wave-2" class="font-extrabold text-white">01 Jan – 31 Mar 2027</span>
+              <div id="p-hero-waves-items" class="space-y-2">
+                <div class="flex justify-between py-1.5 border-b border-white/10">
+                  <span class="text-white/70">Gelombang I (Prestasi &amp; Reguler)</span>
+                  <span id="p-wave-1" class="font-extrabold text-limeaccent-400">01 Okt – 31 Des 2026</span>
+                </div>
+                <div class="flex justify-between py-1.5 border-b border-white/10">
+                  <span class="text-white/70">Gelombang II</span>
+                  <span id="p-wave-2" class="font-extrabold text-white">01 Jan – 31 Mar 2027</span>
+                </div>
               </div>
               <div class="flex justify-between py-1.5 border-b border-white/10">
                 <span class="text-white/70">Pelaksanaan Tes &amp; Wawancara</span>
@@ -254,7 +256,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="bg-forest-950 text-white rounded-3xl p-6 sm:p-8 space-y-4 shadow-lg">
         <div class="flex items-center justify-between">
-          <span class="bg-limeaccent-400 text-forest-950 text-xs font-extrabold px-3 py-1 rounded-full">Lulusan SD / MI</span>
+          <span id="p-smp-badge" class="bg-limeaccent-400 text-forest-950 text-xs font-extrabold px-3 py-1 rounded-full">Lulusan SD / MI</span>
           <span id="p-smp-quota" class="text-xs font-bold text-limeaccent-400">Kuota: 120 Santri</span>
         </div>
         <h3 id="p-smp-title" class="text-xl sm:text-2xl font-extrabold">JENJANG SMP IT (BOARDING)</h3>
@@ -270,7 +272,7 @@
 
       <div class="bg-forest-900 text-white rounded-3xl p-6 sm:p-8 space-y-4 shadow-lg">
         <div class="flex items-center justify-between">
-          <span class="bg-limeaccent-400 text-forest-950 text-xs font-extrabold px-3 py-1 rounded-full">Lulusan SMP / MTs</span>
+          <span id="p-sma-badge" class="bg-limeaccent-400 text-forest-950 text-xs font-extrabold px-3 py-1 rounded-full">Lulusan SMP / MTs</span>
           <span id="p-sma-quota" class="text-xs font-bold text-limeaccent-400">Kuota: 120 Santri</span>
         </div>
         <h3 id="p-sma-title" class="text-xl sm:text-2xl font-extrabold">JENJANG SMA IT &amp; TAKHASSUS</h3>
@@ -347,7 +349,7 @@
         <p class="text-xs text-zinc-600 leading-relaxed max-w-2xl">
           Rincian biaya pendidikan transparan mencakup Biaya Pendaftaran, Biaya Masuk (DSP), Biaya Bulanan (Syahriyah), Rincian Biaya Lainnya, serta Informasi Rekening Pembayaran Resmi.
         </p>
-        <span class="bg-white border border-emerald-900/15 text-forest-900 text-[11px] font-extrabold px-3 py-1.5 rounded-full shrink-0 w-fit">
+        <span id="p-scholarship-note-badge" class="bg-white border border-emerald-900/15 text-forest-900 text-[11px] font-extrabold px-3 py-1.5 rounded-full shrink-0 w-fit">
           Tersedia Beasiswa Prestasi
         </span>
       </div>
@@ -514,7 +516,14 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div>
+              <label class="font-bold text-forest-950 block mb-1">Pilihan Gelombang *</label>
+              <select id="f_wave" required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 bg-white font-semibold">
+                <option value="Gelombang 1">Gelombang 1 (Buka)</option>
+                <option value="Gelombang 2">Gelombang 2</option>
+              </select>
+            </div>
             <div>
               <label class="font-bold text-forest-950 block mb-1">Pilihan Jenjang *</label>
               <select id="f_level" required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 bg-white font-bold">
@@ -529,6 +538,7 @@
                 <option value="Reguler">Jalur Reguler</option>
                 <option value="Beasiswa Tahfidz">Beasiswa Tahfidz</option>
                 <option value="Prestasi Akademik">Prestasi Akademik</option>
+                <option value="Yatim Berprestasi">Yatim Berprestasi</option>
               </select>
             </div>
             <div>
@@ -695,6 +705,35 @@
         setText('p-test-schedule', d.test_schedule);
         setText('p-boarding-entry', d.boarding_entry_date);
 
+        // Dynamic Hero Waves Rendering
+        if (d.wave_items && Array.isArray(d.wave_items) && d.wave_items.length > 0) {
+          var heroWavesEl = document.getElementById('p-hero-waves-items');
+          if (heroWavesEl) {
+            heroWavesEl.innerHTML = d.wave_items.map(function(item) {
+              var isOpen = item.status === 'Buka';
+              var rangeStr = item.date_range || (item.open_date && item.close_date ? (item.open_date + ' – ' + item.close_date) : (item.open_date || '-'));
+              var valColor = isOpen ? 'text-limeaccent-400' : 'text-white';
+              return '<div class="flex justify-between items-center py-1.5 border-b border-white/10 gap-2">' +
+                '<span class="text-white/75 truncate flex items-center gap-1.5">' +
+                  '<span>' + (item.name || 'Gelombang') + '</span>' +
+                  (isOpen ? '<span class="text-[9px] font-extrabold bg-limeaccent-400 text-forest-950 px-1.5 py-0.5 rounded-full shrink-0">Buka</span>' : '') +
+                '</span>' +
+                '<span class="font-extrabold ' + valColor + ' shrink-0 text-right">' + rangeStr + '</span>' +
+              '</div>';
+            }).join('');
+          }
+
+          // Populate Form Wave Selector
+          var waveSelect = document.getElementById('f_wave');
+          if (waveSelect) {
+            waveSelect.innerHTML = d.wave_items.map(function(item) {
+              var isOpen = item.status === 'Buka';
+              var label = item.name + (isOpen ? ' [Buka]' : (item.status ? ' [' + item.status + ']' : ''));
+              return '<option value="' + (item.name || 'Gelombang') + '"' + (isOpen ? ' selected' : '') + '>' + label + '</option>';
+            }).join('');
+          }
+        }
+
         setText('card-wave-1-date', d.wave_1);
         setText('card-wave-1-test', d.wave_1_test);
         setText('card-wave-1-announce', d.wave_1_announce);
@@ -751,13 +790,16 @@
           }
         }
 
+        setText('p-smp-badge', d.smp_badge);
         setText('p-smp-title', d.smp_title);
         setText('p-smp-desc', d.smp_desc);
         setText('p-smp-quota', 'Kuota: ' + (d.smp_quota || '120 Santri'));
+        setText('p-sma-badge', d.sma_badge);
         setText('p-sma-title', d.sma_title);
         setText('p-sma-desc', d.sma_desc);
         setText('p-sma-quota', 'Kuota: ' + (d.sma_quota || '120 Santri'));
 
+        setText('p-scholarship-note-badge', d.scholarship_note);
         setText('p-requirements-list', d.requirements_list);
         setText('p-selection-materials', d.selection_materials);
 
@@ -820,6 +862,18 @@
               '</div>';
             }).join('');
           }
+
+          // Populate Form Track Selector
+          var trackSelect = document.getElementById('f_track');
+          if (trackSelect) {
+            var defaultTracks = ['Reguler', 'Beasiswa Tahfidz', 'Prestasi Akademik'];
+            var customTracks = d.scholarship_items.map(function(s) { return s.title; }).filter(Boolean);
+            var mergedTracks = Array.from(new Set(defaultTracks.concat(customTracks)));
+            trackSelect.innerHTML = mergedTracks.map(function(t) {
+              var isReg = t === 'Reguler';
+              return '<option value="' + t + '"' + (isReg ? ' selected' : '') + '>' + (isReg ? 'Jalur Reguler' : t) + '</option>';
+            }).join('');
+          }
         }
 
         setText('p-bank-account', d.bank_account);
@@ -844,6 +898,7 @@
         nisn: document.getElementById('f_nisn').value,
         gender: document.getElementById('f_gender').value,
         birth_info: document.getElementById('f_birth_info').value,
+        wave: document.getElementById('f_wave') ? document.getElementById('f_wave').value : '',
         level: document.getElementById('f_level').value,
         track: document.getElementById('f_track').value,
         juz_memorized: document.getElementById('f_juz').value,
