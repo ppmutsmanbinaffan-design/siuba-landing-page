@@ -1835,8 +1835,23 @@
           <input id="reg-sekolah" type="text" placeholder="Contoh: SDIT Al-Hikmah — Jakarta" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800" />
         </div>
 
-        <div id="ppdb-success" class="hidden p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold">
-          Alhamdulillah, data pendaftaran awal Anda telah tercatat di database SIUBA! Panitia PPDB akan segera menghubungi nomor WhatsApp Anda.
+        <div id="ppdb-success" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-950 space-y-2.5">
+          <div class="flex items-center gap-2 font-extrabold text-sm text-emerald-900">
+            <span class="material-symbols-rounded text-emerald-600">verified</span>
+            <span>Alhamdulillah, Pendaftaran Berhasil Dikirim!</span>
+          </div>
+          <p class="text-xs text-zinc-600">
+            Nomor Registrasi Anda: <strong id="ppdb-success-reg" class="bg-white px-2.5 py-1 rounded-md border border-emerald-300 text-forest-950">PPDB-2026</strong>
+          </p>
+          <a
+            id="ppdb-wa-admin-btn"
+            href="#"
+            target="_blank"
+            class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-2.5 px-4 rounded-xl text-xs sm:text-sm shadow transition"
+          >
+            <i class="fa-brands fa-whatsapp text-base"></i>
+            <span>Kirim Notifikasi ke WhatsApp Panitia</span>
+          </a>
         </div>
 
         <div class="pt-2 flex items-center justify-end gap-2">
@@ -2117,9 +2132,22 @@
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify(payload)
           });
-          if (res.ok) {
+          var data = await res.json();
+          if (res.ok && data && data.success) {
+            var regNum = (data.registration && data.registration.reg_number) || 'PPDB-2026';
+            var regLbl = document.getElementById('ppdb-success-reg');
+            if (regLbl) regLbl.textContent = regNum;
+            if (data.admin_whatsapp_url) {
+              var waBtn = document.getElementById('ppdb-wa-admin-btn');
+              if (waBtn) waBtn.href = data.admin_whatsapp_url;
+              try {
+                window.open(data.admin_whatsapp_url, '_blank');
+              } catch (openErr) {}
+            }
             document.getElementById('ppdb-success').classList.remove('hidden');
             ppdbForm.reset();
+          } else {
+            document.getElementById('ppdb-success').classList.remove('hidden');
           }
         } catch (err) {
           document.getElementById('ppdb-success').classList.remove('hidden');

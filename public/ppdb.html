@@ -566,14 +566,37 @@
           </div>
 
           <!-- Bukti Registrasi Box -->
-          <div id="f_success_box" class="hidden p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-emerald-950 space-y-2">
+          <div id="f_success_box" class="hidden p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-emerald-950 space-y-3">
             <div class="flex items-center gap-2 font-extrabold text-sm text-emerald-900">
               <span class="material-symbols-rounded text-emerald-600">verified</span>
               <span>Alhamdulillah, Pendaftaran Berhasil Tercatat!</span>
             </div>
-            <p class="text-xs">Simpan Nomor Registrasi Anda untuk mengecek jadwal tes &amp; hasil kelulusan:</p>
-            <div id="f_reg_number_result" class="text-xl font-extrabold bg-white px-4 py-2 rounded-xl border border-emerald-300 inline-block text-forest-950">
-              PPDB-2026-0001
+            <p class="text-xs text-emerald-900/80">Simpan Nomor Registrasi Anda untuk mengecek jadwal tes &amp; hasil kelulusan:</p>
+            <div class="flex items-center gap-3">
+              <div id="f_reg_number_result" class="text-xl font-extrabold bg-white px-4 py-2 rounded-xl border border-emerald-300 inline-block text-forest-950 tracking-wide">
+                PPDB-2026-0001
+              </div>
+              <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-200 text-emerald-900">Tersimpan di Sistem SIUBA</span>
+            </div>
+
+            <!-- WhatsApp Notification Card to Committee Admin -->
+            <div class="mt-3 p-3.5 rounded-xl bg-white border border-emerald-200 space-y-2.5">
+              <div class="flex items-center gap-2 text-xs font-extrabold text-emerald-950">
+                <i class="fa-brands fa-whatsapp text-emerald-600 text-base"></i>
+                <span>Notifikasi Langsung ke WhatsApp Panitia PPDB</span>
+              </div>
+              <p class="text-[11px] text-zinc-600 leading-relaxed">
+                Pesan notifikasi pendaftaran telah otomatis disiapkan untuk panitia (<strong id="f_wa_admin_phone_label">Admin PPDB</strong>). Klik tombol di bawah untuk mengirim konfirmasi langsung via WhatsApp:
+              </p>
+              <a
+                id="f_btn_wa_admin"
+                href="#"
+                target="_blank"
+                class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 px-4 rounded-xl shadow-md transition text-xs sm:text-sm cursor-pointer"
+              >
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Kirim Notifikasi Pendaftaran ke WhatsApp Panitia</span>
+              </a>
             </div>
           </div>
 
@@ -741,9 +764,28 @@
         });
         var data = await res.json();
         if (data && data.success) {
-          document.getElementById('f_reg_number_result').textContent = (data.registration && data.registration.reg_number) || 'PPDB-2026';
-          document.getElementById('f_success_box').classList.remove('hidden');
+          var regNum = (data.registration && data.registration.reg_number) || 'PPDB-2026';
+          document.getElementById('f_reg_number_result').textContent = regNum;
+
+          if (data.admin_whatsapp_url) {
+            var btnWa = document.getElementById('f_btn_wa_admin');
+            if (btnWa) {
+              btnWa.href = data.admin_whatsapp_url;
+            }
+            var lblWa = document.getElementById('f_wa_admin_phone_label');
+            if (lblWa) {
+              lblWa.textContent = (data.admin_name ? data.admin_name + ' • ' : '') + (data.admin_phone || '');
+            }
+            // Buka tab WhatsApp langsung secara otomatis
+            try {
+              window.open(data.admin_whatsapp_url, '_blank');
+            } catch (openErr) {}
+          }
+
+          var successBox = document.getElementById('f_success_box');
+          successBox.classList.remove('hidden');
           document.getElementById('public-ppdb-form').reset();
+          successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       } catch (err) {}
       btn.disabled = false;

@@ -646,10 +646,36 @@
               </div>
             </div>
 
+            <!-- Card 4: Kontak Admin & Notifikasi WhatsApp PPDB -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-emerald-50/60 border border-emerald-200/90 space-y-3.5 text-xs">
+              <div class="flex items-center justify-between border-b border-emerald-200/80 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <i class="fa-brands fa-whatsapp text-emerald-600 text-lg"></i>
+                  <span class="font-extrabold text-forest-950 uppercase text-sm">4. Notifikasi WhatsApp Admin Panitia PPDB</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-extrabold">Auto WA Notif Aktif</span>
+              </div>
+              <p class="text-[11px] text-zinc-600 leading-relaxed">
+                Setiap kali calon santri mendaftar di Web Portal PPDB atau Modal Pendaftaran Landing Page, sistem otomatis menyiapkan dan memicu notifikasi pendaftaran lengkap langsung ke WhatsApp Admin Panitia yang tertera di bawah ini.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="font-bold text-forest-950 block mb-1">Nomor WhatsApp Admin Panitia (Penerima Notifikasi) *</label>
+                  <input id="ppdb-whatsapp_contact" type="text" placeholder="Contoh: 0812-3456-7890" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white font-bold" />
+                  <span class="text-[10px] text-zinc-500 mt-1 block">Nomor HP panitia aktif. Format bebas (08... / 628...).</span>
+                </div>
+                <div>
+                  <label class="font-bold text-forest-950 block mb-1">Nama Ketua / Kontak Panitia PPDB</label>
+                  <input id="ppdb-admin_contact_name" type="text" placeholder="Contoh: Ustadz H. Ahmad Fauzi, S.Pd.I" class="w-full px-3.5 py-2 rounded-xl border border-zinc-300 bg-white font-semibold" />
+                  <span class="text-[10px] text-zinc-500 mt-1 block">Nama panitia yang dicantumkan pada informasi kontak PPDB.</span>
+                </div>
+              </div>
+            </div>
+
             <div class="pt-2 flex justify-end">
               <button type="button" onclick="saveCmsPpdbSection()" class="bg-forest-950 hover:bg-forest-800 text-limeaccent-400 font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full flex items-center gap-2 shadow-md transition cursor-pointer">
                 <span class="material-symbols-rounded text-[18px]">save</span>
-                <span>Simpan 3 Card PPDB &amp; Jenjang</span>
+                <span>Simpan Informasi PPDB &amp; Kontak Notifikasi WA</span>
               </button>
             </div>
           </div>
@@ -1533,6 +1559,9 @@
         setVal('ppdb-sma_quota', d.sma_quota);
         setVal('ppdb-sma_program', d.sma_program);
 
+        setVal('ppdb-whatsapp_contact', d.whatsapp_contact || '0812-3456-7890');
+        setVal('ppdb-admin_contact_name', d.admin_contact_name || 'Ustadz H. Ahmad Fauzi, S.Pd.I');
+
         currentNews = json.news || (json.data && json.data.news) || [];
         renderNewsList();
       } catch (e) {
@@ -1563,7 +1592,9 @@
         sma_desc: getVal('ppdb-sma_desc'),
         sma_duration: getVal('ppdb-sma_duration'),
         sma_quota: getVal('ppdb-sma_quota'),
-        sma_program: getVal('ppdb-sma_program')
+        sma_program: getVal('ppdb-sma_program'),
+        whatsapp_contact: getVal('ppdb-whatsapp_contact'),
+        admin_contact_name: getVal('ppdb-admin_contact_name')
       };
 
       var res = await fetch('/api/v1/cms/ppdb', {

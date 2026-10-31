@@ -564,6 +564,11 @@ class LandingCmsApiController extends Controller
         $parentName = $request->input('parent_name') ?? $request->input('nama_wali') ?? '-';
         $whatsapp = $request->input('whatsapp') ?? $request->input('no_whatsapp') ?? '-';
         $originSchool = $request->input('origin_school') ?? $request->input('asal_sekolah') ?? '-';
+        $gender = (string) $request->input('gender', 'Putra');
+        $nisn = (string) $request->input('nisn', '');
+        $birthInfo = (string) $request->input('birth_info', '');
+        $juz = (string) $request->input('juz_memorized', '0 Juz');
+        $address = (string) $request->input('address', '');
 
         $nextNum = DB::table('ppdb_registrations')->max('id') + 1;
         $regNumber = sprintf('PPDB-2026-%04d', $nextNum);
@@ -571,16 +576,16 @@ class LandingCmsApiController extends Controller
         $id = DB::table('ppdb_registrations')->insertGetId([
             'reg_number' => $regNumber,
             'student_name' => (string) $studentName,
-            'nisn' => (string) $request->input('nisn', ''),
-            'gender' => (string) $request->input('gender', 'Putra'),
-            'birth_info' => (string) $request->input('birth_info', ''),
+            'nisn' => $nisn,
+            'gender' => $gender,
+            'birth_info' => $birthInfo,
             'level' => (string) $level,
             'track' => (string) $track,
-            'juz_memorized' => (string) $request->input('juz_memorized', '0 Juz'),
+            'juz_memorized' => $juz,
             'parent_name' => (string) $parentName,
             'whatsapp' => (string) $whatsapp,
             'origin_school' => (string) ($originSchool ?: '-'),
-            'address' => (string) $request->input('address', ''),
+            'address' => $address,
             'status' => (string) $request->input('status', 'Baru'),
             'test_score_quran' => (string) $request->input('test_score_quran', '-'),
             'test_score_academic' => (string) $request->input('test_score_academic', '-'),
@@ -589,10 +594,73 @@ class LandingCmsApiController extends Controller
             'updated_at' => now(),
         ]);
 
+        // Ambil Nomor WhatsApp & Nama Admin Panitia PPDB dari Pengaturan CMS
+        $ppdbSettingsRow = DB::table('landing_settings')->where('key', 'ppdb')->first();
+        $ppdbSettings = $ppdbSettingsRow ? (json_decode($ppdbSettingsRow->value, true) ?? []) : self::defaultPpdb();
+        $adminWa = $ppdbSettings['whatsapp_contact'] ?? '0812-3456-7890';
+        $adminName = $ppdbSettings['admin_contact_name'] ?? 'Panitia PPDB';
+
+        // Normalisasi format nomor WA panitia ke 628...
+        $cleanAdminPhone = preg_replace('/[^0-9]/', '', (string) $adminWa);
+        if (str_starts_with($cleanAdminPhone, '0')) {
+            $cleanAdminPhone = '62' . substr($cleanAdminPhone, 1);
+        } elseif (str_starts_with($cleanAdminPhone, '8')) {
+            $cleanAdminPhone = '62' . $cleanAdminPhone;
+        }
+
+        $nowDate = now()->translatedFormat('d F Y, H:i') . ' WIB';
+
+        // Susun teks notifikasi WhatsApp resmi panitia
+        $waMessage = "📋 *NOTIFIKASI PENDAFTARAN SANTRI BARU (PPDB)*\n"
+            . "*Pondok Pesantren Modern Utsman Bin Affan*\n"
+            . "──────────────────────────────\n"
+            . "Bismillah, telah masuk pendaftaran calon santri baru via Web Portal:\n\n"
+            . "🔖 *No. Registrasi:* " . $regNumber . "\n"
+            . "👤 *Nama Calon Santri:* " . $studentName . " (" . $gender . ")\n"
+            . "🆔 *NISN:* " . ($nisn ?: '-') . "\n"
+            . "🏷 *Jenjang Pendidikan:* " . $level . "\n"
+            . "🎯 *Jalur Pendaftaran:* " . $track . "\n"
+            . "📖 *Capaian Hafalan:* " . $juz . "\n"
+            . "🏫 *Asal Sekolah:* " . ($originSchool ?: '-') . "\n"
+            . "👨‍👩‍👦 *Nama Orang Tua/Wali:* " . ($parentName ?: '-') . "\n"
+            . "📱 *WhatsApp Orang Tua:* " . ($whatsapp ?: '-') . "\n"
+            . "📍 *Alamat:* " . ($address ?: '-') . "\n"
+            . "⏰ *Waktu Mendaftar:* " . $nowDate . "\n\n"
+            . "Mohon Panitia PPDB memverifikasi data dan mengonfirmasi jadwal seleksi santri. Terima kasih.\n"
+            . "_Sistem Informasi Terpadu SIUBA_";
+
+        $adminWaUrl = 'https://wa.me/' . $cleanAdminPhone . '?text=' . urlencode($waMessage);
+
+        // Dukungan otomatis WA Gateway / Fonnte / Wablas (jika env disetel)
+        $gatewayStatus = 'direct_wa_link_ready';
+        $gatewayUrl = env('WA_GATEWAY_URL');
+        $gatewayToken = env('WA_GATEWAY_TOKEN') ?: env('FONNTE_TOKEN');
+
+        if ($gatewayUrl && $gatewayToken && $cleanAdminPhone) {
+            try {
+                \Illuminate\Support\Facades\Http::timeout(3)->withHeaders([
+                    'Authorization' => $gatewayToken,
+                ])->post($gatewayUrl, [
+                    'target' => $cleanAdminPhone,
+                    'message' => $waMessage,
+                ]);
+                $gatewayStatus = 'dispatched_to_gateway';
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Auto WA Gateway failed: ' . $e->getMessage());
+                $gatewayStatus = 'gateway_skipped_fallback_link';
+            }
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Pendaftaran PPDB berhasil disimpan dengan Nomor Registrasi: ' . $regNumber,
             'registration' => DB::table('ppdb_registrations')->find($id),
+            'admin_phone' => $adminWa,
+            'admin_name' => $adminName,
+            'admin_clean_phone' => $cleanAdminPhone,
+            'admin_whatsapp_url' => $adminWaUrl,
+            'notification_message' => $waMessage,
+            'gateway_status' => $gatewayStatus,
         ]);
     }
 
