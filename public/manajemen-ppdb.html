@@ -139,76 +139,85 @@
     </div>
 
     <!-- Navigation Tabs -->
-    <div class="no-print flex flex-wrap items-center justify-between gap-3 bg-white p-2 rounded-2xl border border-zinc-200/80 shadow-xs">
-      <div class="flex flex-wrap items-center gap-1.5">
-        <button onclick="switchTab('tab-registrations')" id="btn-tab-registrations" class="ppdb-tab-btn bg-forest-900 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer">
+    <div class="no-print bg-white p-2 rounded-2xl border border-zinc-200/80 shadow-xs">
+      <div class="flex items-center gap-2 overflow-x-auto scrollbar-none py-0.5">
+        <button onclick="switchTab('tab-registrations')" id="btn-tab-registrations" class="ppdb-tab-btn whitespace-nowrap bg-forest-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer shrink-0 shadow-xs">
           <span class="material-symbols-rounded text-[18px]">group_add</span>
           <span>1. Data &amp; Seleksi Pendaftar</span>
           <span id="badge-reg-count" class="bg-limeaccent-400 text-forest-950 text-[11px] font-extrabold px-2 py-0.5 rounded-full">0</span>
         </button>
-        <button onclick="switchTab('tab-settings')" id="btn-tab-settings" class="ppdb-tab-btn text-zinc-600 hover:bg-zinc-100 font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer">
+        <button onclick="switchTab('tab-settings')" id="btn-tab-settings" class="ppdb-tab-btn whitespace-nowrap text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer shrink-0">
           <span class="material-symbols-rounded text-[18px]">calendar_month</span>
           <span>2. Gelombang, Jadwal &amp; Kuota</span>
         </button>
-        <button onclick="switchTab('tab-fees')" id="btn-tab-fees" class="ppdb-tab-btn text-zinc-600 hover:bg-zinc-100 font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer">
+        <button onclick="switchTab('tab-fees')" id="btn-tab-fees" class="ppdb-tab-btn whitespace-nowrap text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer shrink-0">
           <span class="material-symbols-rounded text-[18px]">payments</span>
           <span>3. Biaya, Beasiswa &amp; Syarat</span>
         </button>
-        <button onclick="switchTab('tab-announcement')" id="btn-tab-announcement" class="ppdb-tab-btn text-zinc-600 hover:bg-zinc-100 font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer">
+        <button onclick="switchTab('tab-announcement')" id="btn-tab-announcement" class="ppdb-tab-btn whitespace-nowrap text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer shrink-0">
           <span class="material-symbols-rounded text-[18px]">campaign</span>
           <span>4. Pengumuman Kelulusan &amp; Rekap</span>
-        </button>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <button
-          type="button"
-          onclick="exportToCsv()"
-          class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 transition cursor-pointer"
-        >
-          <span class="material-symbols-rounded text-[17px]">download</span>
-          <span>Export CSV</span>
-        </button>
-        <button
-          type="button"
-          onclick="openAddManualModal()"
-          class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center gap-1.5 transition cursor-pointer shadow-xs"
-        >
-          <span class="material-symbols-rounded text-[18px]">person_add</span>
-          <span>+ Input Pendaftar Baru</span>
         </button>
       </div>
     </div>
 
     <!-- ==================== TAB 1: DATA & SELEKSI PENDAFTAR ==================== -->
     <section id="tab-registrations" class="ppdb-tab-panel bg-white rounded-3xl border border-zinc-200/80 p-5 sm:p-7 shadow-xs space-y-5">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-zinc-100 pb-4">
+      <!-- Section Title & Action Buttons -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-100 pb-4">
         <div>
           <h2 class="text-lg font-extrabold text-forest-950">Data Pendaftar, Penilaian Seleksi &amp; Verifikasi</h2>
-          <p class="text-xs text-zinc-500">Klik tombol <strong>Nilai &amp; Detail</strong> untuk menginput skor tes Al-Qur&rsquo;an, Akademik, catatan pewawancara, atau mencetak kartu ujian.</p>
+          <p class="text-xs text-zinc-500 mt-0.5">Klik tombol <strong class="text-forest-900">Nilai &amp; Detail</strong> untuk menginput skor tes Al-Qur&rsquo;an, Akademik, catatan pewawancara, atau mencetak kartu ujian.</p>
         </div>
 
-        <!-- Filter Bar -->
-        <div class="flex flex-wrap items-center gap-2 text-xs">
+        <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+          <button
+            type="button"
+            onclick="exportToCsv()"
+            class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 transition cursor-pointer"
+          >
+            <span class="material-symbols-rounded text-[17px]">download</span>
+            <span>Export CSV</span>
+          </button>
+          <button
+            type="button"
+            onclick="openAddManualModal()"
+            class="bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center gap-1.5 transition cursor-pointer shadow-xs"
+          >
+            <span class="material-symbols-rounded text-[18px]">person_add</span>
+            <span>+ Input Pendaftar Baru</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dedicated Filter & Search Bar -->
+      <div class="bg-zinc-50/80 border border-zinc-200/80 rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <!-- Search Input with Icon -->
+        <div class="relative flex-1 max-w-md">
+          <span class="material-symbols-rounded absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400 text-[18px] pointer-events-none">search</span>
           <input
             type="text"
             id="filter-search"
             oninput="renderRegistrations()"
-            placeholder="Cari No.Reg / Nama / NISN / WA..."
-            class="px-3.5 py-2 rounded-xl border border-zinc-300 focus:outline-none focus:border-forest-800 w-56"
+            placeholder="Cari No.Reg, nama, NISN, WA, sekolah..."
+            class="w-full pl-10 pr-3.5 py-2.5 text-xs rounded-xl border border-zinc-200 bg-white placeholder-zinc-400 focus:outline-none focus:border-forest-800 focus:ring-1 focus:ring-forest-800 font-medium"
           />
-          <select id="filter-level" onchange="renderRegistrations()" class="px-3 py-2 rounded-xl border border-zinc-300 bg-white font-semibold">
+        </div>
+
+        <!-- Filter Dropdowns Row -->
+        <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 text-xs">
+          <select id="filter-level" onchange="renderRegistrations()" class="px-3.5 py-2.5 rounded-xl border border-zinc-200 bg-white font-semibold text-zinc-700 focus:outline-none focus:border-forest-800 cursor-pointer">
             <option value="">Semua Jenjang</option>
             <option value="SMP IT">SMP IT</option>
             <option value="SMA IT">SMA IT</option>
             <option value="Takhassus">Takhassus</option>
           </select>
-          <select id="filter-gender" onchange="renderRegistrations()" class="px-3 py-2 rounded-xl border border-zinc-300 bg-white font-semibold">
+          <select id="filter-gender" onchange="renderRegistrations()" class="px-3.5 py-2.5 rounded-xl border border-zinc-200 bg-white font-semibold text-zinc-700 focus:outline-none focus:border-forest-800 cursor-pointer">
             <option value="">Putra &amp; Putri</option>
             <option value="Putra">Putra</option>
             <option value="Putri">Putri</option>
           </select>
-          <select id="filter-status" onchange="renderRegistrations()" class="px-3 py-2 rounded-xl border border-zinc-300 bg-white font-semibold">
+          <select id="filter-status" onchange="renderRegistrations()" class="px-3.5 py-2.5 rounded-xl border border-zinc-200 bg-white font-semibold text-zinc-700 focus:outline-none focus:border-forest-800 cursor-pointer">
             <option value="">Semua Status</option>
             <option value="Baru">Baru</option>
             <option value="Diverifikasi">Diverifikasi</option>
@@ -216,6 +225,15 @@
             <option value="Diterima">Diterima</option>
             <option value="Cadangan">Cadangan</option>
           </select>
+          <button
+            type="button"
+            onclick="resetFilters()"
+            title="Reset Filter"
+            class="px-3 py-2.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-600 hover:text-zinc-900 font-bold transition flex items-center gap-1 cursor-pointer shrink-0"
+          >
+            <span class="material-symbols-rounded text-[18px]">restart_alt</span>
+            <span class="hidden sm:inline">Reset</span>
+          </button>
         </div>
       </div>
 
@@ -649,12 +667,20 @@
 
       var btns = document.querySelectorAll('.ppdb-tab-btn');
       for (var j = 0; j < btns.length; j++) {
-        btns[j].className = 'ppdb-tab-btn text-zinc-600 hover:bg-zinc-100 font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer';
+        btns[j].className = 'ppdb-tab-btn whitespace-nowrap text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer shrink-0';
       }
       var activeBtn = document.getElementById('btn-' + tabId);
       if (activeBtn) {
-        activeBtn.className = 'ppdb-tab-btn bg-forest-900 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer';
+        activeBtn.className = 'ppdb-tab-btn whitespace-nowrap bg-forest-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition cursor-pointer shrink-0 shadow-xs';
       }
+    }
+
+    function resetFilters() {
+      document.getElementById('filter-search').value = '';
+      document.getElementById('filter-level').value = '';
+      document.getElementById('filter-gender').value = '';
+      document.getElementById('filter-status').value = '';
+      renderRegistrations();
     }
 
     async function loadPpdbData() {
