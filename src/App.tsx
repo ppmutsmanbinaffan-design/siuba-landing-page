@@ -223,7 +223,17 @@ export function App() {
       if (saved !== null) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          // Merge with INITIAL_USERS to ensure any newly added default accounts (such as panitia.psb) are always present
+          const merged = [...parsed];
+          for (const iu of INITIAL_USERS) {
+            const idx = merged.findIndex((u) => u.username === iu.username || u.id === iu.id);
+            if (idx === -1) {
+              merged.push(iu);
+            } else if (iu.roles && (!merged[idx].roles || merged[idx].roles.length === 0)) {
+              merged[idx] = { ...merged[idx], roles: iu.roles };
+            }
+          }
+          return merged;
         }
       }
     } catch {
@@ -231,6 +241,32 @@ export function App() {
     }
     return INITIAL_USERS;
   });
+
+  // Sync users list from backend database on startup
+  useEffect(() => {
+    fetch('/api/v1/users', {
+      headers: { 'Accept': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.users) && data.users.length > 0) {
+          setUsers((prev) => {
+            const next = data.users.map((dbUser: User) => {
+              const localMatch = prev.find((p) => p.id === dbUser.id || p.username === dbUser.username);
+              return {
+                ...dbUser,
+                password: localMatch?.password || 'password',
+              };
+            });
+            try {
+              localStorage.setItem('siuba_custom_users_v1', JSON.stringify(stripPasswordsForStorage(next)));
+            } catch {}
+            return next;
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [students, setStudents] = useState<Student[]>(() => loadPersistentCollection('siuba_master_students', INITIAL_STUDENTS));
   const [classrooms, setClassrooms] = useState<Classroom[]>(() => loadPersistentCollection('siuba_master_classrooms', INITIAL_CLASSROOMS));
@@ -612,6 +648,14 @@ export function App() {
       }
       return next;
     });
+
+    fetch(`/api/v1/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${authService.getState().token || ''}`,
+      },
+    }).catch(() => {});
   };
 
   const handleUpdateRolePermissions = (roleName: string, permissions: string[]) => {

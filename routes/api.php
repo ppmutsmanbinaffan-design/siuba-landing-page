@@ -39,6 +39,9 @@ Route::prefix('v1')->group(function () {
         });
     });
 
+    // Public / Protected User List for System Shell
+    Route::get('/users', [AuthApiController::class, 'listUsers']);
+
     // =========================================================================
     // PROTECTED OPERATIONAL API GROUP (Requires valid Sanctum Bearer Token)
     // =========================================================================
@@ -51,6 +54,8 @@ Route::prefix('v1')->group(function () {
             ->middleware('permission:users.update');
         Route::post('/users', [AuthApiController::class, 'createUser'])
             ->middleware('permission:users.create');
+        Route::delete('/users/{id}', [AuthApiController::class, 'deleteUser'])
+            ->middleware('permission:users.delete');
         Route::match(['post', 'put'], '/users/{id}/roles', [AuthApiController::class, 'assignRoles']);
         Route::get('/roles', [AuthApiController::class, 'listRoles']);
 

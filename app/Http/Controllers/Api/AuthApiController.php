@@ -449,4 +449,49 @@ class AuthApiController extends Controller
             'roles' => $roles
         ], 200);
     }
+
+    /**
+     * List all users with their assigned roles and permissions.
+     */
+    public function listUsers(): JsonResponse
+    {
+        $users = User::orderBy('id', 'asc')->get()->map(function ($u) {
+            $roles = $u->getRoleNames();
+            $permissions = $u->getAllPermissions()->pluck('name');
+            return [
+                'id' => $u->id,
+                'name' => $u->name,
+                'username' => $u->username,
+                'email' => $u->email,
+                'role' => $roles->first() ?? 'user',
+                'roles' => $roles->toArray(),
+                'permissions' => $permissions->toArray(),
+                'is_active' => (bool) $u->is_active,
+                'last_login_at' => $u->last_login_at ? $u->last_login_at->format('Y-m-d H:i:s') : null,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'users' => $users
+        ], 200);
+    }
+
+    /**
+     * Delete user from system.
+     */
+    public function deleteUser(Request $request, $id): JsonResponse
+    {
+        $targetUser = User::find((int) $id);
+        if (!$targetUser) {
+            return response()->json(['success' => false, 'message' => 'Pengguna tidak ditemukan.'], 404);
+        }
+
+        if ($targetUser->id === 1 || $targetUser->username === 'superadmin') {
+            return response()->json(['success' => false, 'message' => 'Akun Super Admin Master tidak dapat dihapus.'], 403);
+        }
+
+        $targetUser->delete();
+        return response()->json(['success' => true, 'message' => "Pengguna @{$targetUser->username} berhasil dihapus."]);
+    }
 }
