@@ -26,15 +26,25 @@ class IotDeviceApiController extends Controller
             return response()->json([
                 'success' => false,
                 'code' => 'UID_REQUIRED',
-                'message' => 'Parameter rfid_uid wajib dikirimkan oleh ESP32.',
+                'message' => 'Parameter rfid_uid / uid wajib dikirimkan oleh perangkat.',
             ], 400);
+        }
+
+        // Verifikasi opsional Global API Key (Nexabsen V.4)
+        $apiKey = $request->header('X-GLOBAL-KEY') ?? $request->header('x-global-key');
+        $configuredKey = env('NEXABSEN_GLOBAL_KEY');
+        if (!empty($configuredKey) && $apiKey !== $configuredKey) {
+            return response()->json([
+                'success' => false,
+                'message' => 'API Key Salah!',
+            ], 401);
         }
 
         $normalizedUid = Student::normalizeRfidUid((string) $rawUid);
 
-        // 1. Catat atau Perbarui Perangkat Terminal ESP32
-        $deviceCode = (string) ($request->input('device_code') ?? 'ESP32-RFID-01');
-        $deviceName = (string) ($request->input('device_name') ?? 'ESP32 RFID Reader Terminal');
+        // 1. Catat atau Perbarui Perangkat Terminal ESP32 / Nexabsen
+        $deviceCode = (string) ($request->input('device_code') ?? $request->input('device_id') ?? 'NEXABSEN-01');
+        $deviceName = (string) ($request->input('device_name') ?? 'Nexabsen RFID Terminal');
         $deviceLocation = (string) ($request->input('location') ?? 'Gerbang / Pintu Masuk');
 
         $device = AttendanceDevice::firstOrCreate(
@@ -59,7 +69,8 @@ class IotDeviceApiController extends Controller
             return response()->json([
                 'success' => false,
                 'code' => 'CARD_NOT_REGISTERED',
-                'message' => "Kartu RFID dengan UID [{$normalizedUid}] belum didaftarkan ke santri manapun di database SIUBA.",
+                'message' => 'Kartu Ditolak!',
+                'data' => null,
                 'rfid_uid' => $normalizedUid,
                 'device' => $deviceCode,
                 'timestamp' => now()->format('Y-m-d H:i:s'),
@@ -99,7 +110,10 @@ class IotDeviceApiController extends Controller
             return response()->json([
                 'success' => false,
                 'code' => 'NO_ACTIVE_SESSION',
-                'message' => 'Tidak ada sesi presensi yang sedang aktif/terbuka untuk hari ini. Silakan buka sesi di menu Presensi SIUBA terlebih dahulu.',
+                'message' => 'Tidak ada sesi presensi aktif.',
+                'data' => [
+                    'name' => $student->name,
+                ],
                 'student' => [
                     'id' => $student->id,
                     'name' => $student->name,
@@ -124,7 +138,10 @@ class IotDeviceApiController extends Controller
             return response()->json([
                 'success' => true,
                 'code' => 'ALREADY_RECORDED',
-                'message' => "Santri {$student->name} sudah tercatat presensi sebelumnya ({$statusLabel}).",
+                'message' => 'Sudah Absen',
+                'data' => [
+                    'name' => $student->name,
+                ],
                 'student' => [
                     'id' => $student->id,
                     'name' => $student->name,
@@ -143,13 +160,16 @@ class IotDeviceApiController extends Controller
             ]);
         }
 
+        // Waktu tap nyata (mendukung Timestamp Recovery mode offline Nexabsen)
+        $checkInTime = $request->filled('tapped_at') ? Carbon::parse($request->input('tapped_at')) : now();
+
         // 5. Hitung Status Hadir / Terlambat
         $status = 'present';
         $lateMinutes = 0;
 
-        if ($session->present_until && now()->gt($session->present_until)) {
+        if ($session->present_until && $checkInTime->gt($session->present_until)) {
             $status = 'late';
-            $lateMinutes = (int) now()->diffInMinutes($session->present_until);
+            $lateMinutes = (int) $checkInTime->diffInMinutes($session->present_until);
         }
 
         // 6. Simpan Rekam Presensi
@@ -158,10 +178,10 @@ class IotDeviceApiController extends Controller
             'student_id' => $student->id,
             'status' => $status,
             'method' => 'rfid',
-            'check_in_at' => now(),
+            'check_in_at' => $checkInTime,
             'late_minutes' => $lateMinutes,
             'attendance_device_id' => $device->id,
-            'notes' => 'Tap via ESP32 Hardware [' . $deviceCode . ']',
+            'notes' => 'Tap via Hardware [' . $deviceCode . ']',
         ]);
 
         $statusText = $status === 'late' ? "Terlambat ({$lateMinutes} mnt)" : 'Hadir Tepat Waktu';
@@ -169,7 +189,10 @@ class IotDeviceApiController extends Controller
         return response()->json([
             'success' => true,
             'code' => 'SUCCESS',
-            'message' => "Alhamdulillah, Presensi Berhasil: {$student->name} ({$statusText})",
+            'message' => 'Absen Sukses',
+            'data' => [
+                'name' => $student->name,
+            ],
             'student' => [
                 'id' => $student->id,
                 'name' => $student->name,
@@ -185,7 +208,7 @@ class IotDeviceApiController extends Controller
             'status' => $status,
             'status_label' => $statusText,
             'late_minutes' => $lateMinutes,
-            'check_in_at' => now()->format('H:i:s') . ' WIB',
+            'check_in_at' => $checkInTime->format('H:i:s') . ' WIB',
             'device' => $deviceCode,
         ]);
     }

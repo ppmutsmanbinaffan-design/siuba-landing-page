@@ -188,9 +188,12 @@ Route::prefix('v1')->group(function () {
         Route::delete('/ppdb/registrations/{id}', [LandingCmsApiController::class, 'deletePpdbRegistration']);
     });
 
-    // IoT Hardware Bridge (ESP32 RFID Reader & Smart Card Terminal)
+    // IoT Hardware Bridge (ESP32 RFID Reader, Nexabsen V.4 & Smart Card Terminal)
+    Route::match(['get', 'post'], '/tap.php', [IotDeviceApiController::class, 'handleRfidTap']);
     Route::prefix('iot')->group(function () {
-        Route::post('/rfid-tap', [IotDeviceApiController::class, 'handleRfidTap']);
+        Route::match(['get', 'post'], '/rfid-tap', [IotDeviceApiController::class, 'handleRfidTap']);
+        Route::match(['get', 'post'], '/tap.php', [IotDeviceApiController::class, 'handleRfidTap']);
+        Route::match(['get', 'post'], '/nexabsen', [IotDeviceApiController::class, 'handleRfidTap']);
         Route::match(['get', 'post'], '/ping', [IotDeviceApiController::class, 'ping']);
         Route::get('/active-sessions', [IotDeviceApiController::class, 'getActiveSessions']);
     });

@@ -20,6 +20,10 @@ $serveLanding = function () {
     return redirect('/login');
 };
 
+// Nexabsen V.4 & IoT Terminal Endpoint Fallbacks
+Route::match(['get', 'post'], '/tap.php', [\App\Http\Controllers\Api\IotDeviceApiController::class, 'handleRfidTap']);
+Route::match(['get', 'post'], '/api/tap.php', [\App\Http\Controllers\Api\IotDeviceApiController::class, 'handleRfidTap']);
+
 Route::get('/', $serveLanding);
 Route::get('/beranda', $serveLanding);
 Route::get('/landing', $serveLanding);
