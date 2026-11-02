@@ -13,13 +13,30 @@
     <meta property="og:description" content="Sistem Informasi Utsman Bin Affan (SIUBA v1.1.4 STABLE) — Pusat Absensi Terpadu Santri & SDM Pesantren" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <script type="module" crossorigin src="/assets/index-BHIHvDt8.js"></script>
+    <script type="module" crossorigin src="/assets/index-BHIHvDt8.js?v=20261102-11users"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-B4DQaMfC.css">
   </head>
   <body>
     <div id="root"></div>
     <script>
       (function () {
+        // Otomatis sinkronisasi akun baru dan bersihkan cache lama jika akun panitia.psb belum ada
+        try {
+          var cu = localStorage.getItem('siuba_custom_users_v1');
+          if (cu && cu.indexOf('panitia.psb') === -1) {
+            localStorage.removeItem('siuba_custom_users_v1');
+          }
+          if ('caches' in window) {
+            caches.keys().then(function(names) {
+              names.forEach(function(name) {
+                if (name.indexOf('v1.14') === -1 && name.startsWith('siuba-static-')) {
+                  caches.delete(name);
+                }
+              });
+            });
+          }
+        } catch (e) {}
+
         if ((window.location.pathname === '/' || window.location.pathname === '') && window.location.search.indexOf('app=1') === -1) {
           window.location.replace('/beranda');
           return;
