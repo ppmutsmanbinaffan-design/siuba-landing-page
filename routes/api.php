@@ -162,18 +162,24 @@ Route::prefix('v1')->group(function () {
         Route::post('/reset', [MaintenanceApiController::class, 'reset']);
     });
 
-    // Landing Page CMS & PPDB Management Endpoints
+    // Landing Page CMS & PSB / PPDB Management Endpoints
     Route::prefix('cms')->group(function () {
         Route::get('/landing', [LandingCmsApiController::class, 'getPublicData']);
         Route::post('/profile', [LandingCmsApiController::class, 'updateProfile']);
+        Route::post('/psb', [LandingCmsApiController::class, 'updatePpdb']);
         Route::post('/ppdb', [LandingCmsApiController::class, 'updatePpdb']);
         Route::post('/news', [LandingCmsApiController::class, 'storeNews']);
         Route::put('/news/{id}', [LandingCmsApiController::class, 'updateNews']);
         Route::delete('/news/{id}', [LandingCmsApiController::class, 'deleteNews']);
+        Route::post('/psb/register', [LandingCmsApiController::class, 'submitPpdbRegistration']);
         Route::post('/ppdb/register', [LandingCmsApiController::class, 'submitPpdbRegistration']);
+        Route::get('/psb/check', [LandingCmsApiController::class, 'checkPpdbStatus']);
         Route::get('/ppdb/check', [LandingCmsApiController::class, 'checkPpdbStatus']);
+        Route::match(['put', 'patch'], '/psb/registrations/{id}', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
         Route::match(['put', 'patch'], '/ppdb/registrations/{id}', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
+        Route::match(['put', 'patch'], '/psb/registrations/{id}/status', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
         Route::match(['put', 'patch'], '/ppdb/registrations/{id}/status', [LandingCmsApiController::class, 'updatePpdbRegistrationStatus']);
+        Route::delete('/psb/registrations/{id}', [LandingCmsApiController::class, 'deletePpdbRegistration']);
         Route::delete('/ppdb/registrations/{id}', [LandingCmsApiController::class, 'deletePpdbRegistration']);
     });
 

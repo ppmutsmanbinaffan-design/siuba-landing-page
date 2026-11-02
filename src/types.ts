@@ -59,6 +59,7 @@ export type UserRole =
   | 'operator' 
   | 'kesantrian' 
   | 'academic' 
+  | 'panitia-psb' 
   | 'panitia-ppdb' 
   | string;
 

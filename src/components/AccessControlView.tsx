@@ -137,13 +137,13 @@ export const PERMISSION_GROUPS: PermissionGroup[] = [
   },
   {
     id: 'ppdb_admissions',
-    name: '🎓 Penerimaan Santri Baru (PPDB)',
+    name: '🎓 Penerimaan Santri Baru (PSB)',
     icon: 'GraduationCap',
     permissions: [
-      { code: 'ppdb.view', name: 'Lihat Data & Statistik PPDB', description: 'Melihat dashboard PPDB, daftar calon santri pendaftar, dan filter berkas' },
-      { code: 'ppdb.manage', name: 'Kelola Pengaturan & Gelombang PPDB', description: 'Mengatur gelombang pendaftaran, rincian biaya masuk, dan beasiswa' },
-      { code: 'ppdb.verify', name: 'Verifikasi Berkas & Nilai Tes', description: 'Memvalidasi berkas, mengisi nilai tes Al-Qur\'an & akademik, serta menentukan kelulusan' },
-      { code: 'ppdb.export', name: 'Export Data Calon Santri', description: 'Mengunduh rekapitulasi data pendaftar PPDB ke format CSV/Excel' },
+      { code: 'psb.view', name: 'Lihat Data & Statistik PSB', description: 'Melihat dashboard PSB, daftar calon santri pendaftar, dan filter berkas' },
+      { code: 'psb.manage', name: 'Kelola Pengaturan & Gelombang PSB', description: 'Mengatur gelombang pendaftaran, rincian biaya masuk, dan beasiswa' },
+      { code: 'psb.verify', name: 'Verifikasi Berkas & Nilai Tes', description: 'Memvalidasi berkas, mengisi nilai tes Al-Qur\'an & akademik, serta menentukan kelulusan' },
+      { code: 'psb.export', name: 'Export Data Calon Santri', description: 'Mengunduh rekapitulasi data pendaftar PSB ke format CSV/Excel' },
     ],
   },
   {
@@ -278,12 +278,25 @@ export const ROLE_CONFIGS: RoleConfig[] = [
     ],
   },
   {
-    name: 'panitia-ppdb',
-    label: 'Panitia PPDB',
-    desc: 'Panitia Penerimaan Santri Baru: verifikasi berkas formulir pendaftaran, penilaian tes Al-Qur\'an, kelulusan, dan rekap calon santri.',
+    name: 'panitia-psb',
+    label: 'Panitia PSB',
+    desc: 'Panitia Penerimaan Santri Baru (PSB): verifikasi berkas formulir pendaftaran, penilaian tes Al-Qur\'an, kelulusan, dan rekap calon santri.',
     badgeColor: 'bg-lime-100 text-lime-950 border-lime-300',
     defaultPermissions: [
       'dashboard.view', 'students.view',
+      'psb.view', 'psb.manage', 'psb.verify', 'psb.export',
+      'ppdb.view', 'ppdb.manage', 'ppdb.verify', 'ppdb.export',
+      'system.settings'
+    ],
+  },
+  {
+    name: 'panitia-ppdb',
+    label: 'Panitia PSB (PPDB)',
+    desc: 'Panitia Penerimaan Santri Baru (PSB): verifikasi berkas formulir pendaftaran, penilaian tes Al-Qur\'an, kelulusan, dan rekap calon santri.',
+    badgeColor: 'bg-lime-100 text-lime-950 border-lime-300',
+    defaultPermissions: [
+      'dashboard.view', 'students.view',
+      'psb.view', 'psb.manage', 'psb.verify', 'psb.export',
       'ppdb.view', 'ppdb.manage', 'ppdb.verify', 'ppdb.export',
       'system.settings'
     ],
@@ -996,7 +1009,7 @@ export const AccessControlView: React.FC<Props> = ({
                                     key={rName}
                                     className={`px-2.5 py-1 rounded-xl text-[10px] font-black border uppercase tracking-wider inline-flex items-center gap-1 shadow-2xs ${rc.badgeColor}`}
                                   >
-                                    {rName === 'panitia-ppdb' && (
+                                    {(rName === 'panitia-psb' || rName === 'panitia-ppdb') && (
                                       <span className="w-1.5 h-1.5 rounded-full bg-lime-600 animate-pulse"></span>
                                     )}
                                     <span>{rc.label}</span>
@@ -1466,8 +1479,8 @@ export const AccessControlView: React.FC<Props> = ({
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5 flex-wrap">
                             <span className="truncate">{rc.label}</span>
-                            {rc.name === 'panitia-ppdb' && (
-                              <span className="px-1.5 py-0.2 rounded text-[9px] bg-lime-400/40 text-lime-900 font-extrabold border border-lime-500/30">PPDB</span>
+                            {(rc.name === 'panitia-psb' || rc.name === 'panitia-ppdb') && (
+                              <span className="px-1.5 py-0.2 rounded text-[9px] bg-lime-400/40 text-lime-900 font-extrabold border border-lime-500/30">PSB</span>
                             )}
                           </div>
                           <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5 font-normal">{rc.desc}</p>
@@ -1477,7 +1490,7 @@ export const AccessControlView: React.FC<Props> = ({
                   })}
                 </div>
                 <p className="text-[11px] text-slate-500 mt-1">
-                  💡 <em>1 pengguna dapat memegang beberapa role sekaligus (misal: Dewan Guru + Panitia PPDB). Hak akses dari seluruh role yang dipilih akan otomatis digabungkan.</em>
+                  💡 <em>1 pengguna dapat memegang beberapa role sekaligus (misal: Dewan Guru + Panitia PSB). Hak akses dari seluruh role yang dipilih akan otomatis digabungkan.</em>
                 </p>
               </div>
 
@@ -1659,8 +1672,8 @@ export const AccessControlView: React.FC<Props> = ({
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5 flex-wrap">
                             <span className="truncate">{rc.label}</span>
-                            {rc.name === 'panitia-ppdb' && (
-                              <span className="px-1.5 py-0.2 rounded text-[9px] bg-lime-400/40 text-lime-900 font-extrabold border border-lime-500/30">PPDB</span>
+                            {(rc.name === 'panitia-psb' || rc.name === 'panitia-ppdb') && (
+                              <span className="px-1.5 py-0.2 rounded text-[9px] bg-lime-400/40 text-lime-900 font-extrabold border border-lime-500/30">PSB</span>
                             )}
                           </div>
                           <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5 font-normal">{rc.desc}</p>

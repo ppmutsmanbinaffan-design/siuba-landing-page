@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pusat Manajemen PPDB Santri Baru — SIUBA Backend</title>
+  <title>Pusat Manajemen PSB Santri Baru — SIUBA Backend</title>
 
   <!-- Google Fonts: Urbanist -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,17 +48,17 @@
         </a>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-base sm:text-lg font-extrabold tracking-tight">Pusat Manajemen PPDB Santri Baru</h1>
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight">Pusat Manajemen PSB Santri Baru</h1>
             <span id="header-academic-year" class="text-[11px] font-extrabold bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">2026 / 2027</span>
           </div>
-          <p class="text-xs text-emerald-200/80">Sistem Seleksi, Verifikasi Berkas, Penilaian Tes Al-Qur&rsquo;an, Biaya, Beasiswa &amp; Pengumuman PPDB</p>
+          <p class="text-xs text-emerald-200/80">Sistem Seleksi, Verifikasi Berkas, Penilaian Tes Al-Qur&rsquo;an, Biaya, Beasiswa &amp; Pengumuman PSB</p>
         </div>
       </div>
 
       <div class="flex flex-wrap items-center gap-2">
-        <a href="/ppdb" target="_blank" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
+        <a href="/psb" target="_blank" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
           <span class="material-symbols-rounded text-[16px] text-limeaccent-400">open_in_new</span>
-          <span>Lihat Portal Publik PPDB</span>
+          <span>Lihat Portal Publik PSB</span>
         </a>
         <a href="/cms-landing" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
           <span class="material-symbols-rounded text-[16px] text-amber-300">edit_note</span>
@@ -259,13 +259,13 @@
     <section id="tab-settings" class="ppdb-tab-panel hidden bg-white rounded-3xl border border-zinc-200/80 p-5 sm:p-8 shadow-xs space-y-6">
       <div class="border-b border-zinc-100 pb-4">
         <h2 class="text-lg font-extrabold text-forest-950">Pengaturan Gelombang, Jadwal Seleksi &amp; Kuota Jenjang</h2>
-        <p class="text-xs text-zinc-500">Data jadwal gelombang dan kuota ini otomatis tampil di Landing Page dan Portal Publik PPDB (`/ppdb`).</p>
+        <p class="text-xs text-zinc-500">Data jadwal gelombang dan kuota ini otomatis tampil di Landing Page dan Portal Publik PSB (`/ppdb`).</p>
       </div>
 
       <form onsubmit="savePpdbSettings(event)" class="space-y-6 text-xs sm:text-sm">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label class="font-bold text-zinc-800 block mb-1">Tahun Ajaran PPDB</label>
+            <label class="font-bold text-zinc-800 block mb-1">Tahun Ajaran PSB</label>
             <input type="text" id="ppdb_academic_year" required class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
           </div>
           <div>
@@ -287,7 +287,7 @@
         <div class="space-y-4 pt-4 border-t border-zinc-100">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-zinc-100">
             <div>
-              <span class="font-extrabold text-forest-900 uppercase text-xs block">Rincian Periode Gelombang PPDB, Waktu Buka-Tutup &amp; Jadwal Ujian</span>
+              <span class="font-extrabold text-forest-900 uppercase text-xs block">Rincian Periode Gelombang PSB, Waktu Buka-Tutup &amp; Jadwal Ujian</span>
               <p class="text-xs text-zinc-500 mt-0.5">Tentukan berapa gelombang yang dibuka, kapan pendaftaran dibuka &amp; ditutup, serta jadwal ujian seleksi santri.</p>
             </div>
             <button
@@ -364,7 +364,7 @@
         <div class="pt-4 flex justify-end">
           <button type="submit" class="bg-forest-900 hover:bg-forest-800 text-white font-extrabold px-6 py-3 rounded-xl flex items-center gap-2 shadow-md cursor-pointer transition">
             <span class="material-symbols-rounded text-[18px] text-limeaccent-400">save</span>
-            <span>Simpan Jadwal &amp; Kuota PPDB</span>
+            <span>Simpan Jadwal &amp; Kuota PSB</span>
           </button>
         </div>
       </form>
@@ -419,7 +419,7 @@
         <div class="space-y-4 pt-6 border-t border-zinc-100">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-zinc-100">
             <div>
-              <span class="font-extrabold text-forest-900 uppercase text-xs block">B. Program &amp; Ketentuan Beasiswa PPDB</span>
+              <span class="font-extrabold text-forest-900 uppercase text-xs block">B. Program &amp; Ketentuan Beasiswa PSB</span>
               <p class="text-xs text-zinc-500 mt-0.5">Tentukan sendiri jenis beasiswa, kriteria santri, dan rincian potongan biaya/fasilitas yang diberikan.</p>
             </div>
             <button
@@ -467,7 +467,7 @@
         <!-- Kontak Panitia & Rekening -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-zinc-100">
           <div>
-            <label class="font-bold text-zinc-700 block mb-1">Nomor WhatsApp Panitia PPDB</label>
+            <label class="font-bold text-zinc-700 block mb-1">Nomor WhatsApp Panitia PSB</label>
             <input type="text" id="ppdb_whatsapp_contact" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
           </div>
           <div>
@@ -475,7 +475,7 @@
             <input type="text" id="ppdb_admin_contact_name" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
           </div>
           <div>
-            <label class="font-bold text-zinc-700 block mb-1">Rekening Resmi Pembayaran PPDB</label>
+            <label class="font-bold text-zinc-700 block mb-1">Rekening Resmi Pembayaran PSB</label>
             <input type="text" id="ppdb_bank_account" class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300" />
           </div>
           <div>
@@ -536,7 +536,7 @@
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-zinc-200 space-y-5 my-8">
       <div class="flex items-start justify-between gap-4 border-b border-zinc-100 pb-3">
         <div>
-          <span id="modal-reg-badge" class="text-[11px] font-extrabold uppercase bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">PPDB-2026</span>
+          <span id="modal-reg-badge" class="text-[11px] font-extrabold uppercase bg-limeaccent-400 text-forest-950 px-2.5 py-0.5 rounded-full">PSB-2026</span>
           <h3 id="modal-reg-title" class="text-lg font-extrabold text-forest-950 mt-1">Formulir Data &amp; Penilaian Seleksi Calon Santri</h3>
         </div>
         <button type="button" onclick="closeRegModal()" class="w-8 h-8 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center cursor-pointer">
@@ -705,7 +705,7 @@
           renderAcceptedTable();
         }
       } catch (e) {
-        console.error('Failed to load PPDB data:', e);
+        console.error('Failed to load PSB data:', e);
       }
     }
 
@@ -1234,20 +1234,20 @@
 
       tbody.innerHTML = '';
       if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="py-10 text-center text-zinc-400">Belum ada data pendaftar PPDB yang sesuai filter.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="py-10 text-center text-zinc-400">Belum ada data pendaftar PSB yang sesuai filter.</td></tr>';
         return;
       }
 
       filtered.forEach(function (r) {
         var waClean = String(r.whatsapp || '').replace(/[^0-9]/g, '');
         if (waClean.indexOf('0') === 0) waClean = '62' + waClean.substring(1);
-        var waMsg = encodeURIComponent('Assalamu\'alaikum Bapak/Ibu ' + (r.parent_name || '') + ', kami dari Panitia PPDB Ponpes Utsman Bin Affan mengonfirmasi pendaftaran ananda ' + r.student_name + ' (No. Reg: ' + (r.reg_number || '-') + ', Jenjang: ' + r.level + '). Status saat ini: ' + (r.status || 'Baru') + '.');
+        var waMsg = encodeURIComponent('Assalamu\'alaikum Bapak/Ibu ' + (r.parent_name || '') + ', kami dari Panitia PSB Ponpes Utsman Bin Affan mengonfirmasi pendaftaran ananda ' + r.student_name + ' (No. Reg: ' + (r.reg_number || '-') + ', Jenjang: ' + r.level + '). Status saat ini: ' + (r.status || 'Baru') + '.');
 
         var tr = document.createElement('tr');
         tr.className = 'hover:bg-zinc-50/90 transition';
         tr.innerHTML =
           '<td class="py-3.5 px-3">' +
-            '<span class="text-[10px] font-extrabold text-forest-800 bg-limeaccent-400/30 px-2 py-0.5 rounded-md">' + (r.reg_number || ('PPDB-' + r.id)) + '</span>' +
+            '<span class="text-[10px] font-extrabold text-forest-800 bg-limeaccent-400/30 px-2 py-0.5 rounded-md">' + (r.reg_number || ('PSB-' + r.id)) + '</span>' +
             '<div class="font-extrabold text-forest-950 text-sm mt-1">' + r.student_name + '</div>' +
             '<div class="text-[11px] text-zinc-400">' + (r.gender || 'Putra') + (r.nisn ? ' • NISN: ' + r.nisn : '') + '</div>' +
           '</td>' +
@@ -1301,7 +1301,7 @@
       list.forEach(function (r) {
         var tr = document.createElement('tr');
         tr.innerHTML =
-          '<td class="py-3 px-3 font-extrabold text-forest-800">' + (r.reg_number || ('PPDB-' + r.id)) + '</td>' +
+          '<td class="py-3 px-3 font-extrabold text-forest-800">' + (r.reg_number || ('PSB-' + r.id)) + '</td>' +
           '<td class="py-3 px-3 font-extrabold text-forest-950">' + r.student_name + '</td>' +
           '<td class="py-3 px-3">' + (r.gender || 'Putra') + '</td>' +
           '<td class="py-3 px-3 font-bold">' + r.level + ' (' + r.track + ')</td>' +
@@ -1325,7 +1325,7 @@
       var r = allRegistrations.find(function (item) { return Number(item.id) === Number(id); });
       if (!r) return;
       document.getElementById('d_id').value = r.id;
-      document.getElementById('modal-reg-badge').textContent = r.reg_number || ('PPDB #' + r.id);
+      document.getElementById('modal-reg-badge').textContent = r.reg_number || ('PSB #' + r.id);
       document.getElementById('modal-reg-title').textContent = 'Detail & Penilaian Seleksi: ' + r.student_name;
       document.getElementById('d_student_name').value = r.student_name || '';
       document.getElementById('d_nisn').value = r.nisn || '';
@@ -1400,7 +1400,7 @@
     }
 
     async function deleteRegistration(id) {
-      if (!confirm('Hapus data pendaftar PPDB ini?')) return;
+      if (!confirm('Hapus data pendaftar PSB ini?')) return;
       var res = await fetch('/api/v1/cms/ppdb/registrations/' + id, {
         method: 'DELETE',
         headers: { 'Accept': 'application/json' }
@@ -1430,7 +1430,7 @@
       var csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(',')].concat(rows).join('\n');
       var link = document.createElement('a');
       link.setAttribute('href', encodeURI(csvContent));
-      link.setAttribute('download', 'Data-PPDB-SIUBA.csv');
+      link.setAttribute('download', 'Data-PSB-SIUBA.csv');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

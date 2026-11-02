@@ -35,10 +35,13 @@ Route::get('/cms-landing', function () {
     return redirect('/dashboard');
 });
 
-$servePpdbAdmin = function () {
-    $ppdbPath = public_path('manajemen-ppdb.html');
-    if (File::exists($ppdbPath)) {
-        return response()->file($ppdbPath, [
+$servePsbAdmin = function () {
+    $psbPath = public_path('manajemen-psb.html');
+    if (!File::exists($psbPath)) {
+        $psbPath = public_path('manajemen-ppdb.html');
+    }
+    if (File::exists($psbPath)) {
+        return response()->file($psbPath, [
             'Content-Type' => 'text/html; charset=UTF-8',
             'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
         ]);
@@ -46,19 +49,27 @@ $servePpdbAdmin = function () {
     return redirect('/dashboard');
 };
 
-Route::get('/manajemen-ppdb', $servePpdbAdmin);
-Route::get('/ppdb-admin', $servePpdbAdmin);
+Route::get('/manajemen-psb', $servePsbAdmin);
+Route::get('/psb-admin', $servePsbAdmin);
+Route::get('/manajemen-ppdb', $servePsbAdmin);
+Route::get('/ppdb-admin', $servePsbAdmin);
 
-Route::get('/ppdb', function () {
-    $ppdbPublicPath = public_path('ppdb.html');
-    if (File::exists($ppdbPublicPath)) {
-        return response()->file($ppdbPublicPath, [
+$servePsbPublic = function () {
+    $psbPublicPath = public_path('psb.html');
+    if (!File::exists($psbPublicPath)) {
+        $psbPublicPath = public_path('ppdb.html');
+    }
+    if (File::exists($psbPublicPath)) {
+        return response()->file($psbPublicPath, [
             'Content-Type' => 'text/html; charset=UTF-8',
             'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
         ]);
     }
-    return redirect('/beranda#ppdb');
-});
+    return redirect('/beranda#psb');
+};
+
+Route::get('/psb', $servePsbPublic);
+Route::get('/ppdb', $servePsbPublic);
 
 Route::get('/{any}', function () {
     $indexPath = public_path('app.html');

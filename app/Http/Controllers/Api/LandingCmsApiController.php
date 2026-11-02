@@ -359,11 +359,11 @@ class LandingCmsApiController extends Controller
                 ],
             ],
             // Syarat & Materi Tes
-            'requirements_list' => "1. Mengisi formulir pendaftaran PPDB Online atau Offline di Sekretariat.\n2. Fotokopi Akta Kelahiran & Kartu Keluarga (masing-masing 2 lembar).\n3. Fotokopi Rapor 2 semester terakhir yang telah dilegalisir.\n4. Surat Keterangan Aktif Sekolah & Nomor Induk Siswa Nasional (NISN).\n5. Pas Foto berwarna ukuran 3x4 (4 lembar, putri berjilbab putih/gelap).\n6. Surat Keterangan Sehat dari Dokter/Puskesmas & bebas penyakit menular.",
+            'requirements_list' => "1. Mengisi formulir pendaftaran PSB Online atau Offline di Sekretariat.\n2. Fotokopi Akta Kelahiran & Kartu Keluarga (masing-masing 2 lembar).\n3. Fotokopi Rapor 2 semester terakhir yang telah dilegalisir.\n4. Surat Keterangan Aktif Sekolah & Nomor Induk Siswa Nasional (NISN).\n5. Pas Foto berwarna ukuran 3x4 (4 lembar, putri berjilbab putih/gelap).\n6. Surat Keterangan Sehat dari Dokter/Puskesmas & bebas penyakit menular.",
             'selection_materials' => "1. Tes Membaca & Menghafal Al-Qur'an (Tajwid, kelancaran bacaan, dan tes kecepatan menghafal 1 halaman baru).\n2. Tes Akademik Dasar (Matematika, IPA, Bahasa Indonesia, dan Pengetahuan Agama Islam Dasar).\n3. Tes Psikotes Kesiapan Berasrama & Kemandirian Calon Santri.\n4. Wawancara Komitmen Orang Tua / Wali Santri bersama Dewan Masyayikh.",
             // Kontak & Rekening Resmi
             'whatsapp_contact' => '0812-3456-7890',
-            'admin_contact_name' => 'Ustadz H. Ahmad Fauzi, S.Pd.I (Ketua Panitia PPDB)',
+            'admin_contact_name' => 'Ustadz H. Ahmad Fauzi, S.Pd.I (Ketua Panitia PSB)',
             'bank_account' => 'Bank Syariah Indonesia (BSI) — No. Rek: 7123-456-789 a.n. Yayasan Ponpes Utsman Bin Affan',
             'secretariat_hours' => 'Senin – Sabtu, Pukul 08.00 – 16.00 WIB (Gedung Pusat Lt. 1)',
         ];
@@ -669,7 +669,7 @@ class LandingCmsApiController extends Controller
         }
 
         $nextNum = DB::table('ppdb_registrations')->max('id') + 1;
-        $regNumber = sprintf('PPDB-2026-%04d', $nextNum);
+        $regNumber = sprintf('PSB-2026-%04d', $nextNum);
 
         $id = DB::table('ppdb_registrations')->insertGetId([
             'reg_number' => $regNumber,
@@ -692,11 +692,11 @@ class LandingCmsApiController extends Controller
             'updated_at' => now(),
         ]);
 
-        // Ambil Nomor WhatsApp & Nama Admin Panitia PPDB dari Pengaturan CMS
+        // Ambil Nomor WhatsApp & Nama Admin Panitia PSB dari Pengaturan CMS
         $ppdbSettingsRow = DB::table('landing_settings')->where('key', 'ppdb')->first();
         $ppdbSettings = $ppdbSettingsRow ? (json_decode($ppdbSettingsRow->value, true) ?? []) : self::defaultPpdb();
         $adminWa = $ppdbSettings['whatsapp_contact'] ?? '0812-3456-7890';
-        $adminName = $ppdbSettings['admin_contact_name'] ?? 'Panitia PPDB';
+        $adminName = $ppdbSettings['admin_contact_name'] ?? 'Panitia PSB';
 
         // Normalisasi format nomor WA panitia ke 628...
         $cleanAdminPhone = preg_replace('/[^0-9]/', '', (string) $adminWa);
@@ -709,7 +709,7 @@ class LandingCmsApiController extends Controller
         $nowDate = now()->translatedFormat('d F Y, H:i') . ' WIB';
 
         // Susun teks notifikasi WhatsApp resmi panitia
-        $waMessage = "📋 *NOTIFIKASI PENDAFTARAN SANTRI BARU (PPDB)*\n"
+        $waMessage = "📋 *NOTIFIKASI PENDAFTARAN SANTRI BARU (PSB)*\n"
             . "*Pondok Pesantren Modern Utsman Bin Affan*\n"
             . "──────────────────────────────\n"
             . "Bismillah, telah masuk pendaftaran calon santri baru via Web Portal:\n\n"
@@ -725,7 +725,7 @@ class LandingCmsApiController extends Controller
             . "📱 *WhatsApp Orang Tua:* " . ($whatsapp ?: '-') . "\n"
             . "📍 *Alamat:* " . ($address ?: '-') . "\n"
             . "⏰ *Waktu Mendaftar:* " . $nowDate . "\n\n"
-            . "Mohon Panitia PPDB memverifikasi data dan mengonfirmasi jadwal seleksi santri. Terima kasih.\n"
+            . "Mohon Panitia PSB memverifikasi data dan mengonfirmasi jadwal seleksi santri. Terima kasih.\n"
             . "_Sistem Informasi Terpadu SIUBA_";
 
         $adminWaUrl = 'https://wa.me/' . $cleanAdminPhone . '?text=' . urlencode($waMessage);
@@ -752,7 +752,7 @@ class LandingCmsApiController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Pendaftaran PPDB berhasil disimpan dengan Nomor Registrasi: ' . $regNumber,
+            'message' => 'Pendaftaran PSB berhasil disimpan dengan Nomor Registrasi: ' . $regNumber,
             'registration' => DB::table('ppdb_registrations')->find($id),
             'admin_phone' => $adminWa,
             'admin_name' => $adminName,
