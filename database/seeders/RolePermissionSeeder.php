@@ -98,6 +98,12 @@ class RolePermissionSeeder extends Seeder
             'devices.update',
             'devices.manage',
 
+            // Penerimaan Santri Baru (PPDB)
+            'ppdb.view',
+            'ppdb.manage',
+            'ppdb.verify',
+            'ppdb.export',
+
             // Users & Security
             'users.view',
             'users.create',
@@ -138,6 +144,7 @@ class RolePermissionSeeder extends Seeder
                 'events.view', 'events.manage',
                 'kbm.teacher_dashboard', 'kbm.monitoring', 'kbm.timetable', 'kbm.master', 'kbm.reports',
                 'devices.view', 'devices.create', 'devices.update', 'devices.manage',
+                'ppdb.view', 'ppdb.manage', 'ppdb.verify', 'ppdb.export',
                 'system.sync_center', 'system.settings', 'settings.manage',
             ],
 
@@ -274,6 +281,16 @@ class RolePermissionSeeder extends Seeder
                 'staff.view',
                 'kbm.teacher_dashboard', 'kbm.monitoring', 'kbm.timetable', 'kbm.master', 'kbm.reports',
                 'reports.view',
+                'system.settings',
+            ],
+
+            'panitia-ppdb' => [
+                'dashboard.view',
+                'students.view',
+                'ppdb.view',
+                'ppdb.manage',
+                'ppdb.verify',
+                'ppdb.export',
                 'system.settings',
             ],
         ];

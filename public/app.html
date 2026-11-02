@@ -50,8 +50,10 @@
             if (userStr) {
               var u = JSON.parse(userStr);
               var role = (u.role || '').toLowerCase();
-              var allowedRoles = ['super-admin', 'super_admin', 'admin', 'operator', 'pimpinan', 'kepala-sekolah'];
-              if (allowedRoles.indexOf(role) === -1) return;
+              var allowedRoles = ['super-admin', 'super_admin', 'admin', 'operator', 'pimpinan', 'kepala-sekolah', 'panitia-ppdb', 'panitia_ppdb'];
+              var userRoles = Array.isArray(u.roles) && u.roles.length > 0 ? u.roles.map(function(r){ return (r||'').toLowerCase(); }) : [role];
+              var canAccess = userRoles.some(function(r) { return allowedRoles.indexOf(r) !== -1; });
+              if (!canAccess) return;
             }
           } catch (e) {}
 

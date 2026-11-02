@@ -539,6 +539,7 @@ export function App() {
         name: newUser.name,
         email: newUser.email,
         role: newUser.role,
+        roles: newUser.roles || [newUser.role],
         password: plainPassword || newUser.password || 'password',
         is_active: newUser.is_active,
       }),

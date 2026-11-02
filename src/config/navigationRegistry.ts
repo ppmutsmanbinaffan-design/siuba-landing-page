@@ -94,6 +94,10 @@ export const ROLE_PERMISSIONS: Readonly<Record<string, readonly string[]>> = {
     'kbm.reports',
     'devices.view',
     'devices.manage',
+    'ppdb.view',
+    'ppdb.manage',
+    'ppdb.verify',
+    'ppdb.export',
     'users.view',
     'users.manage',
     'system.sync_center',
@@ -259,6 +263,24 @@ export const ROLE_PERMISSIONS: Readonly<Record<string, readonly string[]>> = {
     'kbm.master',
     'kbm.reports',
     'reports.view',
+    'system.settings',
+  ],
+  'panitia-ppdb': [
+    'dashboard.view',
+    'students.view',
+    'ppdb.view',
+    'ppdb.manage',
+    'ppdb.verify',
+    'ppdb.export',
+    'system.settings',
+  ],
+  panitia_ppdb: [
+    'dashboard.view',
+    'students.view',
+    'ppdb.view',
+    'ppdb.manage',
+    'ppdb.verify',
+    'ppdb.export',
     'system.settings',
   ],
 };
@@ -681,6 +703,31 @@ export function hasPermission(
   const [domain] = requiredPermission.split('.');
   if (domain && userPermissions.includes(`${domain}.*`)) return true;
 
+  return false;
+}
+
+/**
+ * Convenience helper to check if a user possesses a specific role (checks primary role and multi-roles array).
+ */
+export function hasRole(user?: User | null, roleName?: string): boolean {
+  if (!user || !roleName) return false;
+  const target = roleName.toLowerCase().replace(/_/g, '-');
+  const userPrimary = (user.role || '').toLowerCase().replace(/_/g, '-');
+  if (userPrimary === target) return true;
+  if (Array.isArray(user.roles)) {
+    return user.roles.some((r) => (r || '').toLowerCase().replace(/_/g, '-') === target);
+  }
+  return false;
+}
+
+/**
+ * Checks if user is Super Admin (via role, multi-roles, id, or wildcard permissions).
+ */
+export function isSuperAdmin(user?: User | null): boolean {
+  if (!user) return false;
+  if (user.id === 1 || user.username === 'superadmin') return true;
+  if (hasRole(user, 'super-admin') || hasRole(user, 'super_admin')) return true;
+  if (Array.isArray(user.permissions) && user.permissions.includes('*')) return true;
   return false;
 }
 

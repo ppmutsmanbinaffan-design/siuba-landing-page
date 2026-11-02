@@ -44,13 +44,15 @@ Route::prefix('v1')->group(function () {
     // =========================================================================
     Route::middleware('auth:sanctum')->group(function () {
 
-        // User Management & Password Sync (Protected)
+        // User Management, Role Assignment & Password Sync (Protected)
         Route::post('/users/{id}/password', [AuthApiController::class, 'updatePassword'])
             ->middleware('permission:users.update');
         Route::put('/users/{id}', [AuthApiController::class, 'updateUser'])
             ->middleware('permission:users.update');
         Route::post('/users', [AuthApiController::class, 'createUser'])
             ->middleware('permission:users.create');
+        Route::match(['post', 'put'], '/users/{id}/roles', [AuthApiController::class, 'assignRoles']);
+        Route::get('/roles', [AuthApiController::class, 'listRoles']);
 
         // Full-Stack Bulk Import Engine (Santri, Guru, SDM, Pelatih)
         Route::prefix('import')->group(function () {

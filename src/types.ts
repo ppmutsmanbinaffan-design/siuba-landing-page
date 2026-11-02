@@ -43,7 +43,24 @@ export type ActivityCategoryCode =
 
 export type DeviceType = 'manual' | 'qr_scanner' | 'rfid_reader' | 'kiosk';
 
-export type UserRole = 'super_admin' | 'kesantrian' | 'academic' | 'teacher' | 'guardian' | 'operator' | string;
+export type UserRole = 
+  | 'super_admin' 
+  | 'super-admin' 
+  | 'admin' 
+  | 'pimpinan' 
+  | 'kepala-sekolah' 
+  | 'kepala-asrama' 
+  | 'guru' 
+  | 'teacher' 
+  | 'musyrif' 
+  | 'pelatih' 
+  | 'petugas-masjid' 
+  | 'petugas-absensi' 
+  | 'operator' 
+  | 'kesantrian' 
+  | 'academic' 
+  | 'panitia-ppdb' 
+  | string;
 
 export interface User {
   id: number;
@@ -51,6 +68,7 @@ export interface User {
   email: string;
   username: string;
   role: UserRole;
+  roles?: string[];
   password?: string;
   permissions?: string[];
   is_active: boolean;

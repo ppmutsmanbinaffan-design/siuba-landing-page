@@ -136,6 +136,17 @@ export const PERMISSION_GROUPS: PermissionGroup[] = [
     ],
   },
   {
+    id: 'ppdb_admissions',
+    name: '🎓 Penerimaan Santri Baru (PPDB)',
+    icon: 'GraduationCap',
+    permissions: [
+      { code: 'ppdb.view', name: 'Lihat Data & Statistik PPDB', description: 'Melihat dashboard PPDB, daftar calon santri pendaftar, dan filter berkas' },
+      { code: 'ppdb.manage', name: 'Kelola Pengaturan & Gelombang PPDB', description: 'Mengatur gelombang pendaftaran, rincian biaya masuk, dan beasiswa' },
+      { code: 'ppdb.verify', name: 'Verifikasi Berkas & Nilai Tes', description: 'Memvalidasi berkas, mengisi nilai tes Al-Qur\'an & akademik, serta menentukan kelulusan' },
+      { code: 'ppdb.export', name: 'Export Data Calon Santri', description: 'Mengunduh rekapitulasi data pendaftar PPDB ke format CSV/Excel' },
+    ],
+  },
+  {
     id: 'system_security',
     name: '⚙️ Sistem, Role & Keamanan',
     icon: 'ShieldCheck',
@@ -176,6 +187,7 @@ export const ROLE_CONFIGS: RoleConfig[] = [
       'students.view', 'students.create', 'students.edit', 'students.deactivate', 'students.cards', 'attendance.excuses', 'qr-print.view',
       'attendance.view', 'attendance.scan', 'attendance.manual', 'attendance.monitoring', 'attendance.rfid', 'attendance.history',
       'devices.view', 'devices.manage',
+      'ppdb.view', 'ppdb.manage', 'ppdb.verify', 'ppdb.export',
       'routine.view', 'prayer.monitoring', 'dormitory.monitoring', 'halaqah.view', 'duty_roster.view', 'routine_schedule.view',
       'events.view', 'events.manage', 'extracurriculars.view', 'classrooms.view', 'dormitories.view', 'activities.view',
       'kbm.teacher_dashboard', 'kbm.monitoring', 'kbm.timetable', 'kbm.master', 'kbm.reports',
@@ -265,6 +277,17 @@ export const ROLE_CONFIGS: RoleConfig[] = [
       'qr-print.view', 'devices.view', 'system.settings'
     ],
   },
+  {
+    name: 'panitia-ppdb',
+    label: 'Panitia PPDB',
+    desc: 'Panitia Penerimaan Santri Baru: verifikasi berkas formulir pendaftaran, penilaian tes Al-Qur\'an, kelulusan, dan rekap calon santri.',
+    badgeColor: 'bg-lime-100 text-lime-950 border-lime-300',
+    defaultPermissions: [
+      'dashboard.view', 'students.view',
+      'ppdb.view', 'ppdb.manage', 'ppdb.verify', 'ppdb.export',
+      'system.settings'
+    ],
+  },
 ];
 
 interface Props {
@@ -331,9 +354,19 @@ export const AccessControlView: React.FC<Props> = ({
   const [formEmail, setFormEmail] = useState('');
   const [formPassword, setFormPassword] = useState('');
   const [formRole, setFormRole] = useState<string>('guru');
+  const [formRoles, setFormRoles] = useState<string[]>(['guru']);
   const [formIsActive, setFormIsActive] = useState<boolean>(true);
   const [formCustomPermissions, setFormCustomPermissions] = useState<string[]>([]);
   const [useCustomPermsInAdd, setUseCustomPermsInAdd] = useState(false);
+
+  // Super Admin Check (only Super Admin has authority to assign & modify user roles)
+  const isCurrentUserSuperAdmin =
+    currentUser.id === 1 ||
+    currentUser.username === 'superadmin' ||
+    currentUser.role === 'super-admin' ||
+    currentUser.role === 'super_admin' ||
+    (Array.isArray(currentUser.roles) && (currentUser.roles.includes('super-admin') || currentUser.roles.includes('super_admin'))) ||
+    (Array.isArray(currentUser.permissions) && currentUser.permissions.includes('*'));
 
   const togglePasswordVisibilityInTable = (userId: number) => {
     setRevealedPasswords((prev) => ({ ...prev, [userId]: !prev[userId] }));
@@ -376,7 +409,8 @@ export const AccessControlView: React.FC<Props> = ({
 
   const handleCopyCredentials = (user: User, passToCopy?: string) => {
     const pass = passToCopy || user.password || 'password';
-    const text = `*Kredensial Login SIUBA Pesantren*\nNama: ${user.name}\nUsername: ${user.username}\nPassword: ${pass}\nRole: ${user.role}\nLink: http://192.168.1.10:8000`;
+    const assignedRoles = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles.join(', ') : user.role;
+    const text = `*Kredensial Login SIUBA Pesantren*\nNama: ${user.name}\nUsername: ${user.username}\nPassword: ${pass}\nRole: ${assignedRoles}\nLink: http://192.168.1.10:8000`;
     navigator.clipboard.writeText(text);
     setCopiedId(user.id);
     setTimeout(() => setCopiedId(null), 2500);
@@ -386,13 +420,16 @@ export const AccessControlView: React.FC<Props> = ({
   // Filtered Users List
   const filteredUsers = allUsers.filter((u) => {
     const q = searchQuery.toLowerCase();
+    const userRoleList = Array.isArray(u.roles) && u.roles.length > 0 ? u.roles : [u.role];
+    const rolesString = userRoleList.join(' ').toLowerCase();
+
     const matchesQuery = 
       (u.name || '').toLowerCase().includes(q) ||
       (u.username || '').toLowerCase().includes(q) ||
       (u.email || '').toLowerCase().includes(q) ||
-      (u.role || '').toLowerCase().includes(q);
+      rolesString.includes(q);
 
-    const matchesRole = filterRole === 'all' || u.role === filterRole;
+    const matchesRole = filterRole === 'all' || userRoleList.includes(filterRole) || u.role === filterRole;
     const matchesStatus = 
       filterStatus === 'all' ||
       (filterStatus === 'active' && u.is_active) ||
@@ -406,7 +443,15 @@ export const AccessControlView: React.FC<Props> = ({
     if (user.permissions && Array.isArray(user.permissions) && user.permissions.length > 0) {
       return user.permissions;
     }
-    return rolePermissionsMap[user.role] || (ROLE_PERMISSIONS as any)[user.role] || [];
+    const userRoles = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles : [user.role];
+    const aggregated: string[] = [];
+    userRoles.forEach((r) => {
+      const perms = rolePermissionsMap[r] || (ROLE_PERMISSIONS as any)[r] || [];
+      perms.forEach((p: string) => {
+        if (!aggregated.includes(p)) aggregated.push(p);
+      });
+    });
+    return aggregated.length > 0 ? aggregated : rolePermissionsMap[user.role] || (ROLE_PERMISSIONS as any)[user.role] || [];
   };
 
   // Check if a permission is active in a list
@@ -432,9 +477,21 @@ export const AccessControlView: React.FC<Props> = ({
       return;
     }
 
+    const selectedRoles = formRoles.length > 0 ? formRoles : [formRole || 'guru'];
+    const primaryRole = selectedRoles[0] || 'guru';
+
+    // Combine permissions from all selected roles if custom perms not overridden
+    const combinedRolePerms: string[] = [];
+    selectedRoles.forEach((r) => {
+      const perms = rolePermissionsMap[r] || (ROLE_PERMISSIONS as any)[r] || [];
+      perms.forEach((p: string) => {
+        if (!combinedRolePerms.includes(p)) combinedRolePerms.push(p);
+      });
+    });
+
     const assignedPermissions = useCustomPermsInAdd && formCustomPermissions.length > 0 
       ? formCustomPermissions 
-      : rolePermissionsMap[formRole] || (ROLE_PERMISSIONS as any)[formRole] || [];
+      : combinedRolePerms;
 
     const plainPass = formPassword.trim() || 'password';
     const newUser: User = {
@@ -443,7 +500,8 @@ export const AccessControlView: React.FC<Props> = ({
       username: cleanUsername,
       email: formEmail.trim() || `${cleanUsername}@utsman.sch.id`,
       password: plainPass,
-      role: formRole as UserRole,
+      role: primaryRole as UserRole,
+      roles: selectedRoles,
       permissions: assignedPermissions,
       is_active: formIsActive,
       last_login_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
@@ -454,7 +512,7 @@ export const AccessControlView: React.FC<Props> = ({
     }
     setIsAddUserModalOpen(false);
     resetForm();
-    onShowToast(`Pengguna "${newUser.name}" (@${newUser.username}) berhasil ditambahkan dengan password "${plainPass}".`, 'success');
+    onShowToast(`Pengguna "${newUser.name}" (@${newUser.username}) berhasil ditambahkan dengan ${selectedRoles.length} role.`, 'success');
   };
 
   // Handle Edit User Submit
@@ -472,11 +530,18 @@ export const AccessControlView: React.FC<Props> = ({
       return;
     }
 
+    const selectedRoles = isCurrentUserSuperAdmin
+      ? (formRoles.length > 0 ? formRoles : [formRole || 'guru'])
+      : (Array.isArray(editingUser.roles) && editingUser.roles.length > 0 ? editingUser.roles : [editingUser.role]);
+
+    const primaryRole = selectedRoles[0] || 'guru';
+
     const updatedData: Partial<User> = {
       name: formName.trim(),
       username: cleanUsername,
       email: formEmail.trim() || `${cleanUsername}@utsman.sch.id`,
-      role: formRole as UserRole,
+      role: primaryRole as UserRole,
+      roles: selectedRoles,
       is_active: formIsActive,
     };
 
@@ -489,12 +554,22 @@ export const AccessControlView: React.FC<Props> = ({
     }
     setEditingUser(null);
     resetForm();
-    onShowToast(`Data dan password pengguna "${updatedData.name}" berhasil diperbarui.`, 'success');
+    onShowToast(`Data dan penugasan role pengguna "${updatedData.name}" berhasil diperbarui.`, 'success');
   };
 
   // Open Edit User Modal
   const openEditModal = (user: User) => {
     setEditingUser(user);
+    setFormName(user.name);
+    setFormUsername(user.username);
+    setFormEmail(user.email);
+    setFormPassword(user.password || 'password');
+    const userRoles = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles : [user.role || 'guru'];
+    setFormRoles(userRoles);
+    setFormRole(userRoles[0] || 'guru');
+    setFormIsActive(user.is_active);
+    setShowPasswordInForm(false);
+  };
     setFormName(user.name);
     setFormUsername(user.username);
     setFormEmail(user.email);
@@ -559,6 +634,10 @@ export const AccessControlView: React.FC<Props> = ({
   // Save Role Permissions Modal
   const handleSaveRolePermissions = () => {
     if (!rolePermissionModal) return;
+    if (!isCurrentUserSuperAdmin) {
+      onShowToast('Hanya Super Admin yang berhak mengubah konfigurasi hak akses role.', 'error');
+      return;
+    }
     const roleName = rolePermissionModal.role.name;
     const updatedPerms = rolePermissionModal.permissions;
 
@@ -584,6 +663,10 @@ export const AccessControlView: React.FC<Props> = ({
 
   // Toggle single permission for matrix directly
   const handleToggleMatrixPermission = (roleName: string, permCode: string) => {
+    if (!isCurrentUserSuperAdmin) {
+      onShowToast('Hanya Super Admin yang berhak mengubah matriks hak akses.', 'error');
+      return;
+    }
     const currentList = rolePermissionsMap[roleName] || (ROLE_PERMISSIONS as any)[roleName] || [];
     let newList: string[];
 
@@ -615,6 +698,7 @@ export const AccessControlView: React.FC<Props> = ({
     setFormEmail('');
     setFormPassword('');
     setFormRole('guru');
+    setFormRoles(['guru']);
     setFormIsActive(true);
     setFormCustomPermissions([]);
     setUseCustomPermsInAdd(false);
@@ -861,6 +945,7 @@ export const AccessControlView: React.FC<Props> = ({
                   ) : (
                     filteredUsers.map((user, idx) => {
                       const isCurrent = currentUser.id === user.id;
+                      const userRoles = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles : [user.role];
                       const roleConfig = ROLE_CONFIGS.find((rc) => rc.name === user.role) || {
                         name: user.role,
                         label: user.role,
@@ -899,9 +984,26 @@ export const AccessControlView: React.FC<Props> = ({
                           </td>
 
                           <td className="p-4">
-                            <span className={`px-2.5 py-1 rounded-xl text-[10px] font-black border uppercase tracking-wider inline-block ${roleConfig.badgeColor}`}>
-                              {roleConfig.label}
-                            </span>
+                            <div className="flex flex-wrap gap-1.5 items-center">
+                              {userRoles.map((rName) => {
+                                const rc = ROLE_CONFIGS.find((c) => c.name === rName) || {
+                                  name: rName,
+                                  label: rName,
+                                  badgeColor: 'bg-slate-100 text-slate-800 border-slate-200',
+                                };
+                                return (
+                                  <span
+                                    key={rName}
+                                    className={`px-2.5 py-1 rounded-xl text-[10px] font-black border uppercase tracking-wider inline-flex items-center gap-1 shadow-2xs ${rc.badgeColor}`}
+                                  >
+                                    {rName === 'panitia-ppdb' && (
+                                      <span className="w-1.5 h-1.5 rounded-full bg-lime-600 animate-pulse"></span>
+                                    )}
+                                    <span>{rc.label}</span>
+                                  </span>
+                                );
+                              })}
+                            </div>
                           </td>
 
                           {/* Password & Credentials Column */}
@@ -1072,7 +1174,7 @@ export const AccessControlView: React.FC<Props> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {ROLE_CONFIGS.map((role) => {
-              const assignedUsers = allUsers.filter((u) => u.role === role.name);
+              const assignedUsers = allUsers.filter((u) => u.role === role.name || (Array.isArray(u.roles) && u.roles.includes(role.name)));
               const activePerms = rolePermissionsMap[role.name] || role.defaultPermissions;
               const isFullAccess = activePerms.includes('*');
 
@@ -1298,32 +1400,85 @@ export const AccessControlView: React.FC<Props> = ({
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Username Login *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Contoh: ustadz.ziyad"
-                    value={formUsername}
-                    onChange={(e) => setFormUsername(e.target.value.toLowerCase())}
-                    className="w-full bg-slate-50 text-slate-900 font-mono font-bold px-3.5 py-2.5 rounded-xl border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  />
+              <div>
+                <label className="block text-slate-700 font-bold mb-1">Username Login *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Contoh: ustadz.ziyad"
+                  value={formUsername}
+                  onChange={(e) => setFormUsername(e.target.value.toLowerCase())}
+                  className="w-full bg-slate-50 text-slate-900 font-mono font-bold px-3.5 py-2.5 rounded-xl border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+
+              {/* Multi-Role Selector */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-slate-700 font-bold">
+                    Role &amp; Penugasan Pengguna * {formRoles.length > 1 && <span className="text-emerald-700 text-xs font-semibold">({formRoles.length} role dipilih)</span>}
+                  </label>
+                  {!isCurrentUserSuperAdmin ? (
+                    <span className="text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-md flex items-center gap-1 border border-amber-300">
+                      🔒 Hanya Super Admin yang berhak mengatur role
+                    </span>
+                  ) : (
+                    <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                      Multi-Role Didukung
+                    </span>
+                  )}
                 </div>
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Role Otorisasi *</label>
-                  <select
-                    value={formRole}
-                    onChange={(e) => setFormRole(e.target.value)}
-                    className="w-full bg-slate-50 text-slate-900 font-bold px-3.5 py-2.5 rounded-xl border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  >
-                    {ROLE_CONFIGS.map((rc) => (
-                      <option key={rc.name} value={rc.name}>
-                        {rc.label}
-                      </option>
-                    ))}
-                  </select>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-2xl max-h-52 overflow-y-auto">
+                  {ROLE_CONFIGS.map((rc) => {
+                    const isChecked = formRoles.includes(rc.name);
+                    return (
+                      <label
+                        key={rc.name}
+                        className={`flex items-start gap-2.5 p-2 rounded-xl border text-xs cursor-pointer transition ${
+                          isChecked
+                            ? 'bg-emerald-50/90 border-emerald-400 text-emerald-950 font-bold shadow-2xs'
+                            : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100/70'
+                        } ${!isCurrentUserSuperAdmin ? 'opacity-70 cursor-not-allowed' : ''}`}
+                      >
+                        <input
+                          type="checkbox"
+                          disabled={!isCurrentUserSuperAdmin}
+                          checked={isChecked}
+                          onChange={(e) => {
+                            if (!isCurrentUserSuperAdmin) return;
+                            if (e.target.checked) {
+                              const next = [...formRoles, rc.name];
+                              setFormRoles(next);
+                              setFormRole(next[0] || rc.name);
+                            } else {
+                              if (formRoles.length === 1) {
+                                onShowToast('Pengguna harus memiliki minimal 1 role.', 'error');
+                                return;
+                              }
+                              const next = formRoles.filter((r) => r !== rc.name);
+                              setFormRoles(next);
+                              setFormRole(next[0] || 'guru');
+                            }
+                          }}
+                          className="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4 cursor-pointer"
+                        />
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="truncate">{rc.label}</span>
+                            {rc.name === 'panitia-ppdb' && (
+                              <span className="px-1.5 py-0.2 rounded text-[9px] bg-lime-400/40 text-lime-900 font-extrabold border border-lime-500/30">PPDB</span>
+                            )}
+                          </div>
+                          <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5 font-normal">{rc.desc}</p>
+                        </div>
+                      </label>
+                    );
+                  })}
                 </div>
+                <p className="text-[11px] text-slate-500 mt-1">
+                  💡 <em>1 pengguna dapat memegang beberapa role sekaligus (misal: Dewan Guru + Panitia PPDB). Hak akses dari seluruh role yang dipilih akan otomatis digabungkan.</em>
+                </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -1439,31 +1594,86 @@ export const AccessControlView: React.FC<Props> = ({
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Username Login *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formUsername}
-                    onChange={(e) => setFormUsername(e.target.value.toLowerCase())}
-                    className="w-full bg-slate-50 text-slate-900 font-mono font-bold px-3.5 py-2.5 rounded-xl border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  />
+              <div>
+                <label className="block text-slate-700 font-bold mb-1">Username Login *</label>
+                <input
+                  type="text"
+                  required
+                  value={formUsername}
+                  onChange={(e) => setFormUsername(e.target.value.toLowerCase())}
+                  className="w-full bg-slate-50 text-slate-900 font-mono font-bold px-3.5 py-2.5 rounded-xl border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+
+              {/* Multi-Role Selector */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-slate-700 font-bold">
+                    Role &amp; Penugasan Pengguna * {formRoles.length > 1 && <span className="text-emerald-700 text-xs font-semibold">({formRoles.length} role aktif)</span>}
+                  </label>
+                  {!isCurrentUserSuperAdmin ? (
+                    <span className="text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-md flex items-center gap-1 border border-amber-300">
+                      🔒 Hanya Super Admin yang berhak mengubah role
+                    </span>
+                  ) : (
+                    <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                      Multi-Role Didukung
+                    </span>
+                  )}
                 </div>
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Role Otorisasi *</label>
-                  <select
-                    value={formRole}
-                    onChange={(e) => setFormRole(e.target.value)}
-                    className="w-full bg-slate-50 text-slate-900 font-bold px-3.5 py-2.5 rounded-xl border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  >
-                    {ROLE_CONFIGS.map((rc) => (
-                      <option key={rc.name} value={rc.name}>
-                        {rc.label}
-                      </option>
-                    ))}
-                  </select>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-2xl max-h-52 overflow-y-auto">
+                  {ROLE_CONFIGS.map((rc) => {
+                    const isChecked = formRoles.includes(rc.name);
+                    return (
+                      <label
+                        key={rc.name}
+                        className={`flex items-start gap-2.5 p-2 rounded-xl border text-xs cursor-pointer transition ${
+                          isChecked
+                            ? 'bg-emerald-50/90 border-emerald-400 text-emerald-950 font-bold shadow-2xs'
+                            : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100/70'
+                        } ${!isCurrentUserSuperAdmin ? 'opacity-70 cursor-not-allowed' : ''}`}
+                      >
+                        <input
+                          type="checkbox"
+                          disabled={!isCurrentUserSuperAdmin}
+                          checked={isChecked}
+                          onChange={(e) => {
+                            if (!isCurrentUserSuperAdmin) return;
+                            if (e.target.checked) {
+                              const next = [...formRoles, rc.name];
+                              setFormRoles(next);
+                              setFormRole(next[0] || rc.name);
+                            } else {
+                              if (formRoles.length === 1) {
+                                onShowToast('Pengguna harus memiliki minimal 1 role.', 'error');
+                                return;
+                              }
+                              const next = formRoles.filter((r) => r !== rc.name);
+                              setFormRoles(next);
+                              setFormRole(next[0] || 'guru');
+                            }
+                          }}
+                          className="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4 cursor-pointer"
+                        />
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="truncate">{rc.label}</span>
+                            {rc.name === 'panitia-ppdb' && (
+                              <span className="px-1.5 py-0.2 rounded text-[9px] bg-lime-400/40 text-lime-900 font-extrabold border border-lime-500/30">PPDB</span>
+                            )}
+                          </div>
+                          <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5 font-normal">{rc.desc}</p>
+                        </div>
+                      </label>
+                    );
+                  })}
                 </div>
+                {!isCurrentUserSuperAdmin && (
+                  <p className="text-[11px] text-amber-800 bg-amber-50 p-2 rounded-xl border border-amber-200 mt-1">
+                    ⚠️ Anda tidak memiliki otoritas Super Admin untuk memodifikasi role. Penugasan role di atas bersifat hanya-lihat (read-only).
+                  </p>
+                )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

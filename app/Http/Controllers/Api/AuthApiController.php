@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AuthApiController extends Controller
 {
@@ -193,7 +194,63 @@ class AuthApiController extends Controller
     }
 
     /**
-     * Update user profile & credentials.
+     * Determine if a user has Super Admin authority.
+     */
+    public static function isSuperAdmin(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        $roles = $user->getRoleNames()->map(fn($r) => strtolower($r))->toArray();
+
+        return in_array('super-admin', $roles, true) ||
+               in_array('super_admin', $roles, true) ||
+               $user->hasRole('super-admin') ||
+               $user->hasRole('super_admin') ||
+               $user->id === 1 ||
+               $user->username === 'superadmin';
+    }
+
+    /**
+     * Extract normalized role list from request.
+     */
+    private function extractRolesFromRequest(Request $request): ?array
+    {
+        $roleInputs = [];
+
+        if ($request->has('roles')) {
+            $raw = $request->input('roles');
+            if (is_array($raw)) {
+                $roleInputs = $raw;
+            } elseif (is_string($raw)) {
+                $roleInputs = explode(',', $raw);
+            }
+        } elseif ($request->filled('role')) {
+            $raw = (string) $request->input('role');
+            if (str_contains($raw, ',')) {
+                $roleInputs = explode(',', $raw);
+            } else {
+                $roleInputs = [$raw];
+            }
+        } else {
+            return null; // Roles not provided in request payload
+        }
+
+        $cleaned = [];
+        foreach ($roleInputs as $r) {
+            $trimmed = trim((string) $r);
+            if ($trimmed !== '') {
+                $cleaned[] = $trimmed;
+            }
+        }
+
+        return array_values(array_unique($cleaned));
+    }
+
+    /**
+     * Update user profile, status, credentials & multiple roles.
+     * Note: Only Super Admin can change user roles!
      */
     public function updateUser(Request $request, $id): JsonResponse
     {
@@ -226,10 +283,29 @@ class AuthApiController extends Controller
 
         $user->save();
 
-        if ($request->filled('role')) {
-            $role = (string) $request->input('role');
-            $user->syncRoles([$role]);
+        // Check if role modification was requested
+        $requestedRoles = $this->extractRolesFromRequest($request);
+        if ($requestedRoles !== null) {
+            $authUser = $request->user();
+            if (!$this->isSuperAdmin($authUser)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Hanya Super Admin yang memiliki hak akses untuk mengatur dan mengubah role pengguna.'
+                ], 403);
+            }
+
+            // Sync multiple roles (ensure only valid system roles are synced)
+            if (!empty($requestedRoles)) {
+                $validRoles = Role::whereIn('name', $requestedRoles)->pluck('name')->unique()->toArray();
+                if (!empty($validRoles)) {
+                    $user->syncRoles($validRoles);
+                }
+            } else {
+                $user->syncRoles([]);
+            }
         }
+
+        $roleNames = $user->getRoleNames();
 
         return response()->json([
             'success' => true,
@@ -240,20 +316,22 @@ class AuthApiController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'is_active' => (bool) $user->is_active,
-                'roles' => $user->getRoleNames(),
+                'roles' => $roleNames,
+                'role' => $roleNames->first() ?? 'user',
+                'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
             ]
         ], 200);
     }
 
     /**
-     * Create new user with hashed password.
+     * Create new user with multiple roles.
+     * Note: Only Super Admin can assign roles during user creation!
      */
     public function createUser(Request $request): JsonResponse
     {
         $username = trim((string) $request->input('username', ''));
         $name = trim((string) $request->input('name', ''));
         $password = trim((string) $request->input('password', 'password'));
-        $role = trim((string) $request->input('role', 'guru'));
         $email = trim((string) $request->input('email', "{$username}@utsman.sch.id"));
 
         if (empty($username) || empty($name)) {
@@ -261,6 +339,22 @@ class AuthApiController extends Controller
                 'success' => false,
                 'message' => 'Nama dan username wajib diisi.'
             ], 422);
+        }
+
+        $requestedRoles = $this->extractRolesFromRequest($request);
+
+        // If specific roles were provided, ensure the creator is Super Admin
+        if ($requestedRoles !== null && count($requestedRoles) > 0) {
+            $authUser = $request->user();
+            if (!$this->isSuperAdmin($authUser)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Hanya Super Admin yang memiliki hak akses untuk mengatur dan mengubah role pengguna.'
+                ], 403);
+            }
+        } else {
+            // Default role if none specified
+            $requestedRoles = ['guru'];
         }
 
         $user = User::updateOrCreate(
@@ -273,7 +367,12 @@ class AuthApiController extends Controller
             ]
         );
 
-        $user->syncRoles([$role]);
+        $validRoles = Role::whereIn('name', $requestedRoles)->pluck('name')->unique()->toArray();
+        if (!empty($validRoles)) {
+            $user->syncRoles($validRoles);
+        }
+
+        $roleNames = $user->getRoleNames();
 
         return response()->json([
             'success' => true,
@@ -284,8 +383,70 @@ class AuthApiController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'is_active' => (bool) $user->is_active,
-                'roles' => $user->getRoleNames(),
+                'roles' => $roleNames,
+                'role' => $roleNames->first() ?? 'user',
+                'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
             ]
         ], 201);
+    }
+
+    /**
+     * Dedicated endpoint to assign multiple roles to a user (Super Admin Only).
+     */
+    public function assignRoles(Request $request, $id): JsonResponse
+    {
+        $authUser = $request->user();
+        if (!$this->isSuperAdmin($authUser)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hanya Super Admin yang memiliki hak akses untuk mengatur dan mengubah role pengguna.'
+            ], 403);
+        }
+
+        $user = is_numeric($id) ? User::find((int) $id) : null;
+        if (!$user) {
+            $username = trim((string) $request->input('username', ''));
+            if ($username !== '') {
+                $user = User::where('username', $username)->first();
+            }
+        }
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data pengguna tidak ditemukan.'
+            ], 404);
+        }
+
+        $requestedRoles = $this->extractRolesFromRequest($request) ?? [];
+        $validRoles = Role::whereIn('name', $requestedRoles)->pluck('name')->unique()->toArray();
+        $user->syncRoles($validRoles);
+
+        $roleNames = $user->getRoleNames();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Role untuk pengguna @{$user->username} berhasil diperbarui.",
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'name' => $user->name,
+                'roles' => $roleNames,
+                'role' => $roleNames->first() ?? 'user',
+                'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
+            ]
+        ], 200);
+    }
+
+    /**
+     * List all available system roles with their assigned permissions.
+     */
+    public function listRoles(): JsonResponse
+    {
+        $roles = Role::with('permissions')->where('guard_name', 'web')->get();
+        return response()->json([
+            'success' => true,
+            'roles' => $roles
+        ], 200);
     }
 }
