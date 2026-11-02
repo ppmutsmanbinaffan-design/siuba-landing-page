@@ -196,5 +196,6 @@ Route::prefix('v1')->group(function () {
         Route::match(['get', 'post'], '/nexabsen', [IotDeviceApiController::class, 'handleRfidTap']);
         Route::match(['get', 'post'], '/ping', [IotDeviceApiController::class, 'ping']);
         Route::get('/active-sessions', [IotDeviceApiController::class, 'getActiveSessions']);
+        Route::get('/last-scan', [IotDeviceApiController::class, 'getLastScan']);
     });
 });

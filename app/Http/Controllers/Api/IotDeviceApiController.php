@@ -66,11 +66,20 @@ class IotDeviceApiController extends Controller
         $student = Student::with('classroom')->where('rfid_uid', $normalizedUid)->first();
 
         if (!$student) {
+            // Simpan UID terakhir yang di-tap agar mudah diambil / didaftarkan dari dashboard
+            \Illuminate\Support\Facades\Cache::put('last_scanned_rfid', [
+                'uid' => $normalizedUid,
+                'device' => $deviceCode,
+                'tapped_at' => now()->format('H:i:s') . ' WIB',
+            ], 600);
+
             return response()->json([
                 'success' => false,
                 'code' => 'CARD_NOT_REGISTERED',
-                'message' => 'Kartu Ditolak!',
-                'data' => null,
+                'message' => 'UID: ' . $normalizedUid,
+                'data' => [
+                    'name' => 'UID: ' . $normalizedUid,
+                ],
                 'rfid_uid' => $normalizedUid,
                 'device' => $deviceCode,
                 'timestamp' => now()->format('Y-m-d H:i:s'),
@@ -276,6 +285,19 @@ class IotDeviceApiController extends Controller
                 'start_at' => $s->start_at?->format('H:i'),
                 'end_at' => $s->end_at?->format('H:i'),
             ]),
+        ]);
+    }
+
+    /**
+     * Ambil UID Kartu Terakhir yang di-tap pada mesin (untuk auto-fill di form Santri).
+     * Route: GET /api/v1/iot/last-scan
+     */
+    public function getLastScan(): JsonResponse
+    {
+        $last = \Illuminate\Support\Facades\Cache::get('last_scanned_rfid');
+        return response()->json([
+            'success' => true,
+            'data' => $last,
         ]);
     }
 }
