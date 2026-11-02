@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registrasi Kartu RFID Santri — SIUBA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols-Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            forest: {
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              950: '#052e16',
+            },
+            limeaccent: {
+              400: '#a3e635',
+              500: '#84cc16',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .pulse-radar {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased selection:bg-limeaccent-400 selection:text-forest-950">
+
+  <!-- Top Navigation Bar -->
+  <header class="border-b border-zinc-800/80 bg-zinc-900/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="/app.html" class="w-10 h-10 rounded-2xl bg-forest-950 border border-emerald-800/60 flex items-center justify-center text-limeaccent-400 shadow-md hover:scale-105 transition">
+          <span class="material-symbols-rounded text-[22px]">contactless</span>
+        </a>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-black tracking-tight text-white">Registrasi Kartu RFID Santri</h1>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-950/80 text-limeaccent-400 border border-emerald-700/50 text-[10px] font-extrabold uppercase tracking-wider">
+              IoT Nexabsen V.4
+            </span>
+          </div>
+          <p class="text-[11px] text-zinc-400">Tautkan kartu fisik RFID santri secara live dari mesin tap atau input manual</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <button onclick="fetchStudents(); fetchLastScan();" class="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold border border-zinc-700 flex items-center gap-1.5 transition">
+          <span class="material-symbols-rounded text-[16px]">sync</span>
+          <span>Refresh</span>
+        </button>
+        <a href="/app.html" class="px-3.5 py-1.5 rounded-xl bg-[#1F5C45] hover:bg-[#12372A] text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition">
+          <span class="material-symbols-rounded text-[16px]">arrow_back</span>
+          <span>Kembali ke SIUBA</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- KPI & Live Radar Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+      
+      <!-- Live Nexabsen Radar Box -->
+      <div class="lg:col-span-5 bg-gradient-to-br from-forest-950 via-zinc-900 to-zinc-950 border border-emerald-900/40 rounded-3xl p-5 sm:p-6 shadow-xl relative overflow-hidden flex flex-col justify-between">
+        <div class="absolute -right-8 -top-8 w-36 h-36 bg-limeaccent-400/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div>
+          <div class="flex items-center justify-between pb-3 border-b border-emerald-900/30">
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-limeaccent-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-limeaccent-500"></span>
+              </span>
+              <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Live Radar Mesin Nexabsen</span>
+            </div>
+            <span id="terminal-badge" class="text-[10px] font-mono text-zinc-400 bg-zinc-800/80 px-2 py-0.5 rounded-lg border border-zinc-700">
+              ESP32-RFID-01
+            </span>
+          </div>
+
+          <div class="mt-4 text-center py-4 space-y-2">
+            <div class="inline-flex w-14 h-14 rounded-2xl bg-forest-900/60 border border-emerald-700/50 items-center justify-center text-limeaccent-400 pulse-radar shadow-lg">
+              <span class="material-symbols-rounded text-[32px]">sensors</span>
+            </div>
+            <div>
+              <p class="text-xs text-zinc-400 font-medium">Tempelkan kartu RFID ke mesin Nexabsen V.4 Anda...</p>
+              <div id="last-scanned-display" class="mt-2 text-2xl sm:text-3xl font-black font-mono tracking-wider text-white">
+                -- MENUNGGU TAP --
+              </div>
+              <p id="last-scanned-time" class="text-[11px] text-zinc-500 font-mono mt-1">Belum ada tap terdeteksi</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-emerald-900/30">
+          <button id="btn-use-detected-card" onclick="applyDetectedCardToForm()" disabled class="w-full py-2.5 px-4 rounded-2xl bg-limeaccent-400 hover:bg-limeaccent-500 disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed text-forest-950 font-black text-xs transition shadow-md flex items-center justify-center gap-2 cursor-pointer">
+            <span class="material-symbols-rounded text-[18px]">add_task</span>
+            <span id="btn-use-detected-card-text">Gunakan Kartu Terdeteksi</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Registration Form -->
+      <div class="lg:col-span-7 bg-zinc-900 border border-zinc-800 rounded-3xl p-5 sm:p-6 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between pb-3 border-b border-zinc-800">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-[#1F5C45]/30 text-emerald-400 flex items-center justify-center">
+                <span class="material-symbols-rounded text-[18px]">badge</span>
+              </span>
+              <h2 class="font-extrabold text-sm sm:text-base text-white">Formulir Pasang Kartu RFID</h2>
+            </div>
+            <span class="text-xs text-zinc-400">Pilih santri lalu simpan</span>
+          </div>
+
+          <form id="form-register-rfid" onsubmit="handleRegisterSubmit(event)" class="mt-4 space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-zinc-300 mb-1">1. Pilih Santri Penerima Kartu *</label>
+              <select id="select-student" required class="w-full p-2.5 bg-zinc-950 border border-zinc-700 rounded-2xl text-xs text-white focus:outline-none focus:border-emerald-500 transition">
+                <option value="">-- Memuat daftar santri... --</option>
+              </select>
+              <p class="text-[11px] text-zinc-500 mt-1">Daftar memprioritaskan santri yang belum memiliki kartu RFID.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-zinc-300 mb-1">2. Nomor UID Kartu RFID (Mifare) *</label>
+                <div class="relative">
+                  <input type="text" id="input-rfid-uid" required placeholder="Contoh: 04A87F12" class="w-full p-2.5 bg-zinc-950 border border-zinc-700 rounded-2xl text-xs font-mono font-bold uppercase text-limeaccent-400 focus:outline-none focus:border-emerald-500 transition" />
+                  <button type="button" onclick="fetchLastScan(true)" title="Cek Tap Mesin Terbaru" class="absolute right-2 top-2 p-1 text-zinc-400 hover:text-white">
+                    <span class="material-symbols-rounded text-[16px]">sync</span>
+                  </button>
+                </div>
+                <p class="text-[10px] text-zinc-500 mt-0.5">Otomatis terisi saat kartu ditempelkan di Nexabsen.</p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-zinc-300 mb-1">Status Verifikasi</label>
+                <div id="uid-status-box" class="p-2.5 bg-zinc-950 border border-zinc-800 rounded-2xl text-xs flex items-center gap-2 text-zinc-400">
+                  <span class="material-symbols-rounded text-[16px] text-zinc-500">info</span>
+                  <span id="uid-status-text">Siap mendaftarkan</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <button type="submit" id="btn-submit-save" class="w-full py-2.5 px-4 rounded-2xl bg-[#1F5C45] hover:bg-[#12372A] text-white font-black text-xs transition shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                <span class="material-symbols-rounded text-[18px]">save</span>
+                <span>Tautkan Kartu ke Santri Ini</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Quick Stats Bento -->
+        <div class="grid grid-cols-3 gap-2 pt-4 border-t border-zinc-800 mt-4 text-center">
+          <div class="bg-zinc-950/60 p-2.5 rounded-2xl border border-zinc-800/80">
+            <span class="text-[10px] text-zinc-500 uppercase font-bold block">Total Santri</span>
+            <span id="stat-total" class="text-base font-black text-white mt-0.5 block">0</span>
+          </div>
+          <div class="bg-emerald-950/20 p-2.5 rounded-2xl border border-emerald-900/40">
+            <span class="text-[10px] text-emerald-400 uppercase font-bold block">Sudah Punya RFID</span>
+            <span id="stat-with-rfid" class="text-base font-black text-emerald-400 mt-0.5 block">0</span>
+          </div>
+          <div class="bg-amber-950/20 p-2.5 rounded-2xl border border-amber-900/40">
+            <span class="text-[10px] text-amber-400 uppercase font-bold block">Belum Punya RFID</span>
+            <span id="stat-without-rfid" class="text-base font-black text-amber-400 mt-0.5 block">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Cards Table & Search -->
+    <div class="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-xl">
+      <!-- Table Header & Controls -->
+      <div class="p-4 sm:p-5 border-b border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-rounded text-emerald-400 text-[20px]">groups</span>
+          <h3 class="font-extrabold text-sm sm:text-base text-white">Daftar Santri & Status Kartu RFID</h3>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Filter Tabs -->
+          <div class="inline-flex p-1 bg-zinc-950 rounded-2xl border border-zinc-800 text-xs font-bold">
+            <button onclick="setFilter('all')" id="tab-filter-all" class="px-3 py-1 rounded-xl bg-zinc-800 text-white transition">Semua</button>
+            <button onclick="setFilter('without_rfid')" id="tab-filter-without" class="px-3 py-1 rounded-xl text-zinc-400 hover:text-white transition">Belum Punya RFID</button>
+            <button onclick="setFilter('with_rfid')" id="tab-filter-with" class="px-3 py-1 rounded-xl text-zinc-400 hover:text-white transition">Sudah Punya RFID</button>
+          </div>
+
+          <!-- Search Box -->
+          <div class="relative">
+            <span class="material-symbols-rounded absolute left-3 top-2.5 text-zinc-500 text-[16px]">search</span>
+            <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Cari santri / NIS..." class="pl-8 pr-3 py-1.5 bg-zinc-950 border border-zinc-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500 w-48 sm:w-56" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Body -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-zinc-950/80 text-zinc-400 uppercase text-[10px] font-black tracking-wider border-b border-zinc-800">
+            <tr>
+              <th class="px-5 py-3.5">No</th>
+              <th class="px-5 py-3.5">Santri &amp; NIS</th>
+              <th class="px-5 py-3.5">Kelas &amp; Asrama</th>
+              <th class="px-5 py-3.5">Nomor RFID UID</th>
+              <th class="px-5 py-3.5 text-center">Status Kartu</th>
+              <th class="px-5 py-3.5 text-center">Aksi Cepat</th>
+            </tr>
+          </thead>
+          <tbody id="student-table-body" class="divide-y divide-zinc-800/80">
+            <tr>
+              <td colspan="6" class="px-5 py-8 text-center text-zinc-500">
+                Memuat data santri...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- Client-side Logic Script -->
+  <script>
+    let allStudents = [];
+    let currentFilter = 'all';
+    let currentSearch = '';
+    let lastScannedUid = null;
+    let pollTimer = null;
+
+    // Toast Notification Helper
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `p-3.5 rounded-2xl text-xs font-bold shadow-2xl border flex items-center gap-2.5 pointer-events-auto transition-all transform duration-300 ${
+        type === 'success' 
+          ? 'bg-emerald-950 border-emerald-700 text-emerald-200' 
+          : type === 'error'
+          ? 'bg-rose-950 border-rose-700 text-rose-200'
+          : 'bg-zinc-900 border-zinc-700 text-zinc-200'
+      }`;
+      const icon = type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info';
+      toast.innerHTML = `<span class="material-symbols-rounded text-[18px]">${icon}</span><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Fetch All Students
+    async function fetchStudents() {
+      try {
+        let url = '/api/v1/iot/students';
+        const params = new URLSearchParams();
+        if (currentFilter !== 'all') params.append('filter', currentFilter);
+        if (currentSearch) params.append('search', currentSearch);
+        if (params.toString()) url += '?' + params.toString();
+
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.success) {
+          allStudents = data.data;
+          document.getElementById('stat-total').innerText = data.total;
+          document.getElementById('stat-with-rfid').innerText = data.with_rfid;
+          document.getElementById('stat-without-rfid').innerText = data.without_rfid;
+          renderSelectDropdown(allStudents);
+          renderTable(allStudents);
+        }
+      } catch (err) {
+        console.error('Gagal mengambil data santri:', err);
+      }
+    }
+
+    // Render Student Select Dropdown
+    function renderSelectDropdown(students) {
+      const select = document.getElementById('select-student');
+      const currentValue = select.value;
+      select.innerHTML = '<option value="">-- Pilih Santri Penerima Kartu --</option>';
+
+      // Sort: prioritize those without RFID
+      const sorted = [...students].sort((a, b) => {
+        if (!a.has_rfid && b.has_rfid) return -1;
+        if (a.has_rfid && !b.has_rfid) return 1;
+        return a.name.localeCompare(b.name);
+      });
+
+      sorted.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        const statusText = s.has_rfid ? `[RFID: ${s.rfid_uid}]` : `[BELUM ADA KARTU]`;
+        opt.innerText = `${s.name} (${s.student_number} - ${s.classroom}) ${statusText}`;
+        if (s.id == currentValue) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    // Render Student Table
+    function renderTable(students) {
+      const tbody = document.getElementById('student-table-body');
+      if (students.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-8 text-center text-zinc-500">Tidak ada santri yang cocok dengan filter.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = students.map((s, idx) => `
+        <tr class="hover:bg-zinc-800/40 transition">
+          <td class="px-5 py-3 text-zinc-500 font-mono text-[11px]">${idx + 1}</td>
+          <td class="px-5 py-3">
+            <div class="font-extrabold text-white text-xs">${s.name}</div>
+            <div class="text-[10px] text-zinc-500 font-mono">NIS: ${s.student_number}</div>
+          </td>
+          <td class="px-5 py-3">
+            <div class="text-zinc-300 font-medium">${s.classroom}</div>
+            <div class="text-[10px] text-zinc-500">${s.dormitory}</div>
+          </td>
+          <td class="px-5 py-3 font-mono">
+            ${s.rfid_uid ? `
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-forest-950 border border-emerald-800 text-limeaccent-400 font-bold text-xs">
+                <span class="material-symbols-rounded text-[14px]">contactless</span>
+                <span>${s.rfid_uid}</span>
+              </span>
+            ` : `
+              <span class="text-zinc-500 italic text-[11px]">Belum Ada</span>
+            `}
+          </td>
+          <td class="px-5 py-3 text-center">
+            ${s.has_rfid ? `
+              <span class="px-2.5 py-1 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-800 text-[10px] font-black uppercase tracking-wider">
+                Aktif
+              </span>
+            ` : `
+              <span class="px-2.5 py-1 rounded-full bg-amber-950/80 text-amber-400 border border-amber-800 text-[10px] font-black uppercase tracking-wider">
+                Belum Terpasang
+              </span>
+            `}
+          </td>
+          <td class="px-5 py-3 text-center">
+            <div class="flex items-center justify-center gap-1.5">
+              ${lastScannedUid ? `
+                <button onclick="quickAssign('${s.id}', '${lastScannedUid}')" title="Pasangkan kartu [${lastScannedUid}] ke santri ini" class="px-2.5 py-1 rounded-xl bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-bold text-[11px] flex items-center gap-1 transition shadow-xs cursor-pointer">
+                  <span class="material-symbols-rounded text-[13px]">bolt</span>
+                  <span>Tautkan</span>
+                </button>
+              ` : ''}
+              <button onclick="openPairModal('${s.id}', '${s.name}', '${s.rfid_uid || ''}')" title="Ubah nomor RFID" class="p-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition">
+                <span class="material-symbols-rounded text-[15px]">edit</span>
+              </button>
+              ${s.has_rfid ? `
+                <button onclick="unregisterCard('${s.id}', '${s.name}')" title="Lepas kartu RFID" class="p-1.5 rounded-xl bg-rose-950/60 hover:bg-rose-900 border border-rose-800 text-rose-300 hover:text-white transition">
+                  <span class="material-symbols-rounded text-[15px]">link_off</span>
+                </button>
+              ` : ''}
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Filter Controls
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.getElementById('tab-filter-all').className = filter === 'all' ? 'px-3 py-1 rounded-xl bg-zinc-800 text-white transition' : 'px-3 py-1 rounded-xl text-zinc-400 hover:text-white transition';
+      document.getElementById('tab-filter-without').className = filter === 'without_rfid' ? 'px-3 py-1 rounded-xl bg-zinc-800 text-white transition' : 'px-3 py-1 rounded-xl text-zinc-400 hover:text-white transition';
+      document.getElementById('tab-filter-with').className = filter === 'with_rfid' ? 'px-3 py-1 rounded-xl bg-zinc-800 text-white transition' : 'px-3 py-1 rounded-xl text-zinc-400 hover:text-white transition';
+      fetchStudents();
+    }
+
+    function handleSearch(val) {
+      currentSearch = val;
+      clearTimeout(window.searchTimer);
+      window.searchTimer = setTimeout(() => {
+        fetchStudents();
+      }, 300);
+    }
+
+    // Quick open pair modal or assign
+    function openPairModal(studentId, studentName, currentUid) {
+      document.getElementById('select-student').value = studentId;
+      document.getElementById('input-rfid-uid').value = currentUid || lastScannedUid || '';
+      document.getElementById('input-rfid-uid').focus();
+    }
+
+    function quickAssign(studentId, uid) {
+      if (!confirm(`Tautkan kartu UID [${uid}] ke santri ini?`)) return;
+      submitPair(studentId, uid);
+    }
+
+    async function unregisterCard(studentId, studentName) {
+      if (!confirm(`Apakah Anda yakin ingin melepas kartu RFID dari santri ${studentName}?`)) return;
+      try {
+        const res = await fetch('/api/v1/iot/unregister-rfid', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ student_id: studentId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          fetchStudents();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (err) {
+        showToast('Gagal menghubungi server.', 'error');
+      }
+    }
+
+    // Polling Last Scanned Card from Nexabsen
+    async function fetchLastScan(manual = false) {
+      try {
+        const res = await fetch('/api/v1/iot/last-scan');
+        const json = await res.json();
+        if (json.success && json.data && json.data.uid) {
+          const newUid = json.data.uid;
+          if (newUid !== lastScannedUid) {
+            lastScannedUid = newUid;
+            document.getElementById('last-scanned-display').innerText = newUid;
+            document.getElementById('last-scanned-time').innerText = `Terdeteksi jam ${json.data.tapped_at || 'Baru saja'}`;
+            document.getElementById('btn-use-detected-card').disabled = false;
+            document.getElementById('btn-use-detected-card-text').innerText = `Gunakan Kartu [${newUid}]`;
+
+            // Auto-fill input if not already filled
+            const inputField = document.getElementById('input-rfid-uid');
+            if (!inputField.value) {
+              inputField.value = newUid;
+            }
+
+            renderTable(allStudents); // update quick assign buttons
+            if (manual) showToast(`Kartu terdeteksi: ${newUid}`, 'success');
+          }
+        }
+      } catch (err) {
+        // silent fail during background poll
+      }
+    }
+
+    function applyDetectedCardToForm() {
+      if (lastScannedUid) {
+        document.getElementById('input-rfid-uid').value = lastScannedUid;
+        document.getElementById('select-student').focus();
+        showToast(`Nomor UID [${lastScannedUid}] siap dipasangkan. Silakan pilih santri!`, 'info');
+      }
+    }
+
+    // Form Submit
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const studentId = document.getElementById('select-student').value;
+      const rfidUid = document.getElementById('input-rfid-uid').value;
+      if (!studentId || !rfidUid) {
+        alert('Mohon pilih santri dan masukkan nomor UID kartu.');
+        return;
+      }
+      await submitPair(studentId, rfidUid);
+    }
+
+    async function submitPair(studentId, rfidUid) {
+      const btn = document.getElementById('btn-submit-save');
+      btn.disabled = true;
+      btn.innerText = 'Menyimpan...';
+
+      try {
+        const res = await fetch('/api/v1/iot/register-rfid', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            student_id: studentId,
+            rfid_uid: rfidUid
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          document.getElementById('input-rfid-uid').value = '';
+          lastScannedUid = null;
+          document.getElementById('last-scanned-display').innerText = '-- MENUNGGU TAP --';
+          document.getElementById('last-scanned-time').innerText = 'Kartu berhasil didaftarkan!';
+          document.getElementById('btn-use-detected-card').disabled = true;
+          document.getElementById('btn-use-detected-card-text').innerText = 'Gunakan Kartu Terdeteksi';
+          fetchStudents();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (err) {
+        showToast('Gagal menghubungi server.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span class="material-symbols-rounded text-[18px]">save</span><span>Tautkan Kartu ke Santri Ini</span>`;
+      }
+    }
+
+    // Initial Load & Start Polling
+    fetchStudents();
+    fetchLastScan();
+    pollTimer = setInterval(fetchLastScan, 1800);
+  </script>
+</body>
+</html>

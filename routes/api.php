@@ -197,5 +197,8 @@ Route::prefix('v1')->group(function () {
         Route::match(['get', 'post'], '/ping', [IotDeviceApiController::class, 'ping']);
         Route::get('/active-sessions', [IotDeviceApiController::class, 'getActiveSessions']);
         Route::get('/last-scan', [IotDeviceApiController::class, 'getLastScan']);
+        Route::get('/students', [IotDeviceApiController::class, 'getStudentsWithRfid']);
+        Route::post('/register-rfid', [IotDeviceApiController::class, 'registerRfid']);
+        Route::post('/unregister-rfid', [IotDeviceApiController::class, 'unregisterRfid']);
     });
 });

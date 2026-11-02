@@ -58,6 +58,20 @@ Route::get('/psb-admin', $servePsbAdmin);
 Route::get('/manajemen-ppdb', $servePsbAdmin);
 Route::get('/ppdb-admin', $servePsbAdmin);
 
+$serveRfidRegister = function () {
+    $rfidPath = public_path('registrasi-rfid.html');
+    if (File::exists($rfidPath)) {
+        return response()->file($rfidPath, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        ]);
+    }
+    return redirect('/santri');
+};
+
+Route::get('/registrasi-rfid', $serveRfidRegister);
+Route::get('/rfid-registration', $serveRfidRegister);
+
 $servePsbPublic = function () {
     $psbPublicPath = public_path('psb.html');
     if (!File::exists($psbPublicPath)) {

@@ -300,4 +300,130 @@ class IotDeviceApiController extends Controller
             'data' => $last,
         ]);
     }
+
+    /**
+     * Ambil Daftar Santri & Kepemilikan RFID untuk Pusat Registrasi Kartu.
+     * Route: GET /api/v1/iot/students
+     */
+    public function getStudentsWithRfid(Request $request): JsonResponse
+    {
+        $query = Student::with(['classroom', 'dormitoryRoom'])
+            ->orderBy('name', 'asc');
+
+        if ($request->filled('search')) {
+            $s = trim((string) $request->input('search'));
+            $query->where(function ($q) use ($s) {
+                $q->where('name', 'like', "%{$s}%")
+                  ->orWhere('student_number', 'like', "%{$s}%")
+                  ->orWhere('rfid_uid', 'like', "%{$s}%");
+            });
+        }
+
+        if ($request->input('filter') === 'without_rfid') {
+            $query->where(function ($q) {
+                $q->whereNull('rfid_uid')->orWhere('rfid_uid', '');
+            });
+        } elseif ($request->input('filter') === 'with_rfid') {
+            $query->whereNotNull('rfid_uid')->where('rfid_uid', '!=', '');
+        }
+
+        $allStudents = $query->get();
+        $totalInDb = Student::count();
+        $withRfidCount = Student::whereNotNull('rfid_uid')->where('rfid_uid', '!=', '')->count();
+
+        $students = $allStudents->map(function ($stu) {
+            return [
+                'id' => $stu->id,
+                'name' => $stu->name,
+                'student_number' => $stu->student_number,
+                'nisn' => $stu->nisn,
+                'gender' => $stu->gender?->value ?? $stu->gender,
+                'classroom' => $stu->classroom?->name ?? 'Belum ada kelas',
+                'dormitory' => $stu->dormitoryRoom?->name ?? 'Non-Asrama',
+                'rfid_uid' => $stu->rfid_uid,
+                'has_rfid' => !empty($stu->rfid_uid),
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'total' => $totalInDb,
+            'with_rfid' => $withRfidCount,
+            'without_rfid' => $totalInDb - $withRfidCount,
+            'data' => $students,
+        ]);
+    }
+
+    /**
+     * Tautkan Kartu RFID ke Santri.
+     * Route: POST /api/v1/iot/register-rfid
+     */
+    public function registerRfid(Request $request): JsonResponse
+    {
+        $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'rfid_uid' => 'required|string',
+        ]);
+
+        $normalizedUid = Student::normalizeRfidUid((string) $request->input('rfid_uid'));
+        if (!$normalizedUid) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nomor UID RFID tidak boleh kosong atau tidak valid.',
+            ], 422);
+        }
+
+        // Cek apakah UID sudah digunakan oleh santri lain
+        $existing = Student::where('rfid_uid', $normalizedUid)
+            ->where('id', '!=', $request->input('student_id'))
+            ->first();
+
+        if ($existing) {
+            return response()->json([
+                'success' => false,
+                'message' => "Kartu RFID [{$normalizedUid}] sudah terdaftar pada santri: {$existing->name} (NIS: {$existing->student_number}).",
+            ], 422);
+        }
+
+        $student = Student::findOrFail($request->input('student_id'));
+        $oldUid = $student->rfid_uid;
+        $student->rfid_uid = $normalizedUid;
+        $student->save();
+
+        // Bersihkan cache kartu terakhir agar tidak tertinggal
+        \Illuminate\Support\Facades\Cache::forget('last_scanned_rfid');
+
+        return response()->json([
+            'success' => true,
+            'message' => "Alhamdulillah, kartu RFID [{$normalizedUid}] berhasil didaftarkan untuk santri {$student->name}.",
+            'data' => [
+                'id' => $student->id,
+                'name' => $student->name,
+                'student_number' => $student->student_number,
+                'rfid_uid' => $student->rfid_uid,
+                'old_rfid_uid' => $oldUid,
+            ],
+        ]);
+    }
+
+    /**
+     * Lepas / Hapus Tautan Kartu RFID dari Santri.
+     * Route: POST /api/v1/iot/unregister-rfid
+     */
+    public function unregisterRfid(Request $request): JsonResponse
+    {
+        $request->validate([
+            'student_id' => 'required|exists:students,id',
+        ]);
+
+        $student = Student::findOrFail($request->input('student_id'));
+        $oldUid = $student->rfid_uid;
+        $student->rfid_uid = null;
+        $student->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Kartu RFID [{$oldUid}] berhasil dilepas dari santri {$student->name}.",
+        ]);
+    }
 }
