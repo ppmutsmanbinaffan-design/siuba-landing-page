@@ -251,34 +251,11 @@
         </div>
       </header>
 
-      <!-- Hero Main Content Grid -->
-      <div id="beranda" class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-end mt-10 sm:mt-16 lg:mt-20">
-        <!-- Left CTA & Subtitle -->
-        <div class="lg:col-span-7 xl:col-span-8 space-y-4 min-w-0">
-          <div class="flex flex-col xs:flex-row flex-wrap sm:items-center gap-3 sm:gap-4">
-            <a
-              href="#ppdb"
-              class="inline-flex items-center justify-between xs:justify-start gap-3 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full shadow-xl transition group w-full xs:w-fit shrink-0"
-            >
-              <span>Pendaftaran Santri Baru (PPDB)</span>
-              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-forest-950 text-limeaccent-400 flex items-center justify-center group-hover:rotate-45 transition-transform shrink-0">
-                <span class="material-symbols-rounded text-[16px] sm:text-[18px]">arrow_outward</span>
-              </span>
-            </a>
-
-            <a
-              href="/login"
-              class="inline-flex items-center justify-center gap-2 glass-nav hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full transition w-full xs:w-fit"
-            >
-              <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">qr_code_scanner</span>
-              <span>Login Sistem Presensi SIUBA</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Right Floating Preview Card (Auto-Sliding Carousel / Slide Berjalan) -->
-        <div class="lg:col-span-5 xl:col-span-4 flex flex-col items-stretch sm:items-start lg:items-end justify-end">
-          <div class="glass-card p-2.5 sm:p-3 rounded-2xl w-full sm:max-w-[300px] lg:max-w-[290px] shadow-2xl">
+      <!-- Hero Main Content (Bottom Floating Bar: Card Kecil & Action Buttons Berdampingan) -->
+      <div id="beranda" class="relative z-10 flex flex-col md:flex-row items-stretch md:items-end justify-between gap-5 sm:gap-6 mt-auto pt-8 w-full">
+        <!-- 1. Floating Preview Card (Slide Berjalan Kecil di Kiri) -->
+        <div class="shrink-0 w-full sm:w-[290px] lg:w-[310px]">
+          <div class="glass-card p-2.5 sm:p-3 rounded-2xl w-full shadow-2xl">
             <!-- Sliding Track Viewport -->
             <div class="relative overflow-hidden rounded-xl">
               <div
@@ -391,6 +368,27 @@
               <span id="hero-slide-counter" class="text-[10px] font-extrabold text-limeaccent-400 tracking-wider">SLIDE 01 / 04</span>
             </div>
           </div>
+        </div>
+
+        <!-- 2. Action Buttons (Di Sebelah Kanan Card Kecil) -->
+        <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-start md:justify-end gap-3 sm:gap-3.5 pb-0.5">
+          <a
+            href="#ppdb"
+            class="inline-flex items-center justify-between sm:justify-start gap-3 bg-limeaccent-400 hover:bg-limeaccent-500 text-forest-950 font-extrabold text-xs sm:text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-2.5 sm:py-3 rounded-full shadow-xl transition group shrink-0"
+          >
+            <span>Pendaftaran Santri Baru (PPDB)</span>
+            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-forest-950 text-limeaccent-400 flex items-center justify-center group-hover:rotate-45 transition-transform shrink-0">
+              <span class="material-symbols-rounded text-[16px] sm:text-[18px]">arrow_outward</span>
+            </span>
+          </a>
+
+          <a
+            href="/login"
+            class="inline-flex items-center justify-center gap-2 glass-nav hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-5 py-2.5 sm:py-3 rounded-full transition shrink-0"
+          >
+            <span class="material-symbols-rounded text-limeaccent-400 text-[18px]">qr_code_scanner</span>
+            <span>Login Sistem Presensi SIUBA</span>
+          </a>
         </div>
       </div>
     </div>
