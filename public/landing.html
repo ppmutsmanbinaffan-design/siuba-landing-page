@@ -978,7 +978,8 @@
   </section>
 
   <!-- ==================== 5. INFORMASI PSB SANTRI BARU (SECTION 03) ==================== -->
-  <section id="psb"><span id="ppdb" class="sr-only"></span class="fluid-container py-6 sm:py-8 lg:py-10 space-y-5 sm:space-y-6">
+  <section id="psb" class="fluid-container py-6 sm:py-8 lg:py-10 space-y-5 sm:space-y-6">
+    <span id="ppdb" class="sr-only"></span>
     <!-- Header (Menu Card) -->
     <div class="section-menu-card p-3.5 sm:p-4 lg:px-5 lg:py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-5">
       <div class="shrink-0">
@@ -1078,79 +1079,137 @@
         </div>
       </div>
 
-      <!-- Card 1: Jenjang SMP IT -->
-      <div class="md:col-span-1 lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[350px] sm:min-h-[390px] shadow-lg group flex flex-col justify-end p-4 sm:p-5">
-        <img
-          id="cms-smp-img"
-          src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
-          alt="SMP IT Utsman Bin Affan"
-          class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-forest-950/92 via-forest-950/35 to-transparent"></div>
-
-        <div class="relative z-10 glass-card rounded-2xl p-4 sm:p-5 text-white space-y-4">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-full bg-limeaccent-400 text-forest-950 flex items-center justify-center font-bold">
+      <!-- Card 2: Jenjang SMP IT -->
+      <div class="md:col-span-1 lg:col-span-4 bg-white rounded-3xl border border-zinc-200/90 shadow-sm overflow-hidden flex flex-col justify-between group">
+        <div>
+          <!-- Image Header with badges -->
+          <div class="relative h-48 sm:h-52 overflow-hidden bg-zinc-100">
+            <img
+              id="cms-smp-img"
+              src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
+              alt="SMP IT Utsman Bin Affan"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-950/40 via-transparent to-transparent"></div>
+            <span class="absolute top-3.5 left-3.5 bg-forest-950/90 backdrop-blur-xs text-limeaccent-400 text-[11px] font-extrabold px-3 py-1 rounded-full shadow-xs">
+              Jenjang SMP IT
+            </span>
+            <span id="cms-smp-badge" class="absolute top-3.5 right-3.5 text-[11px] font-bold bg-white/95 backdrop-blur-xs text-forest-950 px-3 py-1 rounded-full shadow-xs">
+              Lulusan SD / MI
+            </span>
+            <span class="absolute -bottom-3 right-5 w-10 h-10 rounded-2xl bg-forest-950 text-limeaccent-400 flex items-center justify-center shadow-md border-2 border-white">
               <span class="material-symbols-rounded text-[20px]">school</span>
-            </div>
-            <span id="cms-smp-badge" class="text-[11px] font-bold bg-white/15 px-3 py-1 rounded-full">Lulusan SD / MI</span>
+            </span>
           </div>
-          <div>
-            <h4 id="cms-smp-title" class="text-base sm:text-lg font-extrabold">JENJANG SMP IT (BOARDING)</h4>
-            <p id="cms-smp-desc" class="text-xs text-white/80 mt-1">Fondasi Tahsin, Tahfidz 10–15 Juz, Bahasa Arab Dasar &amp; Kurikulum Nasional.</p>
-          </div>
-          <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-[11px]">
+
+          <!-- Body Content -->
+          <div class="p-5 sm:p-6 space-y-3.5">
             <div>
-              <span class="text-white/60 block">Masa Studi</span>
-              <span id="cms-smp-duration" class="font-bold">3 Tahun</span>
+              <h4 id="cms-smp-title" class="text-base sm:text-lg font-extrabold text-forest-950 tracking-tight">
+                JENJANG SMP IT (BOARDING)
+              </h4>
+              <p id="cms-smp-desc" class="text-xs text-zinc-600 leading-relaxed mt-1">
+                Fondasi Tahsin bersanad, Target Tahfidz 10–15 Juz, Bahasa Arab &amp; Inggris Aktif, serta Kurikulum Nasional Kemenag/Kemendikbud.
+              </p>
             </div>
-            <div>
-              <span class="text-white/60 block">Kuota</span>
-              <span id="cms-smp-kuota" class="font-bold">120 Santri</span>
-            </div>
-            <div>
-              <span class="text-white/60 block">Asrama</span>
-              <span id="cms-smp-boarding" class="font-bold">Terpisah Pa/Pi</span>
+
+            <!-- Specs Grid -->
+            <div class="grid grid-cols-3 gap-2 bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3 text-center text-xs">
+              <div class="border-r border-zinc-200/80 pr-1">
+                <span class="text-zinc-500 text-[10px] uppercase font-bold block">Masa Studi</span>
+                <span id="cms-smp-duration" class="font-extrabold text-forest-950 text-xs mt-0.5 block">3 Tahun</span>
+              </div>
+              <div class="border-r border-zinc-200/80 px-1">
+                <span class="text-zinc-500 text-[10px] uppercase font-bold block">Kuota</span>
+                <span id="cms-smp-kuota" class="font-extrabold text-forest-950 text-xs mt-0.5 block">120 Santri</span>
+              </div>
+              <div class="pl-1">
+                <span class="text-zinc-500 text-[10px] uppercase font-bold block">Asrama</span>
+                <span id="cms-smp-boarding" class="font-extrabold text-forest-950 text-xs mt-0.5 block">Terpisah Pa/Pi</span>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Footer Action -->
+        <div class="p-5 sm:p-6 pt-0 border-t border-zinc-100 flex items-center justify-between mt-2">
+          <span class="text-[11px] font-semibold text-zinc-500 flex items-center gap-1">
+            <span class="material-symbols-rounded text-[15px] text-forest-700">verified</span> Kuota Terbatas
+          </span>
+          <a
+            href="/psb#jenjang-smp"
+            class="inline-flex items-center gap-1.5 text-xs font-extrabold text-forest-900 hover:text-forest-700 group-hover:translate-x-0.5 transition"
+          >
+            <span>Detail Jenjang</span>
+            <span class="material-symbols-rounded text-[16px]">arrow_forward</span>
+          </a>
+        </div>
       </div>
 
-      <!-- Card 2: Jenjang SMA IT & Takhassus -->
-      <div class="md:col-span-1 lg:col-span-4 relative rounded-3xl overflow-hidden min-h-[350px] sm:min-h-[390px] shadow-lg group flex flex-col justify-end p-4 sm:p-5">
-        <img
-          id="cms-sma-img"
-          src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80"
-          alt="SMA IT Utsman Bin Affan"
-          class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-forest-950/92 via-forest-950/35 to-transparent"></div>
-
-        <div class="relative z-10 glass-card rounded-2xl p-4 sm:p-5 text-white space-y-4">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-full bg-limeaccent-400 text-forest-950 flex items-center justify-center font-bold">
+      <!-- Card 3: Jenjang SMA IT & Takhassus -->
+      <div class="md:col-span-1 lg:col-span-4 bg-white rounded-3xl border border-zinc-200/90 shadow-sm overflow-hidden flex flex-col justify-between group">
+        <div>
+          <!-- Image Header with badges -->
+          <div class="relative h-48 sm:h-52 overflow-hidden bg-zinc-100">
+            <img
+              id="cms-sma-img"
+              src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80"
+              alt="SMA IT Utsman Bin Affan"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-950/40 via-transparent to-transparent"></div>
+            <span class="absolute top-3.5 left-3.5 bg-forest-950/90 backdrop-blur-xs text-limeaccent-400 text-[11px] font-extrabold px-3 py-1 rounded-full shadow-xs">
+              Jenjang SMA IT
+            </span>
+            <span id="cms-sma-badge" class="absolute top-3.5 right-3.5 text-[11px] font-bold bg-white/95 backdrop-blur-xs text-forest-950 px-3 py-1 rounded-full shadow-xs">
+              Lulusan SMP / MTs
+            </span>
+            <span class="absolute -bottom-3 right-5 w-10 h-10 rounded-2xl bg-forest-950 text-limeaccent-400 flex items-center justify-center shadow-md border-2 border-white">
               <span class="material-symbols-rounded text-[20px]">workspace_premium</span>
-            </div>
-            <span id="cms-sma-badge" class="text-[11px] font-bold bg-white/15 px-3 py-1 rounded-full">Lulusan SMP / MTs</span>
+            </span>
           </div>
-          <div>
-            <h4 id="cms-sma-title" class="text-base sm:text-lg font-extrabold">JENJANG SMA IT &amp; TAKHASSUS</h4>
-            <p id="cms-sma-desc" class="text-xs text-white/80 mt-1">Tahfidz 30 Juz Bersanad, Kajian Kitab Kuning, Sains Olimpiade &amp; Persiapan PTN/Timteng.</p>
+
+          <!-- Body Content -->
+          <div class="p-5 sm:p-6 space-y-3.5">
+            <div>
+              <h4 id="cms-sma-title" class="text-base sm:text-lg font-extrabold text-forest-950 tracking-tight">
+                JENJANG SMA IT &amp; TAKHASSUS
+              </h4>
+              <p id="cms-sma-desc" class="text-xs text-zinc-600 leading-relaxed mt-1">
+                Tahfidz 30 Juz Mutqin Bersanad, Kajian Kitab Turats, Olimpiade MIPA/Sains &amp; Persiapan Masuk PTN / Universitas Timur Tengah.
+              </p>
+            </div>
+
+            <!-- Specs Grid -->
+            <div class="grid grid-cols-3 gap-2 bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3 text-center text-xs">
+              <div class="border-r border-zinc-200/80 pr-1">
+                <span class="text-zinc-500 text-[10px] uppercase font-bold block">Masa Studi</span>
+                <span id="cms-sma-duration" class="font-extrabold text-forest-950 text-xs mt-0.5 block">3 Tahun</span>
+              </div>
+              <div class="border-r border-zinc-200/80 px-1">
+                <span class="text-zinc-500 text-[10px] uppercase font-bold block">Kuota</span>
+                <span id="cms-sma-kuota" class="font-extrabold text-forest-950 text-xs mt-0.5 block">120 Santri</span>
+              </div>
+              <div class="pl-1">
+                <span class="text-zinc-500 text-[10px] uppercase font-bold block">Program</span>
+                <span id="cms-sma-program" class="font-extrabold text-forest-950 text-xs mt-0.5 block">MIPA &amp; Syariah</span>
+              </div>
+            </div>
           </div>
-          <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-[11px]">
-            <div>
-              <span class="text-white/60 block">Masa Studi</span>
-              <span id="cms-sma-duration" class="font-bold">3 Tahun</span>
-            </div>
-            <div>
-              <span class="text-white/60 block">Kuota</span>
-              <span id="cms-sma-kuota" class="font-bold">120 Santri</span>
-            </div>
-            <div>
-              <span class="text-white/60 block">Program</span>
-              <span id="cms-sma-program" class="font-bold">MIPA &amp; Syariah</span>
-            </div>
-          </div>
+        </div>
+
+        <!-- Footer Action -->
+        <div class="p-5 sm:p-6 pt-0 border-t border-zinc-100 flex items-center justify-between mt-2">
+          <span class="text-[11px] font-semibold text-zinc-500 flex items-center gap-1">
+            <span class="material-symbols-rounded text-[15px] text-forest-700">verified</span> Kuota Terbatas
+          </span>
+          <a
+            href="/psb#jenjang-sma"
+            class="inline-flex items-center gap-1.5 text-xs font-extrabold text-forest-900 hover:text-forest-700 group-hover:translate-x-0.5 transition"
+          >
+            <span>Detail Jenjang</span>
+            <span class="material-symbols-rounded text-[16px]">arrow_forward</span>
+          </a>
         </div>
       </div>
     </div>
