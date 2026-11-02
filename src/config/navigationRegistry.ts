@@ -94,6 +94,10 @@ export const ROLE_PERMISSIONS: Readonly<Record<string, readonly string[]>> = {
     'kbm.reports',
     'devices.view',
     'devices.manage',
+    'psb.view',
+    'psb.manage',
+    'psb.verify',
+    'psb.export',
     'ppdb.view',
     'ppdb.manage',
     'ppdb.verify',
@@ -585,6 +589,16 @@ export const NAVIGATION_REGISTRY: NavItemConfig[] = [
     category: 'MASTER DATA',
     route: '/kegiatan',
     permission: 'activities.view',
+  },
+
+  // PENERIMAAN SANTRI BARU (PSB)
+  {
+    id: 'psb-management',
+    label: 'Pusat Manajemen PSB',
+    icon: GraduationCap,
+    category: 'PENERIMAAN SANTRI (PSB)',
+    route: '/manajemen-psb',
+    permission: 'psb.view',
   },
 
   // AKADEMIK / KBM

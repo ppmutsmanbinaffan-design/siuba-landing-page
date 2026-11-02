@@ -1619,6 +1619,7 @@ export function App() {
       case 'devices': return 'Manajemen Perangkat Terminal';
       case 'acceptance-tests': return 'Acceptance Tests';
       case 'access': return 'Role & Permission';
+      case 'psb-management': return 'Pusat Manajemen PSB';
       case 'settings': return 'Pengaturan Sistem & Lingkungan';
       case 'today-timeline': return 'Timeline Rutin & Ibadah';
       case 'prayer-monitoring': return 'Monitoring Shalat 5 Waktu';
@@ -2172,6 +2173,41 @@ export function App() {
               onUpdateRolePermissions={handleUpdateRolePermissions}
               onShowToast={showToast}
             />
+          )}
+
+          {activeTab === 'psb-management' && (
+            <div className="space-y-4 pb-8">
+              <div className="bg-gradient-to-r from-[#12372A] to-[#1F5C45] text-white p-5 rounded-3xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-lime-400 text-lime-950 uppercase tracking-wider">
+                      Modul PSB SIUBA
+                    </span>
+                    <span className="text-xs text-emerald-200">Portal Verifikasi & Seleksi</span>
+                  </div>
+                  <h2 className="text-xl font-extrabold text-white">Pusat Manajemen Penerimaan Santri Baru (PSB)</h2>
+                  <p className="text-xs text-white/80 mt-0.5">Kelola formulir pendaftar, nilai tes Al-Qur'an & akademik, status kelulusan, dan export data calon santri.</p>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <a
+                    href="/manajemen-psb"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold transition border border-white/20"
+                  >
+                    <span>Buka Layar Penuh</span>
+                    <span className="material-symbols-rounded text-[16px]">open_in_new</span>
+                  </a>
+                </div>
+              </div>
+              <div className="w-full h-[calc(100vh-14rem)] min-h-[620px] rounded-3xl overflow-hidden border border-slate-200 shadow-sm bg-white">
+                <iframe
+                  src="/manajemen-psb"
+                  title="Pusat Manajemen PSB"
+                  className="w-full h-full border-0"
+                />
+              </div>
+            </div>
           )}
 
           {activeTab === 'staff-integrated-dashboard' && (

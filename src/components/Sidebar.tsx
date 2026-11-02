@@ -98,6 +98,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         return 'Divisi Kesantrian';
       case 'academic':
         return 'Divisi Akademik';
+      case 'panitia-psb':
+      case 'panitia_psb':
+      case 'panitia-ppdb':
+      case 'panitia_ppdb':
+        return 'Panitia PSB';
       default:
         return role ? role.charAt(0).toUpperCase() + role.slice(1).replace(/[-_]/g, ' ') : 'Pengguna';
     }

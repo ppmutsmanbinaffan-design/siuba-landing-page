@@ -131,5 +131,17 @@ class AdminUserSeeder extends Seeder
             ]
         );
         $adminPondok->syncRoles(['admin']);
+
+        // 11. Panitia PSB (Penerimaan Santri Baru) Account
+        $panitiaPsb = User::updateOrCreate(
+            ['username' => 'panitia.psb'],
+            [
+                'name' => 'Ustadz Hendra Irawan, S.Pd (Panitia PSB)',
+                'email' => 'psb@utsman.sch.id',
+                'password' => $defaultPassword,
+                'is_active' => true,
+            ]
+        );
+        $panitiaPsb->syncRoles(['panitia-psb']);
     }
 }
