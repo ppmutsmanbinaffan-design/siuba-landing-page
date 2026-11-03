@@ -20,7 +20,18 @@ class IotDeviceApiController extends Controller
      */
     public function handleRfidTap(Request $request): JsonResponse
     {
-        $rawUid = $request->input('rfid_uid') ?? $request->input('uid') ?? $request->input('card_uid');
+        $rawContent = $request->getContent();
+        $jsonData = json_decode($rawContent, true);
+        if (!is_array($jsonData)) {
+            $jsonData = [];
+        }
+
+        $rawUid = $request->input('rfid_uid') 
+            ?? $request->input('uid') 
+            ?? $request->input('card_uid')
+            ?? ($jsonData['rfid_uid'] ?? null)
+            ?? ($jsonData['uid'] ?? null)
+            ?? ($jsonData['card_uid'] ?? null);
 
         if (!$rawUid || trim((string) $rawUid) === '') {
             return response()->json([
@@ -43,9 +54,15 @@ class IotDeviceApiController extends Controller
         $normalizedUid = Student::normalizeRfidUid((string) $rawUid);
 
         // 1. Catat atau Perbarui Perangkat Terminal ESP32 / Nexabsen
-        $deviceCode = (string) ($request->input('device_code') ?? $request->input('device_id') ?? 'NEXABSEN-01');
-        $deviceName = (string) ($request->input('device_name') ?? 'Nexabsen RFID Terminal');
-        $deviceLocation = (string) ($request->input('location') ?? 'Gerbang / Pintu Masuk');
+        $deviceCode = (string) (
+            $request->input('device_code') 
+            ?? $request->input('device_id') 
+            ?? ($jsonData['device_code'] ?? null)
+            ?? ($jsonData['device_id'] ?? null)
+            ?? 'NEXABSEN-01'
+        );
+        $deviceName = (string) ($request->input('device_name') ?? ($jsonData['device_name'] ?? 'Nexabsen RFID Terminal'));
+        $deviceLocation = (string) ($request->input('location') ?? ($jsonData['location'] ?? 'Gerbang / Pintu Masuk'));
 
         $device = AttendanceDevice::firstOrCreate(
             ['device_code' => $deviceCode],
@@ -117,9 +134,9 @@ class IotDeviceApiController extends Controller
 
         if (!$session) {
             return response()->json([
-                'success' => false,
+                'success' => true,
                 'code' => 'NO_ACTIVE_SESSION',
-                'message' => 'Tidak ada sesi presensi aktif.',
+                'message' => 'Sesi Belum Buka',
                 'data' => [
                     'name' => $student->name,
                 ],
@@ -129,7 +146,7 @@ class IotDeviceApiController extends Controller
                     'student_number' => $student->student_number,
                 ],
                 'rfid_uid' => $normalizedUid,
-            ], 422);
+            ], 200);
         }
 
         // 4. Periksa Apakah Santri Sudah Melakukan Tap Pada Sesi Ini
