@@ -20,6 +20,10 @@ $serveLanding = function () {
     return redirect('/login');
 };
 
+// Endpoint Fallbacks untuk Hardware IoT & Nexabsen V.4
+Route::match(['get', 'post'], '/tap.php', [\App\Http\Controllers\Api\IotDeviceApiController::class, 'handleRfidTap']);
+Route::match(['get', 'post'], '/api/tap.php', [\App\Http\Controllers\Api\IotDeviceApiController::class, 'handleRfidTap']);
+
 Route::get('/', $serveLanding);
 Route::get('/beranda', $serveLanding);
 Route::get('/landing', $serveLanding);
@@ -50,6 +54,20 @@ Route::get('/manajemen-psb', $servePsbAdmin);
 Route::get('/psb-admin', $servePsbAdmin);
 Route::get('/manajemen-ppdb', $servePsbAdmin);
 Route::get('/ppdb-admin', $servePsbAdmin);
+
+$serveRfidRegister = function () {
+    $rfidPath = public_path('registrasi-rfid.html');
+    if (File::exists($rfidPath)) {
+        return response()->file($rfidPath, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        ]);
+    }
+    return redirect('/dashboard');
+};
+
+Route::get('/registrasi-rfid', $serveRfidRegister);
+Route::get('/rfid-registration', $serveRfidRegister);
 
 $servePsbPublic = function () {
     $psbPublicPath = public_path('psb.html');
