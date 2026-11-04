@@ -53,6 +53,19 @@ class IotDeviceApiController extends Controller
 
         $normalizedUid = Student::normalizeRfidUid((string) $rawUid);
 
+        // Dukungan Khusus Nexabsen V4.1 (Kartu Master Admin -> Trigger RESET_CONFIG)
+        $masterAdminUid = strtoupper((string) env('NEXABSEN_MASTER_ADMIN_UID', '99887766'));
+        if ($normalizedUid === '99887766' || $normalizedUid === $masterAdminUid) {
+            return response()->json([
+                'message' => 'Akses Admin',
+                'action' => 'RESET_CONFIG',
+                'data' => [
+                    'name' => 'Admin Teknisi',
+                    'uid' => $normalizedUid,
+                ],
+            ], 200);
+        }
+
         // 1. Catat atau Perbarui Perangkat Terminal ESP32 / Nexabsen
         $deviceCode = (string) (
             $request->input('device_code') 
@@ -93,9 +106,10 @@ class IotDeviceApiController extends Controller
             return response()->json([
                 'success' => false,
                 'code' => 'CARD_NOT_REGISTERED',
-                'message' => 'UID: ' . $normalizedUid,
+                'message' => 'Kartu Ditolak!',
                 'data' => [
                     'name' => 'UID: ' . $normalizedUid,
+                    'uid' => $normalizedUid,
                 ],
                 'rfid_uid' => $normalizedUid,
                 'device' => $deviceCode,
@@ -139,6 +153,7 @@ class IotDeviceApiController extends Controller
                 'message' => 'Sesi Belum Buka',
                 'data' => [
                     'name' => $student->name,
+                    'uid' => $normalizedUid,
                 ],
                 'student' => [
                     'id' => $student->id,
@@ -167,6 +182,7 @@ class IotDeviceApiController extends Controller
                 'message' => 'Sudah Absen',
                 'data' => [
                     'name' => $student->name,
+                    'uid' => $normalizedUid,
                 ],
                 'student' => [
                     'id' => $student->id,
@@ -218,6 +234,7 @@ class IotDeviceApiController extends Controller
             'message' => 'Absen Sukses',
             'data' => [
                 'name' => $student->name,
+                'uid' => $normalizedUid,
             ],
             'student' => [
                 'id' => $student->id,
