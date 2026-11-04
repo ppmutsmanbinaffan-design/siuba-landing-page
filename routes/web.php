@@ -37,9 +37,6 @@ Route::get('/cms-landing', function () {
 
 $servePsbAdmin = function () {
     $psbPath = public_path('manajemen-psb.html');
-    if (!File::exists($psbPath)) {
-        $psbPath = public_path('manajemen-ppdb.html');
-    }
     if (File::exists($psbPath)) {
         return response()->file($psbPath, [
             'Content-Type' => 'text/html; charset=UTF-8',
@@ -56,9 +53,6 @@ Route::get('/ppdb-admin', $servePsbAdmin);
 
 $servePsbPublic = function () {
     $psbPublicPath = public_path('psb.html');
-    if (!File::exists($psbPublicPath)) {
-        $psbPublicPath = public_path('ppdb.html');
-    }
     if (File::exists($psbPublicPath)) {
         return response()->file($psbPublicPath, [
             'Content-Type' => 'text/html; charset=UTF-8',
