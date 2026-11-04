@@ -13,12 +13,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->prepend(\App\Http\Middleware\CorrelationIdMiddleware::class);
-        $middleware->validateCsrfTokens(except: [
-            'tap.php',
-            'api/tap.php',
-            'api/*',
-            'iot/*',
-        ]);
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,

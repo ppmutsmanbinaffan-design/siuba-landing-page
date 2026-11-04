@@ -188,17 +188,9 @@ Route::prefix('v1')->group(function () {
         Route::delete('/ppdb/registrations/{id}', [LandingCmsApiController::class, 'deletePpdbRegistration']);
     });
 
-    // IoT Hardware Bridge (ESP32 RFID Reader, Nexabsen V.4 & Smart Card Terminal)
-    Route::match(['get', 'post'], '/tap.php', [IotDeviceApiController::class, 'handleRfidTap']);
+    // IoT Hardware Bridge (Device Ping & Status)
     Route::prefix('iot')->group(function () {
-        Route::match(['get', 'post'], '/rfid-tap', [IotDeviceApiController::class, 'handleRfidTap']);
-        Route::match(['get', 'post'], '/tap.php', [IotDeviceApiController::class, 'handleRfidTap']);
-        Route::match(['get', 'post'], '/nexabsen', [IotDeviceApiController::class, 'handleRfidTap']);
         Route::match(['get', 'post'], '/ping', [IotDeviceApiController::class, 'ping']);
         Route::get('/active-sessions', [IotDeviceApiController::class, 'getActiveSessions']);
-        Route::get('/last-scan', [IotDeviceApiController::class, 'getLastScan']);
-        Route::get('/students', [IotDeviceApiController::class, 'getStudentsWithRfid']);
-        Route::post('/register-rfid', [IotDeviceApiController::class, 'registerRfid']);
-        Route::post('/unregister-rfid', [IotDeviceApiController::class, 'unregisterRfid']);
     });
 });
