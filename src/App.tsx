@@ -1637,7 +1637,6 @@ export function App() {
       case 'integrated-dashboard': return 'Dashboard Terpadu';
       case 'attendance-dashboard': return 'Pusat Absensi Santri';
       case 'attendance-monitoring': return 'Live Monitoring Sesi Absensi';
-      case 'rfid-monitoring': return 'Monitoring Terminal RFID';
       case 'executive-dashboard': return 'Dashboard Eksekutif';
       case 'report-center': return 'Pusat Laporan';
       case 'security-audit': return 'Keamanan & Audit Trail';
@@ -1657,8 +1656,7 @@ export function App() {
       case 'sessions': return 'Manajemen Sesi Absensi';
       case 'manual-attendance': return 'Lembar Absensi Manual Santri';
       case 'excuses': return 'Manajemen Izin & Dispensasi Santri';
-      case 'scanner-simulator': return 'Simulator Pemindai QR & RFID';
-      case 'rfid-simulator': return 'Simulator Terminal RFID ESP32';
+      case 'scanner-simulator': return 'Simulator Pemindai QR';
       case 'history': return 'Riwayat & Log Transaksi Presensi';
       case 'devices': return 'Manajemen Perangkat Terminal';
       case 'acceptance-tests': return 'Acceptance Tests';

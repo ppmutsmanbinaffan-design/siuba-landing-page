@@ -493,14 +493,6 @@ export const NAVIGATION_REGISTRY: NavItemConfig[] = [
     permission: 'attendance.monitoring',
   },
   {
-    id: 'rfid-monitoring',
-    label: 'Terminal RFID',
-    icon: Radio,
-    category: 'ABSENSI',
-    route: '/absensi/rfid',
-    permission: 'attendance.rfid',
-  },
-  {
     id: 'excuses',
     label: 'Izin & Dispensasi',
     icon: FileText,
@@ -526,7 +518,7 @@ export const NAVIGATION_REGISTRY: NavItemConfig[] = [
   },
   {
     id: 'scanner-simulator',
-    label: 'Simulator QR / RFID',
+    label: 'Simulator QR Scanner',
     icon: Radio,
     category: 'ABSENSI',
     route: '/simulator',
@@ -650,14 +642,6 @@ export const NAVIGATION_REGISTRY: NavItemConfig[] = [
     icon: Cpu,
     category: 'PERANGKAT',
     route: '/devices',
-    permission: 'devices.view',
-  },
-  {
-    id: 'rfid-simulator',
-    label: 'Simulator RFID (ESP32)',
-    icon: Radio,
-    category: 'PERANGKAT',
-    route: '/perangkat/rfid-simulator',
     permission: 'devices.view',
   },
 

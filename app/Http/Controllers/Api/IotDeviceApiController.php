@@ -17,14 +17,14 @@ class IotDeviceApiController extends Controller
      */
     public function ping(Request $request): JsonResponse
     {
-        $deviceCode = (string) ($request->input('device_code') ?? 'ESP32-RFID-01');
-        $deviceName = (string) ($request->input('device_name') ?? 'ESP32 RFID Reader');
+        $deviceCode = (string) ($request->input('device_code') ?? 'ESP32-DEVICE-01');
+        $deviceName = (string) ($request->input('device_name') ?? 'ESP32 Terminal');
 
         $device = AttendanceDevice::firstOrCreate(
             ['device_code' => $deviceCode],
             [
                 'device_name' => $deviceName,
-                'device_type' => 'rfid_reader',
+                'device_type' => 'kiosk',
                 'location' => 'Pintu Masuk',
                 'is_active' => true,
             ]

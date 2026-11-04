@@ -82,8 +82,6 @@ Route::prefix('v1')->group(function () {
                 ->middleware('permission:attendance.create|attendance.manual');
             Route::post('/sessions/{session}/qr', [AttendanceApiController::class, 'recordByQr'])
                 ->middleware('permission:attendance.create|attendance.qr');
-            Route::post('/sessions/{session}/rfid', [AttendanceApiController::class, 'recordByRfid'])
-                ->middleware('permission:attendance.create|attendance.rfid');
             Route::get('/sessions/{session}/stats', [AttendanceApiController::class, 'sessionStats'])
                 ->middleware('permission:attendance.view|attendance.sessions.view');
         });

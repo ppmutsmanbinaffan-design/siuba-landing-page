@@ -94,37 +94,6 @@ class AttendanceApiController extends Controller
     }
 
     /**
-     * Record Attendance via RFID Card Tap.
-     */
-    public function recordByRfid(Request $request, AttendanceSession $session): JsonResponse
-    {
-        $validated = $request->validate([
-            'rfid_uid' => 'required|string',
-            'device_id' => 'nullable|exists:attendance_devices,id',
-            'timestamp' => 'nullable|date',
-        ]);
-
-        $device = isset($validated['device_id']) ? AttendanceDevice::find($validated['device_id']) : null;
-        $checkInTime = isset($validated['timestamp']) ? Carbon::parse($validated['timestamp']) : null;
-
-        $result = $this->attendanceService->recordByRfidUid(
-            session: $session,
-            rawRfidUid: $validated['rfid_uid'],
-            device: $device,
-            operator: Auth::user(),
-            checkInTime: $checkInTime
-        );
-
-        return response()->json([
-            'success' => $result->success,
-            'code' => $result->code->value,
-            'message' => $result->message,
-            'record' => $result->attendanceRecord,
-            'student' => $result->student,
-        ], $result->success ? 200 : 422);
-    }
-
-    /**
      * Get real-time stats for an active session.
      */
     public function sessionStats(AttendanceSession $session): JsonResponse

@@ -181,10 +181,10 @@ export const InteractiveScannerSimulator: React.FC<ScannerSimulatorProps> = ({
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Simulator Pemindai QR & RFID
+              Simulator Pemindai QR Code
             </h1>
             <p className="text-emerald-100/90 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
-              Simulasikan tap kartu RFID fisik (dengan normalisasi karakter otomatis) dan pemindaian QR Code santri secara langsung ke Attendance Engine.
+              Simulasikan pemindaian QR Code santri secara langsung ke Attendance Engine.
             </p>
           </div>
 
@@ -224,17 +224,6 @@ export const InteractiveScannerSimulator: React.FC<ScannerSimulatorProps> = ({
           >
             <QrCode className="w-4 h-4 text-[#1F5C45]" />
             <span>Pemindai QR Code</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('rfid')}
-            className={`px-4 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer min-h-[38px] active:scale-95 whitespace-nowrap ${
-              activeTab === 'rfid'
-                ? 'bg-white text-[#12372A] shadow-md font-black'
-                : 'bg-black/25 text-emerald-100/80 border border-white/15 hover:bg-black/35 hover:text-white'
-            }`}
-          >
-            <Radio className="w-4 h-4 text-[#1F5C45]" />
-            <span>Tap Kartu RFID Reader</span>
           </button>
           <button
             onClick={() => setActiveTab('timemachine')}
@@ -323,90 +312,6 @@ export const InteractiveScannerSimulator: React.FC<ScannerSimulatorProps> = ({
                   <span>Scan Token</span>
                 </button>
               </div>
-            </div>
-          )}
-
-          {/* TAB 2: RFID Reader */}
-          {activeTab === 'rfid' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
-                  <Radio className="w-5 h-5 text-emerald-700" />
-                  <span>Simulasi Tap Kartu RFID Santri</span>
-                </h3>
-                <span className="text-xs text-slate-600 font-mono font-bold bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">13.56 MHz Mifare / 125 kHz</span>
-              </div>
-
-              {/* RFID Device Selector */}
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  Pilih Gerbang Perangkat RFID:
-                </label>
-                <select
-                  value={selectedDeviceId}
-                  onChange={(e) => setSelectedDeviceId(Number(e.target.value))}
-                  className="w-full p-3 bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl text-xs font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-2xs"
-                >
-                  {devices.map((d) => (
-                    <option key={d.id} value={d.id} className="text-slate-900 font-bold">
-                      {d.device_name} ({d.device_code} - {d.ip_address})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Quick Card Tap Selection */}
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-2">
-                  Pilih Kartu Santri Terdaftar:
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {students.slice(0, 4).map((s) => (
-                    <button
-                      key={s.id}
-                      onClick={() => setRawRfidInput(s.rfid_uid)}
-                      className={`p-3 rounded-2xl text-left text-xs border transition-all cursor-pointer ${
-                        normalizedRfid === AttendanceEngine.normalizeRfid(s.rfid_uid)
-                          ? 'bg-emerald-50 border-emerald-500 text-emerald-950 font-bold ring-2 ring-emerald-200 shadow-2xs'
-                          : 'bg-slate-50 border-slate-200 text-slate-800 hover:border-slate-300'
-                      }`}
-                    >
-                      <p className="truncate font-black text-slate-900">{s.name}</p>
-                      <p className="text-[11px] text-emerald-800 font-mono font-bold mt-0.5">UID: {s.rfid_uid}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Raw Input with Live Normalization Visualizer */}
-              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                <label className="block text-xs font-bold text-slate-700">
-                  Input Raw RFID UID (Mendukung Spasi, Titik Dua, Huruf Kecil):
-                </label>
-                <input
-                  type="text"
-                  value={rawRfidInput}
-                  onChange={(e) => setRawRfidInput(e.target.value)}
-                  placeholder="Contoh: 04 a8 7f 12 atau 04:A8:7F:12"
-                  className="w-full p-2.5 bg-white border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                />
-
-                <div className="flex items-center justify-between text-xs pt-1">
-                  <span className="text-slate-600 font-medium">Hasil Normalisasi Engine:</span>
-                  <span className="font-mono font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-xl border border-emerald-300">
-                    {normalizedRfid || '(Kosong)'}
-                  </span>
-                </div>
-              </div>
-
-              <button
-                id="btn-trigger-rfid-tap"
-                onClick={handleTapRfid}
-                className="w-full py-3.5 bg-[#1F5C45] hover:bg-[#12372A] text-white rounded-2xl text-xs font-bold shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer min-h-[44px] active:scale-95"
-              >
-                <Radio className="w-4 h-4 text-[#EADAA2]" />
-                <span>Tap Kartu RFID Sekarang</span>
-              </button>
             </div>
           )}
 
